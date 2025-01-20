@@ -88,9 +88,41 @@ execution = ['./a.out']
     name = '3-Clause BSD'
     url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L458-L490'
 
+
 [library.LightGBM]
     version = '4.5.0'
     license = { name = 'MIT', url = 'https://github.com/microsoft/LightGBM/blob/master/LICENSE' }
+
+
+[library.compute]
+    version = '36350b7de849300bd3d72a05d8bf890ca405a014'
+    indirect = true
+
+[[library.compute.license]]
+    name = 'BSL-1.0'
+    url = 'https://github.com/boostorg/compute/blob/36350b7de849300bd3d72a05d8bf890ca405a014/LICENSE_1_0.txt'
+
+
+[library.fast_double_parser]
+    version = 'efec03532ef65984786e5e32dbc81f6e6a55a115'
+    indirect = true
+
+[[library.fast_double_parser.license]]
+    name = 'Apache-2.0'
+    url = 'https://github.com/lemire/fast_double_parser/blob/efec03532ef65984786e5e32dbc81f6e6a55a115/LICENSE'
+
+[[library.fast_double_parser.license]]
+    name = 'BSL-1.0'
+    url = 'https://github.com/lemire/fast_double_parser/blob/efec03532ef65984786e5e32dbc81f6e6a55a115/LICENSE.BSL'
+
+
+[library.fmt]
+    version = 'f5e54359df4c26b6230fc61d38aa294581393084'
+    indirect = true
+
+[[library.fmt.license]]
+    name = 'X11-distribute-modifications-variant'
+    url = 'https://github.com/fmtlib/fmt/blob/f5e54359df4c26b6230fc61d38aa294581393084/LICENSE.rst'
 
 
 [library.range-v3]
