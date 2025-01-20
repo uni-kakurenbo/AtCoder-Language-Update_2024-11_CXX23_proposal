@@ -118,7 +118,7 @@ execution = ['./a.out']
 [library.or-tools]
     version = '9.11'
     license = [
-        { name = 'Apache 2.0', url = 'https://github.com/google/or-tools/blob/stable/LICENSE' },
+        { name = 'Apache-2.0', url = 'https://github.com/google/or-tools/blob/stable/LICENSE' },
     ]
 
 
