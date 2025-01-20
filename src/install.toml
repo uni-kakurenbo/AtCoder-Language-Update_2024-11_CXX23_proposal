@@ -121,65 +121,65 @@ execution = ['./a.out']
     url = 'https://github.com/coin-or/CoinUtils/blob/master/LICENSE'
 
 
-[library.osi]
+[library.Osi]
     version = '0.108.7'
     indirect = true
 
-[[library.osi.license]]
+[[library.Osi.license]]
     name = 'EPL-2.0'
     url = 'https://github.com/coin-or/Osi/blob/master/LICENSE'
 
 
-[library.clp]
+[library.Clp]
     version = '1.17.7'
     indirect = true
 
-[[library.clp.license]]
+[[library.Clp.license]]
     name = 'EPL-2.0'
     url = 'https://github.com/coin-or/Clp/blob/master/LICENSE'
 
 
-[library.cgl]
+[library.Cgl]
     version = '0.60.5'
     indirect = true
 
-[[library.cgl.license]]
+[[library.Cgl.license]]
     name = 'EPL-2.0'
     url = 'https://github.com/coin-or/Cgl/blob/master/LICENSE'
 
 
-[library.cbc]
+[library.Cbc]
     version = '0.60.5'
     indirect = true
 
-[[library.cbc.license]]
+[[library.Cbc.license]]
     name = 'EPL-2.0'
     url = 'https://github.com/coin-or/Cbc/blob/master/LICENSE'
 
 
-[library.glpk]
+[library.GLPK]
     version = '1.7.2'
     indirect = true
 
-[[library.glpk.license]]
+[[library.GLPK.license]]
     name = 'GPL-3.0-or-later'
     url = 'https://www.gnu.org/licenses/gpl-3.0.html'
 
 
-[library.highs]
+[library.HiGHS]
     version = '1.7.2'
     indirect = true
 
-[[library.highs.license]]
+[[library.HiGHS.license]]
     name = 'MIT'
     url = 'https://github.com/ERGO-Code/HiGHS/blob/master/LICENSE.txt'
 
 
-[library.scip]
+[library.SCIP]
     version = '900'
     indirect = true
 
-[[library.scip.license]]
+[[library.SCIP.license]]
     name = 'Apache-2.0'
     url = 'https://www.scipopt.org/scip/doc/html/LICENSE.php'
 
