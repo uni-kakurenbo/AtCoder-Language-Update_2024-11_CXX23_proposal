@@ -13,39 +13,39 @@ execution = ['./a.out']
 
 
 [[license]]
-    name = 'GNU GPL v3'
+    name = 'GPL-3.0-or-later'
     url = 'https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Copying.html'
 
 
 [library.abseil]
     version = '20240722.0'
     license = [
-        { name = 'Apache 2.0', url = 'https://github.com/abseil/abseil-cpp/blob/master/LICENSE' },
+        { name = 'Apache-2.0', url = 'https://github.com/abseil/abseil-cpp/blob/master/LICENSE' },
     ]
 
 [library.AC-Library]
     version = '1.5.1'
     license = [
-        { name = 'CC0 1.0', url = 'https://github.com/atcoder/ac-library/blob/master/LICENSE' }
+        { name = 'CC0-1.0', url = 'https://github.com/atcoder/ac-library/blob/master/LICENSE' }
     ]
 
 [library.Boost]
     version = '1.86.0'
     license = [
-        { name = 'BSL 1.0', url = 'https://www.boost.org/LICENSE_1_0.txt' }
+        { name = 'BSL-1.0', url = 'https://www.boost.org/LICENSE_1_0.txt' }
     ]
 
 [library.Eigen]
     version = '3.4.0-4'
     license = [
-        { name = 'MPL 2.0', url = 'https://www.mozilla.org/en-US/MPL/2.0/' },
+        { name = 'MPL-2.0-no-copyleft-exception', url = 'https://www.mozilla.org/en-US/MPL/2.0/' },
     ]
 
 [library.GMP]
     version = '2:6.3.0+dfsg-2ubuntu6'
     license = [
-        { name = 'GNU LGPL v3', url = 'https://www.gnu.org/licenses/lgpl-3.0.html' },
-        { name = 'GNU GPL v2', url = 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html' }
+        { name = 'LGPL-3.0-only', url = 'https://www.gnu.org/licenses/lgpl-3.0.html' },
+        { name = 'GPL-2.0-only', url = 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html' }
     ]
 
 
@@ -53,47 +53,142 @@ execution = ['./a.out']
     version = '2.5.1'
 
 [[library.libtorch.license]]
-    name = '3-Clause BSD'
+    name = 'BSD-3-Clause'
     url = 'https://github.com/pytorch/pytorch/blob/main/LICENSE'
 
 [[library.libtorch.license]]
-    name = 'Earlier BSD'
+    name = 'BSD-2-Clause'
     url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L8-L50'
 
 [[library.libtorch.license]]
-    name = '2-Clause BSD'
+    name = 'BSD-2-Clause-Views'
     url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L53-L103'
 
 [[library.libtorch.license]]
-    name = 'Apache License'
+    name = 'Apache-2.0'
     url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L105-L285'
 
 [[library.libtorch.license]]
-    name = '3-Clause BSD'
+    name = 'BSD-3-Clause'
     url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L287-L321'
 
 [[library.libtorch.license]]
-    name = '3-Clause BSD'
+    name = 'BSD-3-Clause'
     url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L324-L360'
 
 [[library.libtorch.license]]
-    name = 'BSL 1.0'
+    name = 'BSL-1.0'
     url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L362-L418'
 
 [[library.libtorch.license]]
-    name = 'PILLOW-SIMD Software License'
+    name = 'MIT-CMU'
     url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L420-L456'
 
-[[library.libtorch.license]]
-    name = '3-Clause BSD'
-    url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L458-L490'
+
+[library.zlib]
+    version = '1.3.1'
+    indirect = true
+
+[[library.zlib.license]]
+    name = 'Zlib'
+    url = 'https://www.zlib.net/zlib_license.html'
+
+
+[library.protobuf]
+    version = '26.1'
+    indirect = true
+
+[[library.protobuf.license]]
+    name = 'BSD-3-Clause-Clear'
+    url = 'https://github.com/protocolbuffers/protobuf/blob/main/LICENSE'
+
+
+[library.re2]
+    version = '2024-04-01'
+    indirect = true
+
+[[library.re2.license]]
+    name = 'BSD-Source-Code'
+    url = 'https://github.com/google/re2/blob/main/LICENSE'
+
+
+[library.coin-utils]
+    version = '2.11.6'
+    indirect = true
+
+[[library.coin-utils.license]]
+    name = 'EPL-2.0'
+    url = 'https://github.com/coin-or/CoinUtils/blob/master/LICENSE'
+
+
+[library.osi]
+    version = '0.108.7'
+    indirect = true
+
+[[library.osi.license]]
+    name = 'EPL-2.0'
+    url = 'https://github.com/coin-or/Osi/blob/master/LICENSE'
+
+
+[library.clp]
+    version = '1.17.7'
+    indirect = true
+
+[[library.clp.license]]
+    name = 'EPL-2.0'
+    url = 'https://github.com/coin-or/Clp/blob/master/LICENSE'
+
+
+[library.cgl]
+    version = '0.60.5'
+    indirect = true
+
+[[library.cgl.license]]
+    name = 'EPL-2.0'
+    url = 'https://github.com/coin-or/Cgl/blob/master/LICENSE'
+
+
+[library.cbc]
+    version = '0.60.5'
+    indirect = true
+
+[[library.cbc.license]]
+    name = 'EPL-2.0'
+    url = 'https://github.com/coin-or/Cbc/blob/master/LICENSE'
+
+
+[library.glpk]
+    version = '1.7.2'
+    indirect = true
+
+[[library.glpk.license]]
+    name = 'GPL-3.0-or-later'
+    url = 'https://www.gnu.org/licenses/gpl-3.0.html'
+
+
+[library.highs]
+    version = '1.7.2'
+    indirect = true
+
+[[library.highs.license]]
+    name = 'MIT'
+    url = 'https://github.com/ERGO-Code/HiGHS/blob/master/LICENSE.txt'
+
+
+[library.scip]
+    version = '900'
+    indirect = true
+
+[[library.scip.license]]
+    name = 'Apache-2.0'
+    url = 'https://www.scipopt.org/scip/doc/html/LICENSE.php'
 
 
 [library.range-v3]
     version = '0.12.0'
 
 [[library.range-v3.license]]
-    name = 'BSL'
+    name = 'BSL-1.0'
     url = 'https://github.com/ericniebler/range-v3/blob/0.12.0/LICENSE.txt#L2'
 
 [[library.range-v3.license]]
