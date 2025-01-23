@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="2:6.3.0+dfsg-2ubuntu6"
+VERSION=
 
 set -eu
 

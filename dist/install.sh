@@ -42,12 +42,14 @@ USER_LIBRARY_FLAGS=(
     -lgmpxx -lgmp
     -I/opt/range-v3/include/
     -I/opt/unordered_dense/include/ -L/opt/unordered_dense/lib/
+    -I/opt/z3/include/ -L/opt/z3/lib/ -Wl,-R/opt/z3/lib/ -lz3
+    -I/opt/light-gbm/include/ -L/opt/light-gbm/lib/ -Wl,-R/opt/light-gbm/lib/ -l_lightgbm
 
     -I/opt/libtorch/include/ -I/opt/libtorch/include/torch/csrc/api/include/ -L/opt/libtorch/lib/
     -Wl,-R/opt/libtorch/lib/ -ltorch -ltorch_cpu -lc10
 
-    -I/opt/z3/include/ -L/opt/z3/lib/ -Wl,-R/opt/z3/lib/ -lz3
-    -I/opt/light-gbm/include/ -L/opt/light-gbm/lib/ -Wl,-R/opt/light-gbm/lib/ -l_lightgbm
+    -I/opt/or-tools/include/ -L/opt/or-tools/lib/
+    -Wl,-R/opt/or-tools/lib/ -lortools -lprotobuf
 )
 
 INTERNAL_BUILD_FLAGS=( # for internal library building (CMake).
@@ -64,7 +66,7 @@ USER_BUILD_FLAGS=( # for contestants.
 # shellcheck disable=all
 PARALLEL="$(nproc)"
 
-VERSION="14.2.0-4ubuntu2~24.04"
+VERSION=
 set -eu
 
 sudo apt-get install -y "g++-14=${VERSION}"
@@ -73,7 +75,7 @@ sudo apt-get install -y cmake pigz pbzip2
 
 
 # abseil
-VERSION="20240722.0"
+VERSION=
 
 set -eu
 
@@ -89,9 +91,10 @@ cd ./abseil/
 mkdir -p ./build/ && cd ./build/
 
 BUILD_ARGS=(
+    -DABSL_ENABLE_INSTALL:BOOL=ON
     -DABSL_PROPAGATE_CXX_STD:BOOL=ON
     -DCMAKE_INSTALL_PREFIX:PATH=/opt/abseil/
-    -DCMAKE_CXX_FLAGS:STRING="${INTERNAL_BUILD_FLAGS[*]}"
+    -DCMAKE_CXX_FLAGS:STRING="${INTERNAL_BUILD_FLAGS[*]} -fPIC"
 )
 
 if [[ -v RUN_TEST ]] && [[ "${RUN_TEST}" = "true" ]]; then
@@ -107,7 +110,7 @@ sudo cmake --build ./ --target install --parallel "${PARALLEL}"
 
 
 # AC-Library
-VERSION="1.5.1"
+VERSION=
 
 set -eu
 
@@ -118,7 +121,7 @@ sudo unzip -oq ./ac-library.zip -d /opt/ac-library/
 
 
 # Boost
-VERSION="1.86.0"
+VERSION=
 
 set -eu
 
@@ -149,7 +152,7 @@ sudo ./b2 "${BUILD_ARGS[@]}" --prefix=/opt/boost/ install
 
 
 # Eigen
-VERSION="3.4.0-4"
+VERSION=
 
 set -eu
 
@@ -157,7 +160,7 @@ sudo apt-get install -y "libeigen3-dev=${VERSION}"
 
 
 # GMP
-VERSION="2:6.3.0+dfsg-2ubuntu6"
+VERSION=
 
 set -eu
 
@@ -165,7 +168,7 @@ sudo apt-get install -y "libgmp3-dev=${VERSION}"
 
 
 # libtorch
-VERSION="2.5.1"
+VERSION=
 
 set -eu
 
@@ -181,8 +184,56 @@ sudo cp -Trf ./libtorch/include/ /opt/libtorch/include/
 sudo cp -Trf ./libtorch/lib/ /opt/libtorch/lib/
 
 
+# or-tools
+VERSION=
+
+set -eu
+
+cd /tmp/
+
+mkdir -p ./or-tools/
+
+sudo wget -q "https://github.com/google/or-tools/archive/refs/tags/v${VERSION}.tar.gz" -O ./or-tools.tar.gz
+sudo tar -I pigz -xf ./or-tools.tar.gz -C ./or-tools/ --strip-components 1
+
+cd ./or-tools/
+
+BUILD_TESTING=OFF
+GENERATOR="Unix Makefiles"
+
+if [[ -v RUN_TEST ]]; then
+    BUILD_TESTING=ON
+
+    if [[ ! -v ATCODER ]]; then
+        GENERATOR="Ninja"
+    fi
+fi
+
+mkdir -p ./build/ && cd ./build/
+
+sudo cmake -G "${GENERATOR}" \
+    -DBUILD_ZLIB:BOOL=ON -DBUILD_Protobuf:BOOL=ON -DBUILD_re2:BOOL=ON \
+    -DUSE_COINOR:BOOL=ON -DBUILD_CoinUtils:BOOL=ON -DBUILD_Osi:BOOL=ON -DBUILD_Clp:BOOL=ON -DBUILD_Cgl:BOOL=ON -DBUILD_Cbc:BOOL=ON \
+    -DUSE_GLPK:BOOL=ON -DBUILD_GLPK=ON \
+    -DUSE_HIGHS:BOOL=ON -DBUILD_HIGHS=ON \
+    -DUSE_SCIP:BOOL=ON -DBUILD_SCIP:BOOL=ON \
+    -DBUILD_SAMPLES:BOOL=OFF -DBUILD_EXAMPLES:BOOL=OFF \
+    -DBUILD_TESTING:BOOL="${BUILD_TESTING}" \
+    -DCMAKE_PREFIX_PATH:PATH=/opt/abseil/ \
+    -DCMAKE_INSTALL_PREFIX:PATH=/opt/or-tools/ \
+    -DCMAKE_CXX_COMPILER:STRING="g++-14" \
+    -DCMAKE_CXX_FLAGS="${INTERNAL_BUILD_FLAGS[*]}" \
+    ../
+
+sudo cmake --build ./ --config Release --target install --parallel "${PARALLEL}"
+
+if [[ -v RUN_TESTIONS ]]; then
+    sudo cmake --build ./ --config Release --target test --parallel "${PARALLEL}"
+fi
+
+
 # LightGBM
-VERSION="4.5.0"
+VERSION=
 
 set -eu
 
@@ -210,7 +261,7 @@ sudo cmake --build ./ --target install --parallel "${PARALLEL}"
 
 
 # range-v3
-VERSION="0.12.0"
+VERSION=
 
 set -eu
 
@@ -227,7 +278,7 @@ sudo cp -Trf ./range-v3/include/ /opt/range-v3/include/
 
 
 # unordered_dense
-VERSION="4.4.0"
+VERSION=
 
 set -eu
 
@@ -251,7 +302,7 @@ sudo cmake --build ./ --target install --parallel "${PARALLEL}"
 
 
 # Z3
-VERSION="4.13.3"
+VERSION=
 
 set -eu
 
