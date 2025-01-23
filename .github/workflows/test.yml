@@ -46,11 +46,11 @@ jobs:
 
             - name: Install
               env:
-                  RUN_TEST: ${{ github.event.inputs.test-mode == "strict" }}
+                  RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
               run: |
                   chmod +x ./dist/install.sh
                   ./dist/install.sh
 
             - name: Run test
-              if: ${{ github.event.inputs.test-mode != "none" }}
+              if: ${{ github.event.inputs.test-mode != 'none' }}
               run: ./.github/workflows/internal/test.sh
