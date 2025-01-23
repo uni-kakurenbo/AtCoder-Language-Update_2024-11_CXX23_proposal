@@ -46,6 +46,7 @@ USER_LIBRARY_FLAGS=(
     -I/opt/libtorch/include/ -I/opt/libtorch/include/torch/csrc/api/include/ -L/opt/libtorch/lib/
     -Wl,-R/opt/libtorch/lib/ -ltorch -ltorch_cpu -lc10
 
+    -I/opt/z3/include/ -L/opt/z3/lib/ -Wl,-R/opt/z3/lib/ -lz3
     -I/opt/light-gbm/include/ -L/opt/light-gbm/lib/ -Wl,-R/opt/light-gbm/lib/ -l_lightgbm
 )
 
@@ -247,6 +248,32 @@ sudo cmake \
     ../
 
 sudo cmake --build ./ --target install --parallel "${PARALLEL}"
+
+
+# Z3
+VERSION="4.13.3"
+
+set -eu
+
+cd /tmp/
+
+mkdir -p ./z3/
+
+sudo wget -q "https://github.com/Z3Prover/z3/archive/refs/tags/z3-${VERSION}.tar.gz" -O ./z3.tar.gz
+sudo tar -I pigz -xf ./z3.tar.gz -C ./z3/ --strip-components 1
+
+cd ./z3/
+
+mkdir -p ./build/ && cd ./build/
+
+sudo cmake \
+    -DCMAKE_BUILD_TYPE:STRING=Release \
+    -DCMAKE_INSTALL_PREFIX:PATH=/opt/z3/ \
+    -DCMAKE_CXX_COMPILER:STRING="g++-14" \
+    -DCMAKE_CXX_FLAGS:STRING="${INTERNAL_BUILD_FLAGS[*]}" \
+    ../
+
+sudo make install "-j${PARALLEL}"
 
 
 sudo apt-get remove -y --auto-remove cmake pigz pbzip2
