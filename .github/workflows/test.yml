@@ -8,6 +8,15 @@ on:
             - test/**
     pull_request:
     workflow_dispatch:
+        inputs:
+            test-mode:
+                required: true
+                default: "normal"
+                type: choice
+                options:
+                    - none
+                    - normal
+                    - strict
 
 concurrency:
     group: |
@@ -36,8 +45,12 @@ jobs:
               run: ./.github/workflows/internal/replace.sh
 
             - name: Install
+              env:
+                  RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
               run: |
                   chmod +x ./dist/install.sh
                   ./dist/install.sh
+
             - name: Run test
+              if: ${{ github.event.inputs.test-mode != 'none' }}
               run: ./.github/workflows/internal/test.sh
