@@ -38,6 +38,8 @@ USER_LIBRARY_FLAGS=(
 
     -I/opt/libtorch/include/ -I/opt/libtorch/include/torch/csrc/api/include/ -L/opt/libtorch/lib/
     -Wl,-R/opt/libtorch/lib/ -ltorch -ltorch_cpu -lc10
+
+    -I/opt/light-gbm/include/ -L/opt/light-gbm/lib/ -Wl,-R/opt/light-gbm/lib/ -l_lightgbm
 )
 
 INTERNAL_BUILD_FLAGS=( # for internal library building (CMake).

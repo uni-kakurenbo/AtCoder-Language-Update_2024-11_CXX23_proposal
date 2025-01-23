@@ -13,6 +13,7 @@ sudo apt-get install -y cmake pigz pbzip2
 ./sub-installers/Eigen.sh
 ./sub-installers/GMP.sh
 ./sub-installers/libtorch.sh
+./sub-installers/LightGBM.sh
 ./sub-installers/range-v3.sh
 ./sub-installers/unordered_dense.sh
 
