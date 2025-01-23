@@ -19,6 +19,8 @@ BASIC_USER_BUILD_FLAGS=(
 )
 
 EXTRA_USER_BUILD_FLAGS=(
+    -fopenmp
+
     "-march=native"
     "-flto=auto"
 
