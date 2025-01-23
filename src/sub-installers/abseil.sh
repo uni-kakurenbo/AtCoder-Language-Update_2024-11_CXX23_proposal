@@ -19,10 +19,12 @@ BUILD_ARGS=(
 )
 
 if [[ -v RUN_TEST ]]; then
-    sudo cmake -DABSL_BUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON "${BUILD_ARGS[@]}" ../
+    if [[ ${RUN_TEST} ]]; then
+        sudo cmake -DABSL_BUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON "${BUILD_ARGS[@]}" ../
 
-    sudo make "-j${PARALLEL}"
-    sudo ctest --parallel "${PARALLEL}"
+        sudo make "-j${PARALLEL}"
+        sudo ctest --parallel "${PARALLEL}"
+    fi
 else
     sudo cmake "${BUILD_ARGS[@]}" ../
 fi
