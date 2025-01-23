@@ -24,6 +24,8 @@ BASIC_USER_BUILD_FLAGS=(
 )
 
 EXTRA_USER_BUILD_FLAGS=(
+    -fopenmp
+
     "-march=native"
     "-flto=auto"
 
@@ -43,6 +45,8 @@ USER_LIBRARY_FLAGS=(
 
     -I/opt/libtorch/include/ -I/opt/libtorch/include/torch/csrc/api/include/ -L/opt/libtorch/lib/
     -Wl,-R/opt/libtorch/lib/ -ltorch -ltorch_cpu -lc10
+
+    -I/opt/light-gbm/include/ -L/opt/light-gbm/lib/ -Wl,-R/opt/light-gbm/lib/ -l_lightgbm
 )
 
 INTERNAL_BUILD_FLAGS=( # for internal library building (CMake).
@@ -174,6 +178,34 @@ sudo mkdir -p /opt/libtorch/lib/libtorch/
 
 sudo cp -Trf ./libtorch/include/ /opt/libtorch/include/
 sudo cp -Trf ./libtorch/lib/ /opt/libtorch/lib/
+
+
+# LightGBM
+VERSION="4.5.0"
+
+set -eu
+
+cd /tmp/
+
+mkdir -p ./light-gbm/
+
+sudo wget -q "https://github.com/microsoft/LightGBM/releases/download/v${VERSION}/lightgbm-${VERSION}.tar.gz" -O ./light-gbm.tar.gz
+sudo tar -I pigz -xf ./light-gbm.tar.gz -C ./light-gbm/ --strip-components 1
+
+cd ./light-gbm/
+
+sudo rm -rf ./lightgbm/
+sudo rm -rf ./external_libs/eigen/
+
+mkdir -p ./build/ && cd ./build/
+
+sudo cmake \
+    -DCMAKE_INSTALL_PREFIX:PATH=/opt/light-gbm/ \
+    -DCMAKE_CXX_COMPILER:STRING="g++-14" \
+    -DCMAKE_CXX_FLAGS:STRING="${INTERNAL_BUILD_FLAGS[*]} -I/usr/include/eigen3/" \
+    ../
+
+sudo cmake --build ./ --target install --parallel "${PARALLEL}"
 
 
 # range-v3
