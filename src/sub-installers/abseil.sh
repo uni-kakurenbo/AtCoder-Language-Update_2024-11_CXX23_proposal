@@ -19,6 +19,8 @@ BUILD_ARGS=(
 )
 
 if [[ -v RUN_TEST ]]; then
+    echo "${RUN_TEST}"
+
     if [[ ${RUN_TEST} ]]; then
         sudo cmake -DABSL_BUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON "${BUILD_ARGS[@]}" ../
 
