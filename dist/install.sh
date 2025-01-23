@@ -24,12 +24,14 @@ BASIC_USER_BUILD_FLAGS=(
 )
 
 EXTRA_USER_BUILD_FLAGS=(
+    -fopenmp
+
     "-march=native"
     "-flto=auto"
 
-    "-fconstexpr-depth=2147483647"
-    "-fconstexpr-loop-limit=2147483647"
-    "-fconstexpr-ops-limit=2147483647"
+    "-fconstexpr-depth=1024"
+    "-fconstexpr-loop-limit=524288"
+    "-fconstexpr-ops-limit=67108864"
 )
 
 USER_LIBRARY_FLAGS=(
@@ -40,9 +42,14 @@ USER_LIBRARY_FLAGS=(
     -lgmpxx -lgmp
     -I/opt/range-v3/include/
     -I/opt/unordered_dense/include/ -L/opt/unordered_dense/lib/
+    -I/opt/z3/include/ -L/opt/z3/lib/ -Wl,-R/opt/z3/lib/ -lz3
+    -I/opt/light-gbm/include/ -L/opt/light-gbm/lib/ -Wl,-R/opt/light-gbm/lib/ -l_lightgbm
 
     -I/opt/libtorch/include/ -I/opt/libtorch/include/torch/csrc/api/include/ -L/opt/libtorch/lib/
     -Wl,-R/opt/libtorch/lib/ -ltorch -ltorch_cpu -lc10
+
+    -I/opt/or-tools/include/ -L/opt/or-tools/lib/
+    -Wl,-R/opt/or-tools/lib/ -lortools -lprotobuf
 )
 
 INTERNAL_BUILD_FLAGS=( # for internal library building (CMake).
@@ -84,9 +91,10 @@ cd ./abseil/
 mkdir -p ./build/ && cd ./build/
 
 BUILD_ARGS=(
+    -DABSL_ENABLE_INSTALL:BOOL=ON
     -DABSL_PROPAGATE_CXX_STD:BOOL=ON
     -DCMAKE_INSTALL_PREFIX:PATH=/opt/abseil/
-    -DCMAKE_CXX_FLAGS:STRING="${INTERNAL_BUILD_FLAGS[*]}"
+    -DCMAKE_CXX_FLAGS:STRING="${INTERNAL_BUILD_FLAGS[*]} -fPIC"
 )
 
 if [[ -v RUN_TEST ]] && [[ "${RUN_TEST}" = "true" ]]; then
@@ -176,6 +184,82 @@ sudo cp -Trf ./libtorch/include/ /opt/libtorch/include/
 sudo cp -Trf ./libtorch/lib/ /opt/libtorch/lib/
 
 
+# or-tools
+VERSION="9.11"
+
+set -eu
+
+cd /tmp/
+
+mkdir -p ./or-tools/
+
+sudo wget -q "https://github.com/google/or-tools/archive/refs/tags/v${VERSION}.tar.gz" -O ./or-tools.tar.gz
+sudo tar -I pigz -xf ./or-tools.tar.gz -C ./or-tools/ --strip-components 1
+
+cd ./or-tools/
+
+BUILD_TESTING=OFF
+GENERATOR="Unix Makefiles"
+
+if [[ -v RUN_TEST ]]; then
+    BUILD_TESTING=ON
+
+    if [[ ! -v ATCODER ]]; then
+        GENERATOR="Ninja"
+    fi
+fi
+
+mkdir -p ./build/ && cd ./build/
+
+sudo cmake -G "${GENERATOR}" \
+    -DBUILD_ZLIB:BOOL=ON -DBUILD_Protobuf:BOOL=ON -DBUILD_re2:BOOL=ON \
+    -DUSE_COINOR:BOOL=ON -DBUILD_CoinUtils:BOOL=ON -DBUILD_Osi:BOOL=ON -DBUILD_Clp:BOOL=ON -DBUILD_Cgl:BOOL=ON -DBUILD_Cbc:BOOL=ON \
+    -DUSE_GLPK:BOOL=ON -DBUILD_GLPK=ON \
+    -DUSE_HIGHS:BOOL=ON -DBUILD_HIGHS=ON \
+    -DUSE_SCIP:BOOL=ON -DBUILD_SCIP:BOOL=ON \
+    -DBUILD_SAMPLES:BOOL=OFF -DBUILD_EXAMPLES:BOOL=OFF \
+    -DBUILD_TESTING:BOOL="${BUILD_TESTING}" \
+    -DCMAKE_PREFIX_PATH:PATH=/opt/abseil/ \
+    -DCMAKE_INSTALL_PREFIX:PATH=/opt/or-tools/ \
+    -DCMAKE_CXX_COMPILER:STRING="g++-14" \
+    -DCMAKE_CXX_FLAGS="${INTERNAL_BUILD_FLAGS[*]}" \
+    ../
+
+sudo cmake --build ./ --config Release --target install --parallel "${PARALLEL}"
+
+if [[ -v RUN_TESTIONS ]]; then
+    sudo cmake --build ./ --config Release --target test --parallel "${PARALLEL}"
+fi
+
+
+# LightGBM
+VERSION="4.5.0"
+
+set -eu
+
+cd /tmp/
+
+mkdir -p ./light-gbm/
+
+sudo wget -q "https://github.com/microsoft/LightGBM/releases/download/v${VERSION}/lightgbm-${VERSION}.tar.gz" -O ./light-gbm.tar.gz
+sudo tar -I pigz -xf ./light-gbm.tar.gz -C ./light-gbm/ --strip-components 1
+
+cd ./light-gbm/
+
+sudo rm -rf ./lightgbm/
+sudo rm -rf ./external_libs/eigen/
+
+mkdir -p ./build/ && cd ./build/
+
+sudo cmake \
+    -DCMAKE_INSTALL_PREFIX:PATH=/opt/light-gbm/ \
+    -DCMAKE_CXX_COMPILER:STRING="g++-14" \
+    -DCMAKE_CXX_FLAGS:STRING="${INTERNAL_BUILD_FLAGS[*]} -I/usr/include/eigen3/" \
+    ../
+
+sudo cmake --build ./ --target install --parallel "${PARALLEL}"
+
+
 # range-v3
 VERSION="0.12.0"
 
@@ -215,6 +299,32 @@ sudo cmake \
     ../
 
 sudo cmake --build ./ --target install --parallel "${PARALLEL}"
+
+
+# Z3
+VERSION="4.13.3"
+
+set -eu
+
+cd /tmp/
+
+mkdir -p ./z3/
+
+sudo wget -q "https://github.com/Z3Prover/z3/archive/refs/tags/z3-${VERSION}.tar.gz" -O ./z3.tar.gz
+sudo tar -I pigz -xf ./z3.tar.gz -C ./z3/ --strip-components 1
+
+cd ./z3/
+
+mkdir -p ./build/ && cd ./build/
+
+sudo cmake \
+    -DCMAKE_BUILD_TYPE:STRING=Release \
+    -DCMAKE_INSTALL_PREFIX:PATH=/opt/z3/ \
+    -DCMAKE_CXX_COMPILER:STRING="g++-14" \
+    -DCMAKE_CXX_FLAGS:STRING="${INTERNAL_BUILD_FLAGS[*]}" \
+    ../
+
+sudo make install "-j${PARALLEL}"
 
 
 sudo apt-get remove -y --auto-remove cmake pigz pbzip2
