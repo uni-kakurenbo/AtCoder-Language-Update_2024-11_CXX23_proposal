@@ -24,9 +24,9 @@ EXTRA_USER_BUILD_FLAGS=(
     "-march=native"
     "-flto=auto"
 
-    "-fconstexpr-depth=2147483647"
-    "-fconstexpr-loop-limit=2147483647"
-    "-fconstexpr-ops-limit=2147483647"
+    "-fconstexpr-depth=1024"
+    "-fconstexpr-loop-limit=524288"
+    "-fconstexpr-ops-limit=67108864"
 )
 
 USER_LIBRARY_FLAGS=(
