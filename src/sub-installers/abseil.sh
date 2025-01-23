@@ -18,14 +18,11 @@ BUILD_ARGS=(
     -DCMAKE_CXX_FLAGS:STRING="${INTERNAL_BUILD_FLAGS[*]}"
 )
 
-if [[ -v RUN_TEST ]]; then
+if [[ -v RUN_TEST ]] && [[ "${RUN_TEST}" = "true" ]]; then
+    sudo cmake -DABSL_BUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON "${BUILD_ARGS[@]}" ../
 
-    if [[ "${RUN_TEST}" = "true" ]]; then
-        sudo cmake -DABSL_BUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON "${BUILD_ARGS[@]}" ../
-
-        sudo make "-j${PARALLEL}"
-        sudo ctest --parallel "${PARALLEL}"
-    fi
+    sudo make "-j${PARALLEL}"
+    sudo ctest --parallel "${PARALLEL}"
 else
     sudo cmake "${BUILD_ARGS[@]}" ../
 fi
