@@ -5,7 +5,7 @@ set -eu
 sudo apt-get install -y "g++-14=${VERSION}"
 
 ### Libraries
-sudo apt-get install -y build-essential pigz pbzip2
+sudo apt-get install -y cmake pigz pbzip2
 
 ./sub-installers/abseil.sh
 ./sub-installers/AC-Library.sh
@@ -14,7 +14,9 @@ sudo apt-get install -y build-essential pigz pbzip2
 ./sub-installers/GMP.sh
 ./sub-installers/libtorch.sh
 ./sub-installers/or-tools.sh
+./sub-installers/LightGBM.sh
 ./sub-installers/range-v3.sh
 ./sub-installers/unordered_dense.sh
+./sub-installers/Z3.sh
 
-sudo apt-get remove -y --auto-remove build-essential pigz pbzip2
+sudo apt-get remove -y --auto-remove cmake pigz pbzip2

@@ -5,7 +5,6 @@ BASIC_BUILD_FLAGS=(
 
     -O2
 
-    -fcoroutines
     -lstdc++exp
 )
 
@@ -20,6 +19,8 @@ BASIC_USER_BUILD_FLAGS=(
 )
 
 EXTRA_USER_BUILD_FLAGS=(
+    -fopenmp
+
     "-march=native"
     "-flto=auto"
 
@@ -36,6 +37,8 @@ USER_LIBRARY_FLAGS=(
     -lgmpxx -lgmp
     -I/opt/range-v3/include/
     -I/opt/unordered_dense/include/ -L/opt/unordered_dense/lib/
+    -I/opt/z3/include/ -L/opt/z3/lib/ -Wl,-R/opt/z3/lib/ -lz3
+    -I/opt/light-gbm/include/ -L/opt/light-gbm/lib/ -Wl,-R/opt/light-gbm/lib/ -l_lightgbm
 
     -I/opt/libtorch/include/ -I/opt/libtorch/include/torch/csrc/api/include/ -L/opt/libtorch/lib/
     -Wl,-R/opt/libtorch/lib/ -ltorch -ltorch_cpu -lc10
