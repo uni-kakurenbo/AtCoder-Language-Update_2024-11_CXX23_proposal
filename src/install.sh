@@ -16,5 +16,6 @@ sudo apt-get install -y cmake pigz pbzip2
 ./sub-installers/LightGBM.sh
 ./sub-installers/range-v3.sh
 ./sub-installers/unordered_dense.sh
+./sub-installers/Z3.sh
 
 sudo apt-get remove -y --auto-remove cmake pigz pbzip2

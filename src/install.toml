@@ -245,3 +245,9 @@ execution = ['./a.out']
     license = [
         { name = 'MIT', url = 'https://github.com/martinus/unordered_dense/blob/main/LICENSE' },
     ]
+
+[library.Z3]
+    version = '4.13.3'
+    license = [
+        { name = 'MIT', url = 'https://github.com/Z3Prover/z3/blob/z3-4.13.3/LICENSE.txt' }
+    ]
