@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION=
+VERSION="3.4.0-4"
 
 set -eu
 
