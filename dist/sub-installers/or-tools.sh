@@ -18,10 +18,10 @@ cd ./or-tools/
 BUILD_TESTING=OFF
 GENERATOR="Unix Makefiles"
 
-if [[ -v RUN_TEST ]]; then
+if [[ -v RUN_TEST ]] && [[ "${RUN_TEST}" = "true" ]]; then
     BUILD_TESTING=ON
 
-    if [[ ! -v ATCODER ]]; then
+    if [[ ! -v ATCODER ]] && [[ ! -v GITHUB_WORKFLOW ]]; then
         GENERATOR="Ninja"
     fi
 fi
@@ -44,6 +44,6 @@ sudo cmake -G "${GENERATOR}" \
 
 sudo cmake --build ./ --config Release --target install --parallel "${PARALLEL}"
 
-if [[ -v RUN_TESTIONS ]]; then
+if [[ -v RUN_TEST ]] && [[ "${RUN_TEST}" = "true" ]]; then
     sudo cmake --build ./ --config Release --target test --parallel "${PARALLEL}"
 fi
