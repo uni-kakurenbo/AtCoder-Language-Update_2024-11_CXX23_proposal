@@ -10,7 +10,6 @@ BASIC_BUILD_FLAGS=(
 
     -O2
 
-    -fcoroutines
     -lstdc++exp
 )
 

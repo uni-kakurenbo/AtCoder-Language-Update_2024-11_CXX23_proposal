@@ -10,7 +10,6 @@ BASIC_BUILD_FLAGS=(
 
     -O2
 
-    -fcoroutines
     -lstdc++exp
 )
 
@@ -65,7 +64,7 @@ set -eu
 
 sudo apt-get install -y "g++-14=${VERSION}"
 
-sudo apt-get install -y build-essential pigz pbzip2
+sudo apt-get install -y cmake pigz pbzip2
 
 
 # abseil
@@ -90,7 +89,7 @@ BUILD_ARGS=(
     -DCMAKE_CXX_FLAGS:STRING="${INTERNAL_BUILD_FLAGS[*]}"
 )
 
-if [[ -v RUN_TEST ]]; then
+if [[ -v RUN_TEST ]] && [[ "${RUN_TEST}" = "true" ]]; then
     sudo cmake -DABSL_BUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON "${BUILD_ARGS[@]}" ../
 
     sudo make "-j${PARALLEL}"
@@ -191,7 +190,7 @@ sudo tar -I pigz -xf ./range-v3.tar.gz -C ./range-v3/ --strip-components 1
 
 sudo mkdir -p /opt/range-v3/include/
 
-cp -Trf ./range-v3/include/ /opt/range-v3/include/
+sudo cp -Trf ./range-v3/include/ /opt/range-v3/include/
 
 
 # unordered_dense
@@ -218,5 +217,5 @@ sudo cmake \
 sudo cmake --build ./ --target install --parallel "${PARALLEL}"
 
 
-sudo apt-get remove -y --auto-remove build-essential pigz pbzip2
+sudo apt-get remove -y --auto-remove cmake pigz pbzip2
 
