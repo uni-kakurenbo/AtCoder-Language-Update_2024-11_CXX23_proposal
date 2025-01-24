@@ -71,7 +71,7 @@ set -eu
 
 sudo apt-get install -y "g++-14=${VERSION}"
 
-sudo apt-get install -y cmake pigz pbzip2
+sudo apt-get install -y git cmake pigz pbzip2
 
 
 # abseil
@@ -328,5 +328,5 @@ sudo cmake \
 sudo make install "-j${PARALLEL}"
 
 
-sudo apt-get remove -y --auto-remove cmake pigz pbzip2
+sudo apt-get remove -y --auto-remove git cmake pigz pbzip2
 
