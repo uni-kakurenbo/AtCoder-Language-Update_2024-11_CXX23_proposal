@@ -25,7 +25,11 @@ jobs:
             - name: Replace template
               run: ./.github/workflows/internal/replace.sh
 
+            - name: Lint
+              run: ./.github/workflows/internal/lint.sh
+
             - name: Push
+              if: ${{ !cancelled() && !startsWith(github.ref_name, 'test') }}
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
