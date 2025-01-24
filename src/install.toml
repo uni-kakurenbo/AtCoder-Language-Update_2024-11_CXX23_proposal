@@ -87,7 +87,9 @@ execution = ['./a.out']
 
 [library.LightGBM]
     version = '4.5.0'
-    license = { name = 'MIT', url = 'https://github.com/microsoft/LightGBM/blob/master/LICENSE' }
+    license = [
+        { name = 'MIT', url = 'https://github.com/microsoft/LightGBM/blob/master/LICENSE' }
+    ]
 
 
 [library.compute]
@@ -129,15 +131,15 @@ execution = ['./a.out']
     url = 'https://github.com/ericniebler/range-v3/blob/0.12.0/LICENSE.txt#L2'
 
 [[library.range-v3.license]]
-    name = 'libc++'
+    name = '!License-dummy'
     url = 'https://github.com/ericniebler/range-v3/blob/0.12.0/LICENSE.txt#L28'
 
 [[library.range-v3.license]]
-    name = '"Elements of Programming" license'
+    name = '!License-dummy'
     url = 'https://github.com/ericniebler/range-v3/blob/0.12.0/LICENSE.txt#L107'
 
 [[library.range-v3.license]]
-    name = 'SGI C++ Standard Template Library license'
+    name = '!License-dummy'
     url = 'https://github.com/ericniebler/range-v3/blob/0.12.0/LICENSE.txt#L127'
 
 
