@@ -75,7 +75,7 @@ USER_LIBRARY_FLAGS=(
     -I/opt/abseil/include/ -L/opt/abseil/l/
     -I/opt/ac-library/
 
-    -I/opt/boost/include/ -L/opt/boost/l/ "${USER_BOOST_LIBRARY_LINKS}"
+    -I/opt/boost/include/ -L/opt/boost/l/ "${USER_BOOST_LIBRARY_LINKS[@]}"
     -I/usr/include/eigen3/
     -lgmpxx -lgmp
     -I/opt/range-v3/include/
