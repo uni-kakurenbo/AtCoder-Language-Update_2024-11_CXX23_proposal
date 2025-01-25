@@ -23,6 +23,7 @@ function run-test() {
     exit_status=0
 
     {
+
         set +e
         local header="================ ${name} ================"
 
@@ -40,7 +41,7 @@ function run-test() {
         echo
         echo
 
-        if [ $exit_status -gt 0 ]; then
+        if [ ${exit_status} -gt 0 ]; then
             cat "error" >./../../fail.txt
         fi
 
@@ -54,12 +55,14 @@ export -f run-test
 find ./ -type f -name '*.test.cpp' -print0 |
     xargs -0 "-P$(nproc)" -I {} bash -c 'run-test {}'
 
-FAIL=0
+FAIL=false
 
 if [ -f ./tmp/fail.txt ]; then
-    FAIL=1
+    FAIL=true
 fi
 
 sudo rm -rf ./tmp/
 
-exit ${FAIL}
+if [[ ${FAIL} = true ]]; then
+    exit 1
+fi
