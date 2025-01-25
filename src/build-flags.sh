@@ -1,5 +1,4 @@
 # shellcheck disable=all
-
 BASIC_BUILD_FLAGS=(
     "-std=gnu++23"
 
@@ -159,24 +158,60 @@ USER_BOOST_LIBRARY_LINKS=(
     -lboost_wserialization
 )
 
+USER_ORTOOLS_LIBRARY_LINKS=(
+    -lCbc
+    -lCbcSolver
+    -lCgl
+    -lClp
+    -lClpSolver
+    -lCoinUtils
+    -lGLPK
+    -lOsi
+    -lOsiCbc
+    -lOsiClp
+    -lhighs
+    -lortools
+    # -lortools_flatzinc
+    # -lprotobuf-lite
+    -lprotobuf
+    # -lprotoc
+    -lre2
+    -lscip
+    -lutf8_range
+    -lutf8_validity
+    -lz
+)
+
 USER_LIBRARY_FLAGS=(
     -I/opt/abseil/include/ -L/opt/abseil/lib/ "${USER_ABSEIL_LIBRARY_LINKS[@]}"
     -Wnon-virtual-dtor -lrt # specified by abseil
 
     -I/opt/ac-library/
+
     -I/opt/boost/include/ -L/opt/boost/lib/ "${USER_BOOST_LIBRARY_LINKS[@]}"
+
     -I/usr/include/eigen3/
+
     -lgmpxx -lgmp
+
     -I/opt/range-v3/include/
-    -I/opt/unordered_dense/include/
+
+    -I/opt/unordered_dense/include/ -L/opt/unordered_dense/lib/
+
     -I/opt/z3/include/ -L/opt/z3/lib/ -Wl,-R/opt/z3/lib/ -lz3
+
     -I/opt/light-gbm/include/ -L/opt/light-gbm/lib/ -Wl,-R/opt/light-gbm/lib/ -l_lightgbm
 
     -I/opt/libtorch/include/ -I/opt/libtorch/include/torch/csrc/api/include/ -L/opt/libtorch/lib/
     -Wl,-R/opt/libtorch/lib/ -ltorch -ltorch_cpu -lc10
 
     -I/opt/or-tools/include/ -L/opt/or-tools/lib/
-    -Wl,-R/opt/or-tools/lib/ -lortools -lprotobuf
+    -Wl,-R/opt/or-tools/lib/ -lortools -lhighs -lprotobuf "${USER_ORTOOLS_LIBRARY_LINKS[@]}"
+)
+
+USER_LIBRARY_FLAGS=( # deplicate link info for foolish linker
+    ${USER_LIBRARY_FLAGS[@]}
+    ${USER_LIBRARY_FLAGS[@]}
 )
 
 INTERNAL_BUILD_FLAGS=( # for internal library building (CMake).
