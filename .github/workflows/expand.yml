@@ -415,6 +415,9 @@ jobs:
                   fetch-depth: 0
                   ssh-key: ${{ secrets.SSH_KEY }}
 
+            - name: Remove Distribution Directory
+              run: rm -rf ./dist/
+
             - name: Download Installers
               uses: actions/download-artifact@v4
               with:
