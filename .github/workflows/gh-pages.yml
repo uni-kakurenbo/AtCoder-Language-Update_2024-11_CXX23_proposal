@@ -50,7 +50,7 @@ jobs:
                     fi
 
                     if [ -f ./pages/compile.sh ]; then
-                        echo '## Compiler Script'
+                        echo '## Compile Script'
                         echo '```bash'
                         cat ./pages/compile.sh
                         echo '```'
