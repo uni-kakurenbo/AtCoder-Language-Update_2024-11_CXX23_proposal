@@ -68,7 +68,7 @@ jobs:
                           './.github/workflows/internal/tools/**'
                         )
                       }}
-                  restore-keys: tools-
+                  restore-keys: tools
 
             - name: Build
               run: |
