@@ -4,7 +4,7 @@
 - [Compile script](https://uni-kakurenbo.github.io/AtCoder-Language-Update_2024-11_CXX23-GCC14-2-0_proposal/#compile-script)
 - [Configuration file](https://uni-kakurenbo.github.io/AtCoder-Language-Update_2024-11_CXX23-GCC14-2-0_proposal/#configulation-file)
 
-## [Library]((https://github.com/uni-kakurenbo/AtCoder-Language-Update_2024-11_Cpp23-GCC14_draft/blob/main/src/sub-installers))
+## [Library](https://github.com/uni-kakurenbo/AtCoder-Language-Update_2024-11_CXX23-GCC14-2-0_proposal/blob/main/src/sub-installers)
 
 ### Official
 - [AC Library](https://atcoder.github.io/ac-library/master/document_ja/): `1.5.1`
@@ -74,7 +74,7 @@ Arithmetic Library
 - [「現状提案されてるのは大体もう Python から使えることを考えると大きな影響はないのでは」](https://discord.com/channels/1245258617582653553/1293457974442070016/1307648262941179924)
 
 
-## [Compile flags](https://github.com/uni-kakurenbo/AtCoder-Language-Update_2024-11_Cpp23-GCC14_draft/blob/main/config)
+## [Compile flags](https://github.com/uni-kakurenbo/AtCoder-Language-Update_2024-11_CXX23-GCC14-2-0_proposal/blob/main/config)
 Some other flags might be appended, depending on libraries that is to be installed; see also [compile script](https://uni-kakurenbo.github.io/AtCoder-Language-Update_2024-11_CXX23-GCC14-2-0_proposal/#compile-script), which appears below.
 
 ### Basic
@@ -147,7 +147,7 @@ Some other flags might be appended, depending on libraries that is to be install
 - [「オプションが導入されたときに環境が本当に改善されるのか慎重に考えてほしい」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306580652933644340)
 - [「コンテストなどの何らかの活動でオプション追加の恩恵を具体的に受けることはおそらくほぼないので，不安の一方」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306580652933644340)
 
-- [「言語のオプションのレギュレーションが必要かどうかは AtCoder 社が考えることであり，先回り忖度して自粛する必要はないように」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306593655439626251)
+- [「言語のオプションのレギュレーションが必要かどうかは AtCoder 社が考えることであり，先回り忖度して自粛する必要はない」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306593655439626251)
 
 - [「他のコンテストサイトの環境とかけ離れるのには大きく反対」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306604370422665246)
 - [「アルゴリズムコンテストの目的を考えると，なんでもかんでも高速に・便利にすればよいというものではない」]((https://discord.com/channels/1245258617582653553/1293457974442070016/1306604370422665246))
