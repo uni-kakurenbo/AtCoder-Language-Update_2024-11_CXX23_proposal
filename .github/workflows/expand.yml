@@ -421,13 +421,9 @@ jobs:
               with:
                   ref: ${{ github.head_ref || github.ref_name }}
                   ssh-key: ${{ secrets.SSH_KEY }}
-                  sparse-checkout-cone-mode: false
-                  sparse-checkout: |
-                      /*
-                      !/dist/*
                   fetch-depth: 0
 
-            - name: Remove Distribution Directory
+            - name: Remove Old Files
               run: rm -rf ./dist/
 
             - name: Download Installers
