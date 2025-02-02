@@ -62,7 +62,7 @@ Arithmetic Library
     - inherited (as a proposal)
 
 - [Z3](https://github.com/Z3Prover/z3): `4.13.3`
-    - A theorem prover designed by Microsoft Research to solve satisfiability modulo theories (a.k.a. SMT).
+    - A theorem prover designed by Microsoft Research to solve satisfiability modulo theories (SMT).
     - inherited (as a proposal)
 
 #### Comments
