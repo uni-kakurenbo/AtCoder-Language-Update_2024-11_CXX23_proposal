@@ -1,4 +1,4 @@
-name: Deploy to Github Pages
+name: Generate Pages
 run-name: ${{ github.workflow }} (${{ github.ref_name }})
 
 on:
