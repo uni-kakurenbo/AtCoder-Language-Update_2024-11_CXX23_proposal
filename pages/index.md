@@ -1,5 +1,9 @@
 # AtCoder Language Update &ndash; Nov. 2024 <br /> C++23 (GCC 14.2.0) [proposal]
 
+- [Install script](https://uni-kakurenbo.github.io/AtCoder-Language-Update_2024-11_CXX23-GCC14-2-0_proposal/#install-script)
+- [Compile script](https://uni-kakurenbo.github.io/AtCoder-Language-Update_2024-11_CXX23-GCC14-2-0_proposal/#compile-script)
+- [Configuration file](https://uni-kakurenbo.github.io/AtCoder-Language-Update_2024-11_CXX23-GCC14-2-0_proposal/#configulation-file)
+
 ## [Library]((https://github.com/uni-kakurenbo/AtCoder-Language-Update_2024-11_Cpp23-GCC14_draft/blob/main/src/sub-installers))
 
 ### Official
@@ -71,7 +75,7 @@ Arithmetic Library
 
 
 ## [Compile flags](https://github.com/uni-kakurenbo/AtCoder-Language-Update_2024-11_Cpp23-GCC14_draft/blob/main/config)
-Some other flags might be appended, depending on libraries that is to be installed; see also compile script (`compile.sh`), which appears below.
+Some other flags might be appended, depending on libraries that is to be installed; see also [compile script](https://uni-kakurenbo.github.io/AtCoder-Language-Update_2024-11_CXX23-GCC14-2-0_proposal/#compile-script), which appears below.
 
 ### Basic
 - `-std=gnu++23`
