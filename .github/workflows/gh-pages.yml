@@ -5,7 +5,7 @@ on:
     workflow_call:
 
 concurrency:
-    group: ${{ github.action_repository }}
+    group: ${{ github.repository_id }}
     cancel-in-progress: true
 
 jobs:
