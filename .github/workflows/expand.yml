@@ -68,7 +68,7 @@ jobs:
                           './.github/workflows/internal/tools/**'
                         )
                       }}
-                  restore-keys: tools-
+                  restore-keys: tools
 
             - name: Build
               run: |
@@ -241,7 +241,7 @@ jobs:
                           format('./config/library/ac_{0}.pc', matrix.target)
                         )
                       }}
-                  restore-keys: ${{ matrix.target }}-
+                  restore-keys: ${{ matrix.target }}
 
             - name: Install
               env:
