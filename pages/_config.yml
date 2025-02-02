@@ -1,11 +1,5 @@
-title: "AtCoder Language Update 2024.11.: C++23 (GCC 14.2.0) [draft]"
+theme: jekyll-theme-dinky
 
-plugins:
-    - jemoji
-    - jekyll-redirect-from
-
-description: |
-    The contents of this repository are temporary proposal.
-    提案段階のものです．すべてが採択されるわけではありません．
-
-theme: jekyll-theme-cayman
+github:
+    installer_url: https://cdn.jsdelivr.net/gh/uni-kakurenbo/AtCoder-Language-Update_2024-11_Cpp23-GCC14-2-0_proposal/dist/install.sh
+    compiler_url: https://cdn.jsdelivr.net/gh/uni-kakurenbo/AtCoder-Language-Update_2024-11_Cpp23-GCC14-2-0_proposal/dist/compile.sh

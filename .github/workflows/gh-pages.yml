@@ -33,28 +33,31 @@ jobs:
             - name: Download Outputs
               uses: actions/download-artifact@v4
               with:
-                  name: dist-config
+                  pattern: dist-config
                   path: ./pages/
+                  merge-multiple: true
 
             - name: Merge data
               run: |
                   {
-                    if [ -f ./dist/install.sh ]; then
-                        echo '# `install.sh`'
+                    echo
+
+                    if [ -f ./pages/install.sh ]; then
+                        echo '## `install.sh`'
                         echo '```bash'
                         cat ./dist/install.sh
                         echo '```'
                     fi
 
-                    if [ -f ./dist/compile.sh ]; then
-                        echo '# `compile.sh`'
+                    if [ -f ./pages/compile.sh ]; then
+                        echo '## `compile.sh`'
                         echo '```bash'
                         cat ./dist/compile.sh
                         echo '```'
                     fi
 
-                    if [ -f ./dist/install.toml ]; then
-                        echo '# `install.toml`'
+                    if [ -f ./pages/install.toml ]; then
+                        echo '## `install.toml`'
                         echo '```toml'
                         cat ./dist/install.toml
                         echo '```'
