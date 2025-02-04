@@ -4,6 +4,7 @@
 @import "{{ site.theme }}";
 
 div.wrapper {
+    max-width: 940px;
     min-width: 85%;
 }
 
