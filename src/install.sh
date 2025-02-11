@@ -59,7 +59,7 @@ if [ -v ATCODER ]; then
         -type d -print0 |
         xargs -0 sudo rm -rf
 
-    sudo apt-get remove -y --auto-remove git cmake ninja-build pigz pbzip2
+    sudo apt-get purge  -y --auto-remove git cmake ninja-build pigz pbzip2
 
     echo "::endgroup::"
 fi
