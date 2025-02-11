@@ -1,15 +1,13 @@
 #!/bin/bash
 set +u
-if [[ ${AC_NO_BUILD_light_gbm} ]]; then exit 0; fi
+if [[ ${AC_NO_BUILD_light_gbm} || "${AC_VARIANT}" == "clang" ]]; then exit 0; fi
 set -eu
 
 cd /tmp/ac_install/
 
 echo "::group::LightGBM"
 
-if [ -d ./light-gbm/ ]; then
-    sudo rm -rf ./light-gbm/
-fi
+if [ -d ./light-gbm/ ]; then sudo rm -rf ./light-gbm/; fi
 
 sudo mkdir -p ./light-gbm/
 
@@ -24,6 +22,9 @@ sudo rm -rf ./external_libs/eigen/
 sudo mkdir -p ./build/ && cd ./build/
 
 sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
+    -DBUILD_CLI:BOOL=OFF \
+    -DBUILD_STATIC_LIB=ON \
+    -DUSE_HOMEBREW_FALLBACK=OFF \
     -DCMAKE_INSTALL_PREFIX:PATH=/opt/ac_install/ \
     -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]} -I/opt/ac_install/include/" \
     ../

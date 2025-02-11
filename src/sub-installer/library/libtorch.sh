@@ -1,14 +1,14 @@
 #!/bin/bash
 set +u
-if [[ ${AC_NO_BUILD_libtorch} ]]; then exit 0; fi
+if [[ ${AC_NO_BUILD_libtorch} || "${AC_VARIANT}" == "clang" ]]; then exit 0; fi
 set -eu
 
 cd /tmp/ac_install/
 
 echo "::group::LibTorch"
 
-sudo wget -q "https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-${VERSION}%2Bcpu.zip" -O ./libtorch.zip
-sudo unzip -oq ./libtorch.zip -d ./
+sudo wget "https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-${VERSION}%2Bcpu.zip" -O ./libtorch.zip
+sudo unzip -o ./libtorch.zip -d ./
 
 sudo mkdir -p /opt/ac_install/include/
 sudo mkdir -p /opt/ac_install/lib/

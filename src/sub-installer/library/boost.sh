@@ -20,17 +20,26 @@ else
     sudo touch ./user-config.jam
 fi
 
+if [[ -v CCACHE_ENABLED ]]; then
+    sudo sed -i \
+        -e 's/test_compiler g++$TOOLSET_SUFFIX/test_compiler "ccache g++$TOOLSET_SUFFIX"/g' \
+        -e 's/test_compiler clang++$TOOLSET_SUFFIX/test_compiler "ccache clang++$TOOLSET_SUFFIX"/g' \
+        ./tools/build/src/engine/build.sh
+fi
+
 sudo ./bootstrap.sh \
-    --with-toolset=gcc \
+    --with-toolset="${AC_VARIANT}" \
     --without-libraries=mpi,graph_parallel \
     --prefix=/opt/ac_install/
 
 sudo ./b2 \
-    toolset=gcc \
+    toolset="${AC_VARIANT}" \
     link=static \
     threading=single \
     variant=release \
     cflags="-w" \
+    define="BOOST_STACKTRACE_USE_BACKTRACE" \
+    define="BOOST_STACKTRACE_BACKTRACE_INCLUDE_FILE='\"/usr/lib/gcc/x86_64-linux-gnu/14/include/backtrace.h\"'" \
     cxxflags="${BUILD_FLAGS[*]}" \
     --user-config="./user-config.jam" \
     -j"${PARALLEL}" -d0 \
