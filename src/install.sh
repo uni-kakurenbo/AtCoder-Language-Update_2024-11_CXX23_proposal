@@ -12,7 +12,6 @@ if [[ ! -v AC_VARIANT ]] || [[ "${AC_VARIANT}" == "gcc" ]]; then
 
     CC="gcc-14"
     CXX="g++-14"
-
 else
     ./sub-installer/compiler/clang.sh
 

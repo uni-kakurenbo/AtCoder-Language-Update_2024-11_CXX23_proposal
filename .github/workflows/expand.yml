@@ -95,7 +95,7 @@ jobs:
 
         outputs:
             libraries: ${{ steps.gen-lib-list.outputs.list }}
-            execlude-libraries: ${{ steps.gen-lib-list.outputs.execlude }}
+            excluded-libraries: ${{ steps.gen-lib-list.outputs.excluded }}
 
         steps:
             - name: Checkout
@@ -119,7 +119,7 @@ jobs:
                     } | jq -c --argjson exclude "${EXCLUDE}" '. - $exclude'
                   } >>"${GITHUB_OUTPUT}"
 
-                  echo "execlude=${EXCLUDE}" >>"${GITHUB_OUTPUT}"
+                  echo "excluded=${EXCLUDE}" >>"${GITHUB_OUTPUT}"
 
     gen-installer:
         name: Generate Installers
@@ -199,7 +199,7 @@ jobs:
                   TARGET='${{ matrix.target }}'
 
                   LIBRARIES='${{ needs.config-matrix.outputs.libraries }}'
-                  EXECLUDE_LIBRARIES='${{ needs.config-matrix.outputs.execlude-libraries }}'
+                  EXCLUDED_LIBRARIES='${{ needs.config-matrix.outputs.excluded-libraries }}'
 
                   echo "${LIBRARIES}" | jq -c -r '.[]' |
                     while read -r lib_id; do
@@ -208,7 +208,7 @@ jobs:
                       fi
                     done
 
-                  echo "${EXECLUDE_LIBRARIES}" | jq -c -r '.[]' |
+                  echo "${EXCLUDED_LIBRARIES}" | jq -c -r '.[]' |
                     while read -r lib_id; do
                         echo "AC_NO_BUILD_${lib_id//-/_}=true" >>"${GITHUB_ENV}"
                     done
@@ -242,26 +242,23 @@ jobs:
               if: ${{ github.event.inputs.test-mode != 'strict' }}
               uses: hendrikmuhs/ccache-action@v1.2
               with:
-                  key: >
-                      ${{ matrix.variant }}-${{ matrix.target }}-${{
-                        hashFiles(
-                          './src/install.sh',
-                          './src/config.toml',
-                          './config/internal/ac_basic.pc',
-                          './config/internal/ac_internal.pc',
-                          format('./src/sub-installer/library/{0}.sh', matrix.target),
-                          format('./config/library/ac_{0}.pc', matrix.target)
-                        )
-                      }}
-                  restore-keys: ${{ matrix.variant }}-${{ matrix.target }}
+                  key: ${{ matrix.variant }}-${{ matrix.target }}
 
             - name: Install
               env:
                   AC_RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
+                  AC_NO_BUILD_COMPILER: true
               run: |
                   set -eu
 
-                  chmod +x ./dist/${{ matrix.variant }}/install.sh
+                  if "${{ matrix.variant == 'clang' }}"; then
+                    sudo apt-get install -y clang-18 libc++-19-dev
+
+                    sudo ln -sT /usr/bin/clang-18 /usr/bin/clang-19
+                    sudo ln -sT /usr/bin/clang++-18 /usr/bin/clang++-19
+                  fi
+
+                  chmod +x -R ./dist/
                   ./dist/${{ matrix.variant }}/install.sh
 
             - name: Collect Pkgconfig Files
@@ -353,12 +350,13 @@ jobs:
 
         needs: gen-compiler
 
+        runs-on: ${{ vars.RUNNER_IMAGE }}
+
         strategy:
             matrix:
+                # id: [0, 1, 2, 3, 4, 5, 6, 7]
                 variant: ["gcc", "clang"]
             fail-fast: false
-
-        runs-on: ${{ vars.RUNNER_IMAGE }}
 
         steps:
             - name: Checkout
@@ -383,10 +381,27 @@ jobs:
             - name: Test
               if: github.event.inputs.test-mode != 'none'
               run: |
-                  chmod +x -R ./dist/
-                  ./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh
+                  set -eu
 
-                  ./.github/workflows/internal/test.sh "${{ matrix.variant }}"
+                  if [[ "${{ matrix.variant == 'clang' }}" ]]; then
+                    sudo apt-get install -y clang-18 libc++-19-dev
+
+                    sudo ln -s /usr/bin/clang-18 /usr/bin/clang-19
+                    sudo ln -s /usr/bin/clang++-18 /usr/bin/clang++-19
+                  else
+                    ./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh
+                  fi
+
+                  # TESTS=($(
+                  #     find ./test/ -type f -iname *.test.cpp -printf '%P\n' | \
+                  #     awk -v n=${{ strategy.job-total }}  \
+                  #       -v i=${{ matrix.id }} \
+                  #       '{ if((NR-1)%n == i){ print $0 } }'
+                  # ))
+
+                  chmod +x -R ./dist/
+
+                  ./.github/workflows/internal/test.sh "${{ matrix.variant }}" # "${TESTS[@]}"
 
     gen-config:
         name: Generate Configuration File
@@ -453,7 +468,7 @@ jobs:
 
         if: >
             !cancelled() &&
-            !startsWith(github.ref_name, 'test/') &&
+            github.ref_name == github.event.repository.default_branch &&
             needs.test.result == 'success'
 
         runs-on: ${{ vars.RUNNER_IMAGE }}
