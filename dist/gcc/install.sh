@@ -28,6 +28,7 @@ if [[ ! -v AC_VARIANT ]] || [[ "${AC_VARIANT}" == "gcc" ]]; then
 VERSION="14.2.0-4ubuntu2~24.04"
 
 set -eu
+if "${AC_NO_BUILD_COMPILER:-false}"; then exit 0; fi
 
 echo "::group::GCC"
 
@@ -39,7 +40,6 @@ echo "::endgroup::"
 
     CC="gcc-14"
     CXX="g++-14"
-
 else
     
 # clang
@@ -47,6 +47,7 @@ else
 VERSION="19.1.7"
 
 set -eu
+if "${AC_NO_BUILD_COMPILER:-false}"; then exit 0; fi
 
 echo "::group::Clang"
 
@@ -57,8 +58,10 @@ sudo chmod +x ./llvm.sh
 
 sudo ./llvm.sh 19
 
-sudo apt-get install -y libc++-19-dev
+sudo ln -s "$(which clang-19)" "/usr/bin/clang"
+sudo ln -s "$(which clang++-19)" "/usr/bin/clang++"
 
+sudo apt-get install -y libc++-19-dev
 sudo apt-get purge -y --auto-remove lsb-release software-properties-common gnupg
 
 echo "::endgroup::"
@@ -107,9 +110,8 @@ export BOOST_BUILDER_CONFIG
 (
 VERSION="20240722.0"
 
-set +u
-if [[ ${AC_NO_BUILD_abseil} && ${AC_NO_BUILD_or_tools} ]]; then exit 0; fi
 set -eu
+if [[ "${AC_NO_BUILD_abseil:-false}" == true && "${AC_NO_BUILD_or_tools-false}" == true ]]; then exit 0; fi
 
 cd /tmp/ac_install/
 
@@ -152,9 +154,8 @@ echo "::endgroup::"
 (
 VERSION="1.5.1"
 
-set +u
-if [[ ${AC_NO_BUILD_ac_library} ]]; then exit 0; fi
 set -eu
+if "${AC_NO_BUILD_ac_library:-false}"; then exit 0; fi
 
 cd /tmp/ac_install/
 
@@ -171,9 +172,8 @@ echo "::endgroup::"
 (
 VERSION="1.86.0"
 
-set +u
-if [[ ${AC_NO_BUILD_boost} ]]; then exit 0; fi
 set -eu
+if "${AC_NO_BUILD_boost:-false}"; then exit 0; fi
 
 cd /tmp/ac_install/
 
@@ -225,9 +225,12 @@ echo "::endgroup::"
 (
 VERSION="3.4.0-4"
 
-set +u
-if [[ ${AC_NO_BUILD_eigen} && ${AC_NO_BUILD_light_gbm} && ${AC_NO_BUILD_or_tools} ]]; then exit 0; fi
 set -eu
+if [[ "${AC_NO_BUILD_eigen:-false}" == true &&
+    "${AC_NO_BUILD_light_gbm:-false}" == true &&
+    "${AC_NO_BUILD_or_tools:-false}" == true ]]; then
+    exit 0
+fi
 
 echo "::group::Eigen3"
 
@@ -258,9 +261,8 @@ echo "::endgroup::"
 (
 VERSION="2:6.3.0+dfsg-2ubuntu6.1"
 
-set +u
-if [[ ${AC_NO_BUILD_gmp} ]]; then exit 0; fi
 set -eu
+if "${AC_NO_BUILD_gmp:-false}"; then exit 0; fi
 
 echo "::group::gmp"
 
@@ -274,9 +276,11 @@ echo "::endgroup::"
 (
 VERSION="2.6.0"
 
-set +u
-if [[ ${AC_NO_BUILD_libtorch} || "${AC_VARIANT}" == "clang" ]]; then exit 0; fi
 set -eu
+if [[ "${AC_NO_BUILD_libtorch:-false}" == true ||
+    "${AC_VARIANT:-false}" == "clang" ]]; then
+    exit 0
+fi
 
 cd /tmp/ac_install/
 
@@ -304,9 +308,8 @@ echo "::endgroup::"
 (
 VERSION="4.5.0"
 
-set +u
-if [[ ${AC_NO_BUILD_light_gbm} || "${AC_VARIANT}" == "clang" ]]; then exit 0; fi
 set -eu
+if [[ "${AC_NO_BUILD_light_gbm:-false}" == true || "${AC_VARIANT:-false}" == "clang" ]]; then exit 0; fi
 
 cd /tmp/ac_install/
 
@@ -344,9 +347,8 @@ echo "::endgroup::"
 (
 VERSION="9.11"
 
-set +u
-if [[ ${AC_NO_BUILD_or_tools} ]]; then exit 0; fi
 set -eu
+if "${AC_NO_BUILD_or_tools:-false}"; then exit 0; fi
 
 cd /tmp/ac_install/
 
@@ -395,9 +397,8 @@ echo "::endgroup::"
 (
 VERSION="0.12.0"
 
-set +u
-if [[ ${AC_NO_BUILD_range_v3} ]]; then exit 0; fi
 set -eu
+if "${AC_NO_BUILD_range_v3:-false}"; then exit 0; fi
 
 cd /tmp/ac_install/
 
@@ -420,9 +421,8 @@ echo "::endgroup::"
 (
 VERSION="4.4.0"
 
-set +u
-if [[ ${AC_NO_BUILD_unordered_dense} ]]; then exit 0; fi
 set -eu
+if "${AC_NO_BUILD_unordered_dense:-false}"; then exit 0; fi
 
 cd /tmp/ac_install/
 
@@ -451,9 +451,8 @@ echo "::endgroup::"
 (
 VERSION="4.13.3"
 
-set +u
-if [[ ${AC_NO_BUILD_z3} ]]; then exit 0; fi
 set -eu
+if "${AC_NO_BUILD_z3:-false}"; then exit 0; fi
 
 cd /tmp/ac_install/
 

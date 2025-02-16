@@ -4,9 +4,8 @@
 ####################################
 VERSION="1.86.0"
 
-set +u
-if [[ ${AC_NO_BUILD_boost} ]]; then exit 0; fi
 set -eu
+if "${AC_NO_BUILD_boost:-false}"; then exit 0; fi
 
 cd /tmp/ac_install/
 
