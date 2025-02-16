@@ -468,7 +468,7 @@ jobs:
 
         if: >
             !cancelled() &&
-            !startsWith(github.ref_name, 'test/') &&
+            github.ref_name == github.event.repository.default_branch &&
             needs.test.result == 'success'
 
         runs-on: ${{ vars.RUNNER_IMAGE }}
