@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 
-OUTPUT=./test/merged.test.cpp
+export OUTPUT=./test/merged.test.cpp
 
 mkdir -p ./test/
 echo "" >"${OUTPUT}"
