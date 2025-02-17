@@ -45,32 +45,9 @@ jobs:
               with:
                   ref: ${{ github.head_ref || github.ref_name }}
 
-            - name: Merge data
+            - name: Dump data
               run: |
-                  {
-                    echo
-
-                    if [ -f ./dist/install.sh ]; then
-                        echo '## Install Script'
-                        echo '```bash'
-                        cat ./dist/install.sh
-                        echo '```'
-                    fi
-
-                    if [ -f ./dist/compile.sh ]; then
-                        echo '## Compile Script'
-                        echo '```bash'
-                        cat ./dist/compile.sh
-                        echo '```'
-                    fi
-
-                    if [ -f ./dist/config.toml ]; then
-                        echo '## Configuration File'
-                        echo '```toml'
-                        cat ./dist/config.toml
-                        echo '```'
-                    fi
-                  } >>./pages/index.md
+                  ./.github/workflows/internal/dump.sh >>./pages/index.md
 
             - name: Build with Jekyll
               uses: actions/jekyll-build-pages@v1
