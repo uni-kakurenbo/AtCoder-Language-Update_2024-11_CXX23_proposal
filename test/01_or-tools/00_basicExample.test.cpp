@@ -67,7 +67,7 @@ void BasicExample() {
 }
 }  // namespace operations_research
 
-int main() {
+int main(int argc, char *argv[]) {
   InitGoogle(argv[0], &argc, &argv, true);
   absl::SetFlag(&FLAGS_stderrthreshold, 0);
   operations_research::BasicExample();
