@@ -59,4 +59,4 @@ find ./sub-installer/ -type f -name '*.sh' -print0 |
 
 echo >>./install.sh
 
-sed -i -E 's/^\s*//g' ./install.sh
+shfmt -i 4 -w ./install.sh
