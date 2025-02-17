@@ -47,7 +47,7 @@ jobs:
                   path: ./.test-runner/
 
             - name: Merge Tests
-              run: ./.workflows/internal/merge-tests.sh
+              run: ./.github/workflows/internal/merge-tests.sh
 
             - name: Run
               working-directory: ./.test-runner/
