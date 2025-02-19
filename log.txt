@@ -1,0 +1,879 @@
+::group::./00_plane/chunk_by_view.test.cpp
+================================ ./00_plane/chunk_by_view.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+---------------------------------------------------------------------------------------------------
+===================================================================================================
+
+
+::endgroup::
+::group::./01_open-mp/get_max_threads.test.cpp
+================================ ./01_open-mp/get_max_threads.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+-------------------------------------------------------------------------------------------------------
+=======================================================================================================
+
+
+::endgroup::
+::group::./00_plane/stacktrace.test.cpp
+================================ ./00_plane/stacktrace.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+------------------------------------------------------------------------------------------------
+================================================================================================
+
+
+::endgroup::
+::group::./00_plane/flat_map.test.cpp
+================================ ./00_plane/flat_map.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+----------------------------------------------------------------------------------------------
+==============================================================================================
+
+
+::endgroup::
+::group::./00_plane/portable_assumptions.test.cpp
+================================ ./00_plane/portable_assumptions.test.cpp ================================
+./Main.cpp:8:14: warning: assumption is ignored because it contains (potential) side-effects [-Wassume]
+    8 |     [[assume(x-- == 0)]];
+      |     ~~~~~~~~~^~~~~~~~~~~
+1 warning generated.
+----------------------------------------------------------------------------------------------------------
+==========================================================================================================
+
+
+::endgroup::
+::group::./00_plane/narrowing_contextual_conversions_to_bool.test.cpp
+================================ ./00_plane/narrowing_contextual_conversions_to_bool.test.cpp ================================
+------------------------------------------------------------------------------------------------------------------------------
+==============================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/lambda_expressions_with_parentheses_omitted.test.cpp
+================================ ./00_plane/lambda_expressions_with_parentheses_omitted.test.cpp ================================
+---------------------------------------------------------------------------------------------------------------------------------
+=================================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/named_universal_character_escapes.test.cpp
+================================ ./00_plane/named_universal_character_escapes.test.cpp ================================
+-----------------------------------------------------------------------------------------------------------------------
+=======================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/chunk_view.test.cpp
+================================ ./00_plane/chunk_view.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+------------------------------------------------------------------------------------------------
+================================================================================================
+
+
+::endgroup::
+::group::./00_plane/if_consteval.test.cpp
+================================ ./00_plane/if_consteval.test.cpp ================================
+--------------------------------------------------------------------------------------------------
+==================================================================================================
+
+
+::endgroup::
+::group::./00_plane/non_literal_variables_and_labels_and_gotos_in_constexpr_functions.test.cpp
+================================ ./00_plane/non_literal_variables_and_labels_and_gotos_in_constexpr_functions.test.cpp ================================
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+=======================================================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/enumerate_view.test.cpp
+================================ ./00_plane/enumerate_view.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+----------------------------------------------------------------------------------------------------
+====================================================================================================
+
+
+::endgroup::
+::group::./00_plane/static_operator.test.cpp
+================================ ./00_plane/static_operator.test.cpp ================================
+-----------------------------------------------------------------------------------------------------
+=====================================================================================================
+
+
+::endgroup::
+::group::./00_plane/range_fold_algorithms.test.cpp
+================================ ./00_plane/range_fold_algorithms.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+-----------------------------------------------------------------------------------------------------------
+===========================================================================================================
+
+
+::endgroup::
+::group::./00_plane/join_with_view.test.cpp
+================================ ./00_plane/join_with_view.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+----------------------------------------------------------------------------------------------------
+====================================================================================================
+
+
+::endgroup::
+::group::./00_plane/stride_view.test.cpp
+================================ ./00_plane/stride_view.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+-------------------------------------------------------------------------------------------------
+=================================================================================================
+
+
+::endgroup::
+::group::./00_plane/wording_for_class_template_argument_deduction_from_inherited_constructors.test.cpp
+================================ ./00_plane/wording_for_class_template_argument_deduction_from_inherited_constructors.test.cpp ================================
+./Main.cpp:7:9: warning: skipped [-W#pragma-messages]
+    7 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+===============================================================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/elifdef_and_elifndef_and_warning.test.cpp
+================================ ./00_plane/elifdef_and_elifndef_and_warning.test.cpp ================================
+./Main.cpp:12:2: warning: reachable [-W#warnings]
+   12 | #warning reachable
+      |  ^
+1 warning generated.
+----------------------------------------------------------------------------------------------------------------------
+======================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/simpler_implicit_move.test.cpp
+================================ ./00_plane/simpler_implicit_move.test.cpp ================================
+./Main.cpp:30:10: warning: reference to stack memory associated with parameter 'n' returned [-Wreturn-stack-address]
+   30 |   return n;
+      |          ^
+./Main.cpp:34:13: warning: reference to stack memory associated with parameter 'n' returned [-Wreturn-stack-address]
+   34 |     return (n);
+      |             ^
+2 warnings generated.
+-----------------------------------------------------------------------------------------------------------
+===========================================================================================================
+
+
+::endgroup::
+::group::./00_plane/float128_t.test.cpp
+================================ ./00_plane/float128_t.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+------------------------------------------------------------------------------------------------
+================================================================================================
+
+
+::endgroup::
+::group::./00_plane/non_const_evaluated_constexpr_function.test.cpp
+================================ ./00_plane/non_const_evaluated_constexpr_function.test.cpp ================================
+----------------------------------------------------------------------------------------------------------------------------
+============================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/contains.test.cpp
+================================ ./00_plane/contains.test.cpp ================================
+----------------------------------------------------------------------------------------------
+==============================================================================================
+
+
+::endgroup::
+::group::./00_plane/mdspan.test.cpp
+================================ ./00_plane/mdspan.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+--------------------------------------------------------------------------------------------
+============================================================================================
+
+
+::endgroup::
+::group::./00_plane/spanstream.test.cpp
+================================ ./00_plane/spanstream.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+------------------------------------------------------------------------------------------------
+================================================================================================
+
+
+::endgroup::
+::group::./00_plane/generalized_wording_for_partial_specializations.test.cpp
+================================ ./00_plane/generalized_wording_for_partial_specializations.test.cpp ================================
+-------------------------------------------------------------------------------------------------------------------------------------
+=====================================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/static_constexpr_variables_in_constexpr_functions.test.cpp
+================================ ./00_plane/static_constexpr_variables_in_constexpr_functions.test.cpp ================================
+---------------------------------------------------------------------------------------------------------------------------------------
+=======================================================================================================================================
+
+
+::endgroup::
+::group::./01_light-gbm/set_max_threads.test.cpp
+================================ ./01_light-gbm/set_max_threads.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+---------------------------------------------------------------------------------------------------------
+=========================================================================================================
+
+
+::endgroup::
+::group::./00_plane/slide_view.test.cpp
+================================ ./00_plane/slide_view.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+------------------------------------------------------------------------------------------------
+================================================================================================
+
+
+::endgroup::
+::group::./00_plane/cartesian_product_view.test.cpp
+================================ ./00_plane/cartesian_product_view.test.cpp ================================
+./Main.cpp:4:9: warning: skipped [-W#pragma-messages]
+    4 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+------------------------------------------------------------------------------------------------------------
+============================================================================================================
+
+
+::endgroup::
+::group::./01_libtorch/tensor_rand.test.cpp
+================================ ./01_libtorch/tensor_rand.test.cpp ================================
+./Main.cpp:6:9: warning: skipped [-W#pragma-messages]
+    6 | #pragma message("skipped")
+      |         ^
+1 warning generated.
+----------------------------------------------------------------------------------------------------
+====================================================================================================
+
+
+::endgroup::
+::group::./00_plane/attributes_on_lambda_expressions.test.cpp
+================================ ./00_plane/attributes_on_lambda_expressions.test.cpp ================================
+----------------------------------------------------------------------------------------------------------------------
+======================================================================================================================
+
+
+::endgroup::
+::group::./01_or-tools/basic_example.test.cpp
+================================ ./01_or-tools/basic_example.test.cpp ================================
+./Main.cpp:6:10: fatal error: 'absl/flags/flag.h' file not found
+    6 | #include <absl/flags/flag.h>
+      |          ^~~~~~~~~~~~~~~~~~~
+1 error generated.
+------------------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+======================================================================================================
+
+
+::endgroup::
+::group::./01_gmp/mpz.test.cpp
+================================ ./01_gmp/mpz.test.cpp ================================
+ld.lld: error: undefined symbol: __gmpz_init
+>>> referenced by ld-temp.o
+>>>               a.out.lto.o:(main)
+
+ld.lld: error: undefined symbol: __gmp_randinit_default
+>>> referenced by ld-temp.o
+>>>               a.out.lto.o:(main)
+
+ld.lld: error: undefined symbol: __gmp_randseed_ui
+>>> referenced by ld-temp.o
+>>>               a.out.lto.o:(main)
+
+ld.lld: error: undefined symbol: __gmpz_urandomb
+>>> referenced by ld-temp.o
+>>>               a.out.lto.o:(main)
+
+ld.lld: error: undefined symbol: __gmp_printf
+>>> referenced by ld-temp.o
+>>>               a.out.lto.o:(main)
+
+ld.lld: error: undefined symbol: __gmpz_clear
+>>> referenced by ld-temp.o
+>>>               a.out.lto.o:(main)
+
+ld.lld: error: undefined symbol: __gmp_randclear
+>>> referenced by ld-temp.o
+>>>               a.out.lto.o:(main)
+clang++-19: error: linker command failed with exit code 1 (use -v to see invocation)
+---------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+=======================================================================================
+
+
+::endgroup::
+::group::./00_plane/is_scoped_enum.test.cpp
+================================ ./00_plane/is_scoped_enum.test.cpp ================================
+----------------------------------------------------------------------------------------------------
+====================================================================================================
+
+
+::endgroup::
+::group::./01_unordered_dense/map.test.cpp
+================================ ./01_unordered_dense/map.test.cpp ================================
+./Main.cpp:2:10: fatal error: 'ankerl/unordered_dense.h' file not found
+    2 | #include <ankerl/unordered_dense.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+---------------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+===================================================================================================
+
+
+::endgroup::
+::group::./01_ac-library/modint.test.cpp
+================================ ./01_ac-library/modint.test.cpp ================================
+./Main.cpp:2:10: fatal error: 'atcoder/modint' file not found
+    2 | #include <atcoder/modint>
+      |          ^~~~~~~~~~~~~~~~
+1 error generated.
+-------------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+=================================================================================================
+
+
+::endgroup::
+::group::./01_eigen/nearest_neighbor.test.cpp
+================================ ./01_eigen/nearest_neighbor.test.cpp ================================
+./Main.cpp:2:10: fatal error: 'Eigen/Dense' file not found
+    2 | #include <Eigen/Dense>
+      |          ^~~~~~~~~~~~~
+1 error generated.
+------------------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+======================================================================================================
+
+
+::endgroup::
+::group::./00_plane/to_underlying.test.cpp
+================================ ./00_plane/to_underlying.test.cpp ================================
+---------------------------------------------------------------------------------------------------
+===================================================================================================
+
+
+::endgroup::
+::group::./01_abseil/str_join.test.cpp
+================================ ./01_abseil/str_join.test.cpp ================================
+./Main.cpp:5:10: fatal error: 'absl/strings/str_join.h' file not found
+    5 | #include <absl/strings/str_join.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+-----------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+===============================================================================================
+
+
+::endgroup::
+::group::./01_boost/rational.test.cpp
+================================ ./01_boost/rational.test.cpp ================================
+./Main.cpp:15:10: fatal error: 'boost/config.hpp' file not found
+   15 | #include <boost/config.hpp>
+      |          ^~~~~~~~~~~~~~~~~~
+1 error generated.
+----------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+==============================================================================================
+
+
+::endgroup::
+::group::./00_plane/consteval_conditionally_makes_constexpr_function_consteval.test.cpp
+================================ ./00_plane/consteval_conditionally_makes_constexpr_function_consteval.test.cpp ================================
+------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================
+
+
+::endgroup::
+::group::./02_other/starts_with.test.cpp
+================================ ./02_other/starts_with.test.cpp ================================
+-------------------------------------------------------------------------------------------------
+=================================================================================================
+
+
+::endgroup::
+::group::./00_plane/literal_suffix_for_size_t.test.cpp
+================================ ./00_plane/literal_suffix_for_size_t.test.cpp ================================
+---------------------------------------------------------------------------------------------------------------
+===============================================================================================================
+
+
+::endgroup::
+::group::./00_plane/generator.test.cpp
+================================ ./00_plane/generator.test.cpp ================================
+./Main.cpp:22:20: error: definition of 'view_interface' must be imported from module 'std_private_ranges_view_interface' before it is required
+   22 | struct generator : std::ranges::view_interface<generator<T>> {
+      |                    ^
+./Main.cpp:107:18: note: in instantiation of template class 'generator<int>' requested here
+  107 |     for(auto v : iota<int>(10)) std::println("{}", v);
+      |                  ^
+/usr/lib/llvm-19/bin/../include/c++/v1/__ranges/view_interface.h:41:7: note: definition here is not reachable
+   41 | class view_interface {
+      |       ^
+1 error generated.
+-----------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+===============================================================================================
+
+
+::endgroup::
+::group::./00_plane/as_rvalue_view.test.cpp
+================================ ./00_plane/as_rvalue_view.test.cpp ================================
+./Main.cpp:15:13: error: no member named 'copy' in namespace 'std::__1::ranges'
+   15 |     ranges::copy(words | views::as_rvalue, back_inserter(new_words));
+      |     ~~~~~~~~^
+1 error generated.
+----------------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+====================================================================================================
+
+
+::endgroup::
+::group::./01_z3/example.test.cpp
+================================ ./01_z3/example.test.cpp ================================
+./Main.cpp:985:5: error: unknown type name 'constructors'; did you mean 'Z3_constructor'?
+  985 |     constructors cs(ctx);
+      |     ^~~~~~~~~~~~
+      |     Z3_constructor
+/usr/include/z3_api.h:19:13: note: 'Z3_constructor' declared here
+   19 | DEFINE_TYPE(Z3_constructor);
+      |             ^
+./Main.cpp:985:18: error: no viable conversion from 'context' to 'Z3_constructor' (aka '_Z3_constructor *')
+  985 |     constructors cs(ctx);
+      |                  ^  ~~~
+/usr/include/z3++.h:183:9: note: candidate function
+  183 |         operator Z3_context() const { return m_ctx; }
+      |         ^
+./Main.cpp:988:43: error: no member named 'datatype_sort' in 'z3::context'
+  988 |     sort sorts[2] = { ctx.int_sort(), ctx.datatype_sort(ilist) };
+      |                                       ~~~ ^
+./Main.cpp:989:7: error: member reference type 'Z3_constructor' (aka '_Z3_constructor *') is a pointer; did you mean to use '->'?
+  989 |     cs.add(ctx.str_symbol("nil"), ctx.str_symbol("is-nil"), 0, nullptr, nullptr);
+      |     ~~^
+      |       ->
+./Main.cpp:989:7: error: incomplete definition of type 'struct _Z3_constructor'
+  989 |     cs.add(ctx.str_symbol("nil"), ctx.str_symbol("is-nil"), 0, nullptr, nullptr);
+      |     ~~^
+/usr/include/z3_api.h:19:1: note: forward declaration of '_Z3_constructor'
+   19 | DEFINE_TYPE(Z3_constructor);
+      | ^
+/usr/include/z3_macros.h:20:39: note: expanded from macro 'DEFINE_TYPE'
+   20 | #define DEFINE_TYPE(T) typedef struct _ ## T *T
+      |                                       ^
+<scratch space>:73:1: note: expanded from here
+   73 | _Z3_constructor
+      | ^
+./Main.cpp:990:7: error: member reference type 'Z3_constructor' (aka '_Z3_constructor *') is a pointer; did you mean to use '->'?
+  990 |     cs.add(ctx.str_symbol("cons"), ctx.str_symbol("is-cons"), 2, accs, sorts);
+      |     ~~^
+      |       ->
+./Main.cpp:990:7: error: incomplete definition of type 'struct _Z3_constructor'
+  990 |     cs.add(ctx.str_symbol("cons"), ctx.str_symbol("is-cons"), 2, accs, sorts);
+      |     ~~^
+/usr/include/z3_api.h:19:1: note: forward declaration of '_Z3_constructor'
+   19 | DEFINE_TYPE(Z3_constructor);
+      | ^
+/usr/include/z3_macros.h:20:39: note: expanded from macro 'DEFINE_TYPE'
+   20 | #define DEFINE_TYPE(T) typedef struct _ ## T *T
+      |                                       ^
+<scratch space>:73:1: note: expanded from here
+   73 | _Z3_constructor
+      | ^
+./Main.cpp:991:19: error: no member named 'datatype' in 'z3::context'
+  991 |     sort ls = ctx.datatype(ilist, cs);
+      |               ~~~ ^
+./Main.cpp:995:7: error: member reference type 'Z3_constructor' (aka '_Z3_constructor *') is a pointer; did you mean to use '->'?
+  995 |     cs.query(0, nil, is_nil, nil_acc);
+      |     ~~^
+      |       ->
+./Main.cpp:995:7: error: incomplete definition of type 'struct _Z3_constructor'
+  995 |     cs.query(0, nil, is_nil, nil_acc);
+      |     ~~^
+/usr/include/z3_api.h:19:1: note: forward declaration of '_Z3_constructor'
+   19 | DEFINE_TYPE(Z3_constructor);
+      | ^
+/usr/include/z3_macros.h:20:39: note: expanded from macro 'DEFINE_TYPE'
+   20 | #define DEFINE_TYPE(T) typedef struct _ ## T *T
+      |                                       ^
+<scratch space>:73:1: note: expanded from here
+   73 | _Z3_constructor
+      | ^
+./Main.cpp:998:7: error: member reference type 'Z3_constructor' (aka '_Z3_constructor *') is a pointer; did you mean to use '->'?
+  998 |     cs.query(1, cons, is_cons, cons_acc);
+      |     ~~^
+      |       ->
+./Main.cpp:998:7: error: incomplete definition of type 'struct _Z3_constructor'
+  998 |     cs.query(1, cons, is_cons, cons_acc);
+      |     ~~^
+/usr/include/z3_api.h:19:1: note: forward declaration of '_Z3_constructor'
+   19 | DEFINE_TYPE(Z3_constructor);
+      | ^
+/usr/include/z3_macros.h:20:39: note: expanded from macro 'DEFINE_TYPE'
+   20 | #define DEFINE_TYPE(T) typedef struct _ ## T *T
+      |                                       ^
+<scratch space>:73:1: note: expanded from here
+   73 | _Z3_constructor
+      | ^
+./Main.cpp:1006:28: error: no member named 'datatype_sort' in 'z3::context'
+ 1006 |     sort sorts1[2] = { ctx.datatype_sort(tlist), ctx.datatype_sort(tlist) };
+      |                        ~~~ ^
+./Main.cpp:1006:54: error: no member named 'datatype_sort' in 'z3::context'
+ 1006 |     sort sorts1[2] = { ctx.datatype_sort(tlist), ctx.datatype_sort(tlist) };
+      |                                                  ~~~ ^
+./Main.cpp:1007:44: error: no member named 'datatype_sort' in 'z3::context'
+ 1007 |     sort sorts2[2] = { ctx.int_sort(), ctx.datatype_sort(tree) };
+      |                                        ~~~ ^
+./Main.cpp:1008:5: error: unknown type name 'constructors'; did you mean 'Z3_constructor'?
+ 1008 |     constructors cs1(ctx), cs2(ctx);
+      |     ^~~~~~~~~~~~
+      |     Z3_constructor
+/usr/include/z3_api.h:19:13: note: 'Z3_constructor' declared here
+   19 | DEFINE_TYPE(Z3_constructor);
+      |             ^
+./Main.cpp:1008:18: error: no viable conversion from 'context' to 'Z3_constructor' (aka '_Z3_constructor *')
+ 1008 |     constructors cs1(ctx), cs2(ctx);
+      |                  ^   ~~~
+/usr/include/z3++.h:183:9: note: candidate function
+  183 |         operator Z3_context() const { return m_ctx; }
+      |         ^
+./Main.cpp:1008:28: error: no viable conversion from 'context' to 'Z3_constructor' (aka '_Z3_constructor *')
+ 1008 |     constructors cs1(ctx), cs2(ctx);
+      |                            ^   ~~~
+/usr/include/z3++.h:183:9: note: candidate function
+  183 |         operator Z3_context() const { return m_ctx; }
+      |         ^
+./Main.cpp:1009:8: error: member reference type 'Z3_constructor' (aka '_Z3_constructor *') is a pointer; did you mean to use '->'?
+ 1009 |     cs1.add(ctx.str_symbol("tnil"), ctx.str_symbol("is-tnil"), 0, nullptr, nullptr);
+      |     ~~~^
+      |        ->
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+==========================================================================================
+
+
+::endgroup::
+::group::./00_plane/life_extension_in_range_based_for_loop.test.cpp
+================================ ./00_plane/life_extension_in_range_based_for_loop.test.cpp ================================
+./Main.cpp:12:1: error: import of module 'std' imported non C++20 importable modules
+   12 | import std;
+      | ^
+./Main.cpp:23:6: error: declaration of 'vector' must be imported from module 'std_vector' before it is required
+   23 | std::vector<std::string> get_vector_string() {
+      |      ^
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:389:28: note: declaration here is not visible
+  389 | class _LIBCPP_TEMPLATE_VIS vector {
+      |                            ^
+./Main.cpp:24:12: error: no matching constructor for initialization of 'std::vector<std::string>' (aka 'vector<basic_string<char>>')
+   24 |     return { "element" };
+      |            ^~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:432:64: note: candidate constructor not viable: no known conversion from 'const char[8]' to 'const allocator_type' (aka 'const std::allocator<std::string>') for 1st argument
+  432 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI explicit vector(const allocator_type& __a)
+      |                                                                ^      ~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:441:64: note: candidate constructor not viable: no known conversion from 'const char[8]' to 'size_type' (aka 'unsigned long') for 1st argument
+  441 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI explicit vector(size_type __n) {
+      |                                                                ^      ~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:543:55: note: candidate constructor not viable: no known conversion from 'const char[8]' to 'const vector<string>' for 1st argument
+  543 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI vector(const vector& __x);
+      |                                                       ^      ~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:549:55: note: candidate constructor not viable: no known conversion from 'const char[8]' to 'initializer_list<value_type>' (aka 'initializer_list<std::string>') for 1st argument
+  549 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI vector(initializer_list<value_type> __il);
+      |                                                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:560:55: note: candidate constructor not viable: no known conversion from 'const char[8]' to 'vector<string>' for 1st argument
+  560 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI vector(vector&& __x)
+      |                                                       ^      ~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:430:55: note: candidate constructor not viable: requires 0 arguments, but 1 was provided
+  430 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI vector()
+      |                                                       ^
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:451:64: note: candidate constructor not viable: requires 2 arguments, but 1 was provided
+  451 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI explicit vector(size_type __n, const allocator_type& __a)
+      |                                                                ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:462:55: note: candidate constructor not viable: requires 2 arguments, but 1 was provided
+  462 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI vector(size_type __n, const value_type& __x) {
+      |                                                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:485:55: note: candidate constructor template not viable: requires 2 arguments, but 1 was provided
+  485 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI vector(_InputIterator __first, _InputIterator __last);
+      |                                                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:498:55: note: candidate constructor template not viable: requires 2 arguments, but 1 was provided
+  498 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI vector(_ForwardIterator __first, _ForwardIterator __last);
+      |                                                       ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:545:3: note: candidate constructor not viable: requires 2 arguments, but 1 was provided
+  545 |   vector(const vector& __x, const __type_identity_t<allocator_type>& __a);
+      |   ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:552:3: note: candidate constructor not viable: requires 2 arguments, but 1 was provided
+  552 |   vector(initializer_list<value_type> __il, const allocator_type& __a);
+      |   ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:568:3: note: candidate constructor not viable: requires 2 arguments, but 1 was provided
+  568 |   vector(vector&& __x, const __type_identity_t<allocator_type>& __a);
+      |   ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:473:3: note: candidate constructor template not viable: requires 3 arguments, but 1 was provided
+  473 |   vector(size_type __n, const value_type& __x, const allocator_type& __a)
+      |   ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:491:3: note: candidate constructor template not viable: requires 3 arguments, but 1 was provided
+  491 |   vector(_InputIterator __first, _InputIterator __last, const allocator_type& __a);
+      |   ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:506:3: note: candidate constructor template not viable: requires 3 arguments, but 1 was provided
+  506 |   vector(_ForwardIterator __first, _ForwardIterator __last, const allocator_type& __a);
+      |   ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:510:35: note: candidate constructor template not viable: requires at least 2 arguments, but 1 was provided
+  510 |   _LIBCPP_HIDE_FROM_ABI constexpr vector(
+      |                                   ^
+  511 |       from_range_t, _Range&& __range, const allocator_type& __alloc = allocator_type())
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:985:60: error: definition of 'basic_string' must be imported from module 'std_string' before it is required
+  985 |       __alloc_traits::destroy(__alloc(), std::__to_address(--__soon_to_be_end));
+      |                                                            ^
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:979:5: note: in instantiation of member function 'std::vector<std::string>::__base_destruct_at_end' requested here
+  979 |     __base_destruct_at_end(this->__begin_);
+      |     ^
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:530:16: note: in instantiation of member function 'std::vector<std::string>::__clear' requested here
+  530 |         __vec_.__clear();
+      |                ^
+/usr/lib/llvm-19/bin/../include/c++/v1/vector:541:67: note: in instantiation of member function 'std::vector<std::string>::__destroy_vector::operator()' requested here
+  541 |   _LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI ~vector() { __destroy_vector (*this)(); }
+      |                                                                   ^
+./Main.cpp:29:20: note: in instantiation of member function 'std::vector<std::string>::~vector' requested here
+   29 |     for(auto&& c : get_vector_string()[0]) {
+      |                    ^
+/usr/lib/llvm-19/bin/../include/c++/v1/string:752:7: note: definition here is not reachable
+  752 | class basic_string {
+      |       ^
+./Main.cpp:29:20: error: object backing the pointer will be destroyed at the end of the full-expression [-Werror,-Wdangling-gsl]
+   29 |     for(auto&& c : get_vector_string()[0]) {
+      |                    ^~~~~~~~~~~~~~~~~~~
+./Main.cpp:30:14: error: no member named 'println' in namespace 'std'; did you mean 'printf'?
+   30 |         std::println("{}", c);
+      |         ~~~~~^~~~~~~
+      |              printf
+/usr/lib/llvm-19/bin/../include/c++/v1/cstdio:167:9: note: 'printf' declared here
+  167 | using ::printf _LIBCPP_USING_IF_EXISTS;
+      |         ^
+6 errors generated.
+----------------------------------------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+============================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/construct_with_iterator_pair.test.cpp
+================================ ./00_plane/construct_with_iterator_pair.test.cpp ================================
+------------------------------------------------------------------------------------------------------------------
+==================================================================================================================
+
+
+::endgroup::
+::group::./01_range-v3/for_each.test.cpp
+================================ ./01_range-v3/for_each.test.cpp ================================
+While building module 'range_v3' imported from ./Main.cpp:3:
+While building module 'concepts' imported from /usr/include/range/v3/range_fwd.hpp:22:
+In file included from <module-includes>:1:
+In file included from /usr/include/concepts/compare.hpp:24:
+/usr/include/concepts/concepts.hpp:751:28: error: declaration of 'invoke' must be imported from module 'meta' before it is required
+  751 |     using return_t = meta::invoke<return_t_<EnableIf>, T>;
+      |                            ^
+/usr/include/meta/meta.hpp:541:5: note: declaration here is not visible
+  541 |     using invoke = typename Fn::template invoke<Args...>;
+      |     ^
+While building module 'range_v3' imported from ./Main.cpp:3:
+While building module 'concepts' imported from /usr/include/range/v3/range_fwd.hpp:22:
+In file included from <module-includes>:1:
+/usr/include/concepts/compare.hpp:25:10: fatal error: cyclic dependency in module 'range_v3': range_v3 -> concepts -> range_v3
+   25 | #include <range/v3/compare.hpp>
+      |          ^
+While building module 'range_v3' imported from ./Main.cpp:3:
+In file included from <module-includes>:1:
+In file included from /usr/include/range/v3/action.hpp:17:
+In file included from /usr/include/range/v3/action/action.hpp:21:
+/usr/include/range/v3/range_fwd.hpp:22:10: fatal error: could not build module 'concepts'
+   22 | #include <concepts/concepts.hpp>
+      |  ~~~~~~~~^
+./Main.cpp:3:10: fatal error: could not build module 'range_v3'
+    3 | #include <range/v3/algorithm/for_each.hpp>
+      |  ~~~~~~~~^
+4 errors generated.
+-------------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+=================================================================================================
+
+
+::endgroup::
+::group::./00_plane/deducing_this.test.cpp
+================================ ./00_plane/deducing_this.test.cpp ================================
+---------------------------------------------------------------------------------------------------
+g
+f
+===================================================================================================
+
+
+::endgroup::
+::group::./00_plane/alias_declaration_in_init_statement.test.cpp
+================================ ./00_plane/alias_declaration_in_init_statement.test.cpp ================================
+-------------------------------------------------------------------------------------------------------------------------
+1
+1
+2
+3
+=========================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/repeate_view.test.cpp
+================================ ./00_plane/repeate_view.test.cpp ================================
+--------------------------------------------------------------------------------------------------
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+==================================================================================================
+
+
+::endgroup::
+::group::./00_plane/println.test.cpp
+================================ ./00_plane/println.test.cpp ================================
+---------------------------------------------------------------------------------------------
+Hello, world.
+=============================================================================================
+
+
+::endgroup::
+::group::./00_plane/labels_at_the_end_of_compound_statements.test.cpp
+================================ ./00_plane/labels_at_the_end_of_compound_statements.test.cpp ================================
+./Main.cpp:4:3: warning: unused label 'first' [-Wunused-label]
+    4 |   first:
+      |   ^~~~~~
+./Main.cpp:8:3: warning: unused label 'second' [-Wunused-label]
+    8 |   second:
+      |   ^~~~~~~
+./Main.cpp:12:3: warning: unused label 'last' [-Wunused-label]
+   12 |   last:
+      |   ^~~~~
+3 warnings generated.
+------------------------------------------------------------------------------------------------------------------------------
+a
+b
+==============================================================================================================================
+
+
+::endgroup::
+::group::./00_plane/expected.test.cpp
+================================ ./00_plane/expected.test.cpp ================================
+----------------------------------------------------------------------------------------------
+5
+"out of domain"
+"divide by zero"
+==============================================================================================
+
+
+::endgroup::
+::group::./00_plane/simd.test.cpp
+================================ ./00_plane/simd.test.cpp ================================
+------------------------------------------------------------------------------------------
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 
+==========================================================================================
+
+
+::endgroup::
+::group::./00_plane/zip_view.test.cpp
+================================ ./00_plane/zip_view.test.cpp ================================
+----------------------------------------------------------------------------------------------
+10: a
+20: b
+==============================================================================================
+
+
+::endgroup::
+::group::./00_plane/to.test.cpp
+================================ ./00_plane/to.test.cpp ================================
+----------------------------------------------------------------------------------------
+the
+quick
+brown
+fox
+========================================================================================
+
+
+::endgroup::
+::group::./01_range-v3/mixed.test.cpp
+================================ ./01_range-v3/mixed.test.cpp ================================
+While building module 'range_v3' imported from ./Main.cpp:4:
+While building module 'concepts' imported from /usr/include/range/v3/range_fwd.hpp:22:
+In file included from <module-includes>:1:
+In file included from /usr/include/concepts/compare.hpp:24:
+/usr/include/concepts/concepts.hpp:751:28: error: declaration of 'invoke' must be imported from module 'meta' before it is required
+  751 |     using return_t = meta::invoke<return_t_<EnableIf>, T>;
+      |                            ^
+/usr/include/meta/meta.hpp:541:5: note: declaration here is not visible
+  541 |     using invoke = typename Fn::template invoke<Args...>;
+      |     ^
+While building module 'range_v3' imported from ./Main.cpp:4:
+While building module 'concepts' imported from /usr/include/range/v3/range_fwd.hpp:22:
+In file included from <module-includes>:1:
+/usr/include/concepts/compare.hpp:25:10: fatal error: cyclic dependency in module 'range_v3': range_v3 -> concepts -> range_v3
+   25 | #include <range/v3/compare.hpp>
+      |          ^
+While building module 'range_v3' imported from ./Main.cpp:4:
+In file included from <module-includes>:1:
+In file included from /usr/include/range/v3/action.hpp:17:
+In file included from /usr/include/range/v3/action/action.hpp:21:
+/usr/include/range/v3/range_fwd.hpp:22:10: fatal error: could not build module 'concepts'
+   22 | #include <concepts/concepts.hpp>
+      |  ~~~~~~~~^
+./Main.cpp:4:10: fatal error: could not build module 'range_v3'
+    4 | #include <range/v3/algorithm/for_each.hpp>
+      |  ~~~~~~~~^
+4 errors generated.
+----------------------------------------------------------------------------------------------
+environment: line 18: ./a.out: No such file or directory
+==============================================================================================
+
+
+::endgroup::
