@@ -11,8 +11,10 @@ AC_VARIANT=clang
 BUILD_FLAGS=(
     "-fexperimental-library"
     "-fuse-ld=lld"
+    "-rtlib=compiler-rt"
     "-std=gnu++23"
     "-stdlib=libc++"
+    "-unwindlib=libunwind"
     "-w"
     ""
 )

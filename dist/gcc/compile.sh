@@ -10,8 +10,7 @@ BUILD_FLAGS=(
     "-DNOMINMAX"
     "-DONLINE_JUDGE"
     "-I/opt/ac_install/include"
-    "-I/opt/ac_install/include/"
-    "-I/opt/ac_install/include/torch/csrc/api/include/"
+    "-I/opt/ac_install/include/torch/csrc/api/include"
     "-O2"
     "-Wall"
     "-Wextra"
@@ -47,7 +46,6 @@ BUILD_FLAGS=(
     "-labsl_random_internal_seed_material"
     "-labsl_random_seed_gen_exception"
     "-labsl_scoped_set_env"
-    "-L/opt/ac_install/lib/"
     "-lboost_atomic"
     "-lboost_charconv"
     "-lboost_chrono"
@@ -183,7 +181,7 @@ BUILD_FLAGS=(
     "-ltorch"
     "-ltorch_cpu"
     "-lc10"
-    "-Wl,-R/opt/ac_install/lib/"
+    "-Wl,-R/opt/ac_install/lib"
     "-l_lightgbm"
 )
 
