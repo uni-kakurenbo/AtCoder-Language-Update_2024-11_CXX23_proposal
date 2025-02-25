@@ -3,6 +3,7 @@
 set -eu
 
 DIST_DIR="$1"
+VARIANT="$(basename "${DIST_DIR}")"
 
 CONFIG_PATHS=(
     "${DIST_DIR}/config/"
@@ -23,8 +24,8 @@ function gen-flags() {
     local flags
     local libs
 
-    flags=($(pkg-config --cflags "$@" | tr ' ' '\n' | sort -u))
-    libs=($(pkg-config --libs "$@"))
+    flags=($(pkg-config --define-variable="variant=${VARIANT}" --cflags "$@" | tr ' ' '\n' | sort -u))
+    libs=($(pkg-config --define-variable="variant=${VARIANT}" --libs "$@"))
 
     echo "${flags[@]} ${libs[@]}"
 }

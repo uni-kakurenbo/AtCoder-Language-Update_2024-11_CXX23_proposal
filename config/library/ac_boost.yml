@@ -3,10 +3,10 @@ Description: links AC-Library.
 Version: null
 
 Cflags: >
-    -I/opt/ac_install/include
+    -I/opt/ac_install/${variant}/include
 
 Libs: >
-    -L/opt/ac_install/lib
+    -L/opt/ac_install/${variant}/lib
 
     -lboost_atomic
     -lboost_charconv

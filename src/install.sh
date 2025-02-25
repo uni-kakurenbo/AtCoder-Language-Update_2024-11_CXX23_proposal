@@ -1,11 +1,14 @@
 #!/bin/bash
 set -eu
 
-sudo mkdir -p /tmp/ac_install/
-sudo mkdir -p /opt/ac_install/
+export AC_TEMP_DIR="/tmp/ac_install/${AC_VARIANT}"
+export AC_INSTALL_DIR="/opt/ac_install/${AC_VARIANT}"
+
+rm -rf "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}"
+sudo mkdir -p "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}/include" "${AC_INSTALL_DIR}/lib"
 
 ### Compiler
-if [[ "${AC_VARIANT:-gcc}" == "gcc" ]]; then
+if [[ "${AC_VARIANT}" == "gcc" ]]; then
     ./sub-installer/compiler/gcc.sh
 
     CC="gcc-14"
@@ -14,10 +17,10 @@ else
     ./sub-installer/compiler/clang.sh
 
     { # generate 'slack' bits/stdc++.h
-        sudo mkdir -p /opt/ac_install/include/bits/
+        sudo mkdir -p "${AC_INSTALL_DIR}/include/bits"
 
         find /usr/lib/llvm-19/include/c++/v1 -maxdepth 1 -type f ! -iname '__**' ! -iname '**.**' -exec echo '#include <{}>' \; |
-            sudo tee /opt/ac_install/include/bits/stdc++.h
+            sudo tee "${AC_INSTALL_DIR}/include/bits/stdc++.h"
     }
 
     CC="clang-19"
@@ -37,19 +40,19 @@ CMAKE_ENVIRONMENT=(
     -DCMAKE_C_COMPILER:STRING="${CC}"
     -DCMAKE_CXX_COMPILER:STRING="${CXX}"
 
-    -DCMAKE_INSTALL_MESSAGE:STRING="NEVER"
+    -DCMAKE_INSTALL_MESSAGE:STRING=NEVER
 )
 
-BOOST_BUILDER_CONFIG="using gcc : : ${CXX} ;"
+BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ${CXX} ;"
 
 if ccache -v; then
-    echo "ccache: enabled"
+    echo "ccache enabled"
 
     export CCACHE_ENABLED=1
 
     CMAKE_ENVIRONMENT+=(
-        -DCMAKE_C_COMPILER_LAUNCHER:STRING="ccache"
-        -DCMAKE_CXX_COMPILER_LAUNCHER:STRING="ccache"
+        -DCMAKE_C_COMPILER_LAUNCHER:STRING=ccache
+        -DCMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
     )
 
     BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ccache ${CXX} ;"
@@ -73,7 +76,7 @@ export BOOST_BUILDER_CONFIG
 if [ -v ATCODER ]; then
     echo "::group::finalize"
 
-    find /opt/ac_install/ \
+    find "${AC_INSTALL_DIR}" \
         -name cmake -or -name pkgconfig -or -name bin -or -name share \
         -type d -print0 |
         xargs -0 sudo rm -rf
