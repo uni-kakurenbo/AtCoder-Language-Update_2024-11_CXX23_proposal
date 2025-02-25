@@ -40,19 +40,19 @@ CMAKE_ENVIRONMENT=(
     -DCMAKE_C_COMPILER:STRING="${CC}"
     -DCMAKE_CXX_COMPILER:STRING="${CXX}"
 
-    -DCMAKE_INSTALL_MESSAGE:STRING="NEVER"
+    -DCMAKE_INSTALL_MESSAGE:STRING=NEVER
 )
 
-BOOST_BUILDER_CONFIG="using gcc : : ${CXX} ;"
+BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ${CXX} ;"
 
 if ccache -v; then
-    echo "ccache: enabled"
+    echo "ccache enabled"
 
     export CCACHE_ENABLED=1
 
     CMAKE_ENVIRONMENT+=(
-        -DCMAKE_C_COMPILER_LAUNCHER:STRING="ccache"
-        -DCMAKE_CXX_COMPILER_LAUNCHER:STRING="ccache"
+        -DCMAKE_C_COMPILER_LAUNCHER:STRING=ccache
+        -DCMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
     )
 
     BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ccache ${CXX} ;"
