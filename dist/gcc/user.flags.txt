@@ -1,8 +1,9 @@
 -DATCODER
 -DNOMINMAX
 -DONLINE_JUDGE
--I/opt/ac_install/include
--I/opt/ac_install/include/torch/csrc/api/include
+-I/opt/ac_install/gcc/include
+-I/opt/ac_install/gcc/include/
+-I/opt/ac_install/gcc/include/torch/csrc/api/include
 -O2
 -Wall
 -Wextra
@@ -16,7 +17,7 @@
 -std=gnu++23
 -lstdc++exp
 -fopenmp
--L/opt/ac_install/lib
+-L/opt/ac_install/gcc/lib
 -labsl_bad_any_cast_impl
 -labsl_cordz_sample_token
 -labsl_failure_signal_handler
@@ -173,5 +174,5 @@
 -ltorch
 -ltorch_cpu
 -lc10
--Wl,-R/opt/ac_install/lib
+-Wl,-R/opt/ac_install/gcc/lib
 -l_lightgbm

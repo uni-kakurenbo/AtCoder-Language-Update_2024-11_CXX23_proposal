@@ -1,7 +1,8 @@
 -DATCODER
 -DNOMINMAX
 -DONLINE_JUDGE
--I/opt/ac_install/include
+-I/opt/ac_install/clang/include
+-I/opt/ac_install/clang/include/
 -O2
 -Wall
 -Wextra
@@ -20,7 +21,7 @@
 -std=gnu++23
 -stdlib=libc++
 -unwindlib=libunwind
--L/opt/ac_install/lib
+-L/opt/ac_install/clang/lib
 -labsl_bad_any_cast_impl
 -labsl_cordz_sample_token
 -labsl_failure_signal_handler
@@ -173,5 +174,5 @@
 -labsl_raw_logging_internal
 -labsl_log_severity
 -labsl_time_zone
--Wl,-R/opt/ac_install/lib
+-Wl,-R/opt/ac_install/clang/lib
 -lz3

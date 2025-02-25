@@ -9,8 +9,9 @@ BUILD_FLAGS=(
     "-DATCODER"
     "-DNOMINMAX"
     "-DONLINE_JUDGE"
-    "-I/opt/ac_install/include"
-    "-I/opt/ac_install/include/torch/csrc/api/include"
+    "-I/opt/ac_install/gcc/include"
+    "-I/opt/ac_install/gcc/include/"
+    "-I/opt/ac_install/gcc/include/torch/csrc/api/include"
     "-O2"
     "-Wall"
     "-Wextra"
@@ -24,7 +25,7 @@ BUILD_FLAGS=(
     "-std=gnu++23"
     "-lstdc++exp"
     "-fopenmp"
-    "-L/opt/ac_install/lib"
+    "-L/opt/ac_install/gcc/lib"
     "-labsl_bad_any_cast_impl"
     "-labsl_cordz_sample_token"
     "-labsl_failure_signal_handler"
@@ -181,13 +182,13 @@ BUILD_FLAGS=(
     "-ltorch"
     "-ltorch_cpu"
     "-lc10"
-    "-Wl,-R/opt/ac_install/lib"
+    "-Wl,-R/opt/ac_install/gcc/lib"
     "-l_lightgbm"
 )
 
 set -eu
 
-if [[ "${AC_VARIANT:-gcc}" = "gcc" ]]; then
+if [[ "${AC_VARIANT}" = "gcc" ]]; then
     g++-14 ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
 else
     clang++-19 ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"

@@ -7,7 +7,7 @@ VERSION="1.86.0"
 set -eu
 if "${AC_NO_BUILD_boost:-false}"; then exit 0; fi
 
-cd /tmp/ac_install/
+cd "${AC_TEMP_DIR}"
 
 echo "::group::boost"
 
@@ -34,7 +34,7 @@ fi
 sudo ./bootstrap.sh \
     --with-toolset="${AC_VARIANT}" \
     --without-libraries=mpi,graph_parallel \
-    --prefix=/opt/ac_install/
+    --prefix="${AC_INSTALL_DIR}"
 
 sudo ./b2 \
     toolset="${AC_VARIANT}" \

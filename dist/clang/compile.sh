@@ -9,7 +9,8 @@ BUILD_FLAGS=(
     "-DATCODER"
     "-DNOMINMAX"
     "-DONLINE_JUDGE"
-    "-I/opt/ac_install/include"
+    "-I/opt/ac_install/clang/include"
+    "-I/opt/ac_install/clang/include/"
     "-O2"
     "-Wall"
     "-Wextra"
@@ -28,7 +29,7 @@ BUILD_FLAGS=(
     "-std=gnu++23"
     "-stdlib=libc++"
     "-unwindlib=libunwind"
-    "-L/opt/ac_install/lib"
+    "-L/opt/ac_install/clang/lib"
     "-labsl_bad_any_cast_impl"
     "-labsl_cordz_sample_token"
     "-labsl_failure_signal_handler"
@@ -181,13 +182,13 @@ BUILD_FLAGS=(
     "-labsl_raw_logging_internal"
     "-labsl_log_severity"
     "-labsl_time_zone"
-    "-Wl,-R/opt/ac_install/lib"
+    "-Wl,-R/opt/ac_install/clang/lib"
     "-lz3"
 )
 
 set -eu
 
-if [[ "${AC_VARIANT:-gcc}" = "gcc" ]]; then
+if [[ "${AC_VARIANT}" = "gcc" ]]; then
     g++-14 ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
 else
     clang++-19 ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"

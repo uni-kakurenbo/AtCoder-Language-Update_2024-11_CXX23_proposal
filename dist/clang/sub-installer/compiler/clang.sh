@@ -7,7 +7,7 @@ VERSION="19.1.7"
 set -eu
 if "${AC_NO_BUILD_COMPILER:-false}"; then exit 0; fi
 
-cd /tmp/ac_install/
+cd "${AC_TEMP_DIR}"
 
 echo "::group::Clang"
 

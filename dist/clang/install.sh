@@ -21,11 +21,14 @@ BUILD_FLAGS=(
 
 set -eu
 
-sudo mkdir -p /tmp/ac_install/
-sudo mkdir -p /opt/ac_install/
+export AC_TEMP_DIR="/tmp/ac_install/${AC_VARIANT}"
+export AC_INSTALL_DIR="/opt/ac_install/${AC_VARIANT}"
+
+rm -rf "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}"
+sudo mkdir -p "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}/include" "${AC_INSTALL_DIR}/lib"
 
 ### Compiler
-if [[ "${AC_VARIANT:-gcc}" == "gcc" ]]; then
+if [[ "${AC_VARIANT}" == "gcc" ]]; then
 
     # gcc
     (
@@ -52,7 +55,7 @@ else
         set -eu
         if "${AC_NO_BUILD_COMPILER:-false}"; then exit 0; fi
 
-        cd /tmp/ac_install/
+        cd "${AC_TEMP_DIR}"
 
         echo "::group::Clang"
 
@@ -73,10 +76,10 @@ else
     )
 
     { # generate 'slack' bits/stdc++.h
-        sudo mkdir -p /opt/ac_install/include/bits/
+        sudo mkdir -p "${AC_INSTALL_DIR}/include/bits"
 
         find /usr/lib/llvm-19/include/c++/v1 -maxdepth 1 -type f ! -iname '__**' ! -iname '**.**' -exec echo '#include <{}>' \; |
-            sudo tee /opt/ac_install/include/bits/stdc++.h
+            sudo tee "${AC_INSTALL_DIR}/include/bits/stdc++.h"
     }
 
     CC="clang-19"
@@ -96,19 +99,19 @@ CMAKE_ENVIRONMENT=(
     -DCMAKE_C_COMPILER:STRING="${CC}"
     -DCMAKE_CXX_COMPILER:STRING="${CXX}"
 
-    -DCMAKE_INSTALL_MESSAGE:STRING="NEVER"
+    -DCMAKE_INSTALL_MESSAGE:STRING=NEVER
 )
 
-BOOST_BUILDER_CONFIG="using gcc : : ${CXX} ;"
+BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ${CXX} ;"
 
 if ccache -v; then
-    echo "ccache: enabled"
+    echo "ccache enabled"
 
     export CCACHE_ENABLED=1
 
     CMAKE_ENVIRONMENT+=(
-        -DCMAKE_C_COMPILER_LAUNCHER:STRING="ccache"
-        -DCMAKE_CXX_COMPILER_LAUNCHER:STRING="ccache"
+        -DCMAKE_C_COMPILER_LAUNCHER:STRING=ccache
+        -DCMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
     )
 
     BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ccache ${CXX} ;"
@@ -122,40 +125,40 @@ export BOOST_BUILDER_CONFIG
     VERSION="20240722.0"
 
     set -eu
-    if [[ "${AC_NO_BUILD_abseil:-false}" == true && "${AC_NO_BUILD_or_tools-false}" == true ]]; then exit 0; fi
+    if [[ "${AC_NO_BUILD_abseil:-false}" == true && "${AC_NO_BUILD_or_tools:-false}" == true ]]; then exit 0; fi
 
-    cd /tmp/ac_install/
+    cd "${AC_TEMP_DIR}"
 
     echo "::group::abseil"
 
-    sudo mkdir -p ./abseil/
+    sudo mkdir -p ./abseil
 
     sudo wget -q "https://github.com/abseil/abseil-cpp/releases/download/${VERSION}/abseil-cpp-${VERSION}.tar.gz" -O ./abseil.tar.gz
-    sudo tar -I pigz -xf ./abseil.tar.gz -C ./abseil/ --strip-components 1
+    sudo tar -I pigz -xf ./abseil.tar.gz -C ./abseil --strip-components 1
 
-    cd ./abseil/
+    cd ./abseil
 
-    sudo mkdir -p ./build/ && cd ./build/
+    sudo mkdir -p ./build && cd ./build
 
     CMAKE_ARGUMENTS=(
         "${CMAKE_ENVIRONMENT[@]}"
         -DABSL_ENABLE_INSTALL:BOOL=ON
         -DABSL_PROPAGATE_CXX_STD:BOOL=ON
         -DABSL_USE_SYSTEM_INCLUDES:BOOL=ON
-        -DCMAKE_INSTALL_PREFIX:PATH=/opt/ac_install/
+        -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}"
         -DCMAKE_CXX_FLAGS:STRING="-fPIC ${BUILD_FLAGS[*]}"
     )
 
     if [[ -v AC_RUN_TEST ]] && [[ "${AC_RUN_TEST}" = "true" ]]; then
-        sudo cmake -DABSL_BUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON "${CMAKE_ARGUMENTS[@]}" ../
+        sudo cmake -DABSL_BUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON "${CMAKE_ARGUMENTS[@]}" ..
 
         sudo make "-j${PARALLEL}"
         sudo ctest --parallel "${PARALLEL}"
     else
-        sudo cmake "${CMAKE_ARGUMENTS[@]}" ../
+        sudo cmake "${CMAKE_ARGUMENTS[@]}" ..
     fi
 
-    sudo cmake --build ./ --target install
+    sudo cmake --build . --target install
 
     echo "::endgroup::"
 )
@@ -167,12 +170,14 @@ export BOOST_BUILDER_CONFIG
     set -eu
     if "${AC_NO_BUILD_ac_library:-false}"; then exit 0; fi
 
-    cd /tmp/ac_install/
+    cd "${AC_TEMP_DIR}"
 
     echo "::group::AC Library"
 
     sudo wget -q "https://github.com/atcoder/ac-library/releases/download/v${VERSION}/ac-library.zip" -O ./ac-library.zip
-    sudo unzip -oq ./ac-library.zip -d /opt/ac_install/include/
+    sudo unzip -oq ./ac-library.zip -d ./ac-library
+
+    cp -rf ./ac-library/atcoder "${AC_INSTALL_DIR}/include"
 
     echo "::endgroup::"
 )
@@ -184,7 +189,7 @@ export BOOST_BUILDER_CONFIG
     set -eu
     if "${AC_NO_BUILD_boost:-false}"; then exit 0; fi
 
-    cd /tmp/ac_install/
+    cd "${AC_TEMP_DIR}"
 
     echo "::group::boost"
 
@@ -211,7 +216,7 @@ export BOOST_BUILDER_CONFIG
     sudo ./bootstrap.sh \
         --with-toolset="${AC_VARIANT}" \
         --without-libraries=mpi,graph_parallel \
-        --prefix=/opt/ac_install/
+        --prefix="${AC_INSTALL_DIR}"
 
     sudo ./b2 \
         toolset="${AC_VARIANT}" \
@@ -231,7 +236,7 @@ export BOOST_BUILDER_CONFIG
 (
     VERSION="3.4.0-4"
 
-    set -eu
+    set -xeu
     if [[ "${AC_NO_BUILD_eigen:-false}" == true && \
         "${AC_NO_BUILD_light_gbm:-false}" == true && \
         "${AC_NO_BUILD_or_tools:-false}" == true ]]; then
@@ -242,20 +247,22 @@ export BOOST_BUILDER_CONFIG
 
     sudo apt-get install -y "libeigen3-dev=${VERSION}"
 
-    sudo mkdir -p /opt/ac_install/include/
-    sudo mkdir -p /opt/ac_install/cmake/
+    sudo mkdir -p "${AC_INSTALL_DIR}/cmake"
 
-    sudo cp -Trf /usr/include/eigen3/ /opt/ac_install/include/
+    sudo cp -Trf /usr/include/eigen3 "${AC_INSTALL_DIR}/include"
 
     # copy and patch cmake files to build OR-Tools.
     sudo cp -f \
         /usr/share/eigen3/cmake/Eigen3Targets.cmake \
         /usr/share/eigen3/cmake/Eigen3Config.cmake \
-        /opt/ac_install/cmake/
+        "${AC_INSTALL_DIR}/cmake"
+
+    CMAKE_PATH="${AC_INSTALL_DIR}/include"
+    CMAKE_PATH="${CMAKE_PATH//'/opt/'/}"
 
     sudo sed -i \
-        -e 's/include\/eigen3/opt\/ac_install\/include\//g' \
-        /opt/ac_install/cmake/Eigen3Targets.cmake
+        -e "s/include\/eigen3/${CMAKE_PATH//'/'/'\/'}/g" \
+        "${AC_INSTALL_DIR}/cmake/Eigen3Targets.cmake"
 
     sudo apt-get remove -y libeigen3-dev
 
@@ -282,27 +289,24 @@ export BOOST_BUILDER_CONFIG
 
     set -eu
     if [[ "${AC_NO_BUILD_libtorch:-false}" == true || \
-        "${AC_VARIANT:-false}" == "clang" ]]; then
+        "${AC_VARIANT}" == "clang" ]]; then
         exit 0
     fi
 
-    cd /tmp/ac_install/
+    cd "${AC_TEMP_DIR}"
 
     echo "::group::LibTorch"
 
     sudo wget "https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-${VERSION}%2Bcpu.zip" -O ./libtorch.zip
-    sudo unzip -o ./libtorch.zip -d ./
-
-    sudo mkdir -p /opt/ac_install/include/
-    sudo mkdir -p /opt/ac_install/lib/
+    sudo unzip -o ./libtorch.zip -d .
 
     # remove protobuf, which or-tools has as its dependencies.
     sudo rm -f ./libtorch/lib/libprotobuf.a
     sudo rm -f ./libtorch/lib/libprotobuf-lite.a
     sudo rm -f ./libtorch/lib/libprotoc.a
 
-    sudo cp -Trf ./libtorch/include/ /opt/ac_install/include/
-    sudo cp -Trf ./libtorch/lib/ /opt/ac_install/lib/
+    sudo cp -Trf ./libtorch/include "${AC_INSTALL_DIR}/include"
+    sudo cp -Trf ./libtorch/lib "${AC_INSTALL_DIR}/lib"
 
     echo "::endgroup::"
 )
@@ -312,35 +316,35 @@ export BOOST_BUILDER_CONFIG
     VERSION=null
 
     set -eu
-    if [[ "${AC_NO_BUILD_light_gbm:-false}" == true || "${AC_VARIANT:-false}" == "clang" ]]; then exit 0; fi
+    if [[ "${AC_NO_BUILD_light_gbm:-false}" == true || "${AC_VARIANT}" == "clang" ]]; then exit 0; fi
 
-    cd /tmp/ac_install/
+    cd "${AC_TEMP_DIR}"
 
     echo "::group::LightGBM"
 
     if [ -d ./light-gbm/ ]; then sudo rm -rf ./light-gbm/; fi
 
-    sudo mkdir -p ./light-gbm/
+    sudo mkdir -p ./light-gbm
 
     sudo wget -q "https://github.com/microsoft/LightGBM/releases/download/v${VERSION}/lightgbm-${VERSION}.tar.gz" -O ./light-gbm.tar.gz
     sudo tar -I pigz -xf ./light-gbm.tar.gz -C ./light-gbm/ --strip-components 1
 
-    cd ./light-gbm/
+    cd ./light-gbm
 
-    sudo rm -rf ./lightgbm/
-    sudo rm -rf ./external_libs/eigen/
+    sudo rm -rf ./lightgbm
+    sudo rm -rf ./external_libs/eigen
 
-    sudo mkdir -p ./build/ && cd ./build/
+    sudo mkdir -p ./build && cd ./build
 
     sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
         -DBUILD_CLI:BOOL=OFF \
         -DBUILD_STATIC_LIB=ON \
         -DUSE_HOMEBREW_FALLBACK=OFF \
-        -DCMAKE_INSTALL_PREFIX:PATH=/opt/ac_install/ \
-        -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]} -I/opt/ac_install/include/" \
-        ../
+        -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
+        -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]} -I${AC_INSTALL_DIR}/include" \
+        ..
 
-    sudo cmake --build ./ --target install
+    sudo cmake --build . --target install
 
     echo "::endgroup::"
 )
@@ -352,16 +356,16 @@ export BOOST_BUILDER_CONFIG
     set -eu
     if "${AC_NO_BUILD_or_tools:-false}"; then exit 0; fi
 
-    cd /tmp/ac_install/
+    cd "${AC_TEMP_DIR}"
 
     echo "::group::OR-Tools"
 
-    sudo mkdir -p ./or-tools/
+    sudo mkdir -p ./or-tools
 
     sudo wget -q "https://github.com/google/or-tools/archive/refs/tags/v${VERSION}.tar.gz" -O ./or-tools.tar.gz
-    sudo tar -I pigz -xf ./or-tools.tar.gz -C ./or-tools/ --strip-components 1
+    sudo tar -I pigz -xf ./or-tools.tar.gz -C ./or-tools --strip-components 1
 
-    cd ./or-tools/
+    cd ./or-tools
 
     BUILD_TESTING=OFF
 
@@ -369,7 +373,7 @@ export BOOST_BUILDER_CONFIG
         BUILD_TESTING=ON
     fi
 
-    sudo mkdir -p ./build/ && cd ./build/
+    sudo mkdir -p ./build && cd ./build
 
     sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
         -DBUILD_ZLIB:BOOL=ON -DBUILD_Protobuf:BOOL=ON -DBUILD_re2:BOOL=ON \
@@ -379,16 +383,16 @@ export BOOST_BUILDER_CONFIG
         -DUSE_SCIP:BOOL=ON -DBUILD_SCIP:BOOL=ON \
         -DBUILD_SAMPLES:BOOL=OFF -DBUILD_EXAMPLES:BOOL=OFF \
         -DBUILD_TESTING:BOOL="${BUILD_TESTING}" \
-        -DCMAKE_PREFIX_PATH:PATH=/opt/ac_install/ \
-        -DCMAKE_INSTALL_PREFIX:PATH=/opt/ac_install/ \
+        -DCMAKE_PREFIX_PATH:PATH="${AC_INSTALL_DIR}" \
+        -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
         -DBUILD_SHARED_LIBS:BOOL=OFF \
         -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]}" \
-        ../
+        ..
 
-    sudo cmake --build ./ --config Release --target install
+    sudo cmake --build . --config Release --target install
 
     if [[ -v AC_RUN_TEST ]] && [[ "${AC_RUN_TEST}" = "true" ]]; then
-        sudo cmake --build ./ --config Release --target test --parallel "${PARALLEL}"
+        sudo cmake --build . --config Release --target test --parallel "${PARALLEL}"
     fi
 
     echo "::endgroup::"
@@ -401,18 +405,16 @@ export BOOST_BUILDER_CONFIG
     set -eu
     if "${AC_NO_BUILD_range_v3:-false}"; then exit 0; fi
 
-    cd /tmp/ac_install/
+    cd "${AC_TEMP_DIR}"
 
     echo "::group::range-v3"
 
-    sudo mkdir -p ./range-v3/
+    sudo mkdir -p ./range-v3
 
     sudo wget -q "https://github.com/ericniebler/range-v3/archive/refs/tags/${VERSION}.tar.gz" -O ./range-v3.tar.gz
-    sudo tar -I pigz -xf ./range-v3.tar.gz -C ./range-v3/ --strip-components 1
+    sudo tar -I pigz -xf ./range-v3.tar.gz -C ./range-v3 --strip-components 1
 
-    sudo mkdir -p /opt/ac_install/include/
-
-    sudo cp -Trf ./range-v3/include/ /opt/ac_install/include/
+    sudo cp -Trf ./range-v3/include "${AC_INSTALL_DIR}/include"
 
     echo "::endgroup::"
 )
@@ -424,24 +426,24 @@ export BOOST_BUILDER_CONFIG
     set -eu
     if "${AC_NO_BUILD_unordered_dense:-false}"; then exit 0; fi
 
-    cd /tmp/ac_install/
+    cd "${AC_TEMP_DIR}"
 
     echo "::group::unordered_dense"
 
-    sudo mkdir -p ./unordered_dense/
+    sudo mkdir -p ./unordered_dense
 
     sudo wget "https://github.com/martinus/unordered_dense/archive/refs/tags/v${VERSION}.tar.gz" -O ./unordered_dense.tar.gz
-    sudo tar -I pigz -xf ./unordered_dense.tar.gz -C ./unordered_dense/ --strip-components 1
+    sudo tar -I pigz -xf ./unordered_dense.tar.gz -C ./unordered_dense --strip-components 1
 
-    cd ./unordered_dense/
+    cd ./unordered_dense
 
-    sudo mkdir -p ./build/ && cd ./build/
+    sudo mkdir -p ./build && cd ./build
 
     sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
-        -DCMAKE_INSTALL_PREFIX:PATH=/opt/ac_install/ \
-        ../
+        -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
+        ..
 
-    sudo cmake --build ./ --target install
+    sudo cmake --build . --target install
 
     echo "::endgroup::"
 )
@@ -453,26 +455,26 @@ export BOOST_BUILDER_CONFIG
     set -eu
     if "${AC_NO_BUILD_z3:-false}"; then exit 0; fi
 
-    cd /tmp/ac_install/
+    cd "${AC_TEMP_DIR}"
 
     echo "::group::Z3"
 
-    sudo mkdir -p ./z3/
+    sudo mkdir -p ./z3
 
     sudo wget -q "https://github.com/Z3Prover/z3/archive/refs/tags/z3-${VERSION}.tar.gz" -O ./z3.tar.gz
-    sudo tar -I pigz -xf ./z3.tar.gz -C ./z3/ --strip-components 1
+    sudo tar -I pigz -xf ./z3.tar.gz -C ./z3 --strip-components 1
 
-    cd ./z3/
+    cd ./z3
 
-    sudo mkdir -p ./build/ && cd ./build/
+    sudo mkdir -p ./build && cd ./build
 
     sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
         -DCMAKE_BUILD_TYPE:STRING=Release \
-        -DCMAKE_INSTALL_PREFIX:PATH=/opt/ac_install/ \
+        -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
         -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]}" \
-        ../
+        ..
 
-    sudo cmake --build ./ --target install
+    sudo cmake --build . --target install
 
     echo "::endgroup::"
 )
@@ -480,7 +482,7 @@ export BOOST_BUILDER_CONFIG
 if [ -v ATCODER ]; then
     echo "::group::finalize"
 
-    find /opt/ac_install/ \
+    find "${AC_INSTALL_DIR}" \
         -name cmake -or -name pkgconfig -or -name bin -or -name share \
         -type d -print0 |
         xargs -0 sudo rm -rf
