@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="4.4.0"
+VERSION="4.5.0"
 
 set -eu
 if "${AC_NO_BUILD_unordered_dense:-false}"; then exit 0; fi
