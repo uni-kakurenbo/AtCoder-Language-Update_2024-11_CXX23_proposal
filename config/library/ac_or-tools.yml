@@ -6,6 +6,15 @@ Requires: protobuf re2
 
 Cflags: >
     -I/opt/ac_install/${variant}/include
+    -DOR_PROTO_DLL=""
+    -DUSE_LP_PARSER
+    -DUSE_MATH_OPT
+    -DUSE_BOP
+    -DUSE_CBC
+    -DUSE_CLP
+    -DUSE_GLOP
+    -DUSE_PDLP
+    -DUSE_SCIP
 
 Libs: >
     -L/opt/ac_install/${variant}/lib

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 
-WORKING_DIRECTORY="$(dirname "$0")/../"
+WORKING_DIRECTORY="$(dirname "$0")/.."
 DIST_DIR="./dist/$1"
 
 # shellcheck source=/dev/null

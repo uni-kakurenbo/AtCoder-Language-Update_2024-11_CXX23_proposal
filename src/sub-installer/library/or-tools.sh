@@ -32,9 +32,9 @@ sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
     -DBUILD_TESTING:BOOL="${BUILD_TESTING}" \
     -DCMAKE_PREFIX_PATH:PATH="${AC_INSTALL_DIR}" \
     -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
-    \
+    -DBUILD_SHARED_LIBS:BOOL=OFF \
     -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]}" \
-    .. # -DBUILD_SHARED_LIBS:BOOL=OFF \
+    ..
 
 sudo cmake --build . --config Release --target install
 
