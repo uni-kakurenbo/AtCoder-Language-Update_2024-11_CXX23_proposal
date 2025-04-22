@@ -8,13 +8,12 @@
 // ref: https://cpprefjp.github.io/reference/ranges/to.html
 
 int main() {
-    using namespace std;
     using namespace std::literals;
 
     auto str = "the quick brown fox"sv;
-    auto words = views::split(str, ' ') | ranges::to<vector<string>>();
+    auto words = std::views::split(str, ' ') | ranges::to<std::vector<std::string>>();
 
     for(const auto& word: words) {
-        println("{}", word);
+        std::println("{}", word);
     }
 }
