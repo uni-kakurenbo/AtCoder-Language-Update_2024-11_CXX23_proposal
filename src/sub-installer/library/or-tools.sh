@@ -22,6 +22,7 @@ fi
 sudo mkdir -p ./build && cd ./build
 
 sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
+    -DBUILD_CXX:BOOL=ON \
     -DBUILD_ZLIB:BOOL=ON -DBUILD_Protobuf:BOOL=ON -DBUILD_re2:BOOL=ON \
     -DUSE_COINOR:BOOL=ON -DBUILD_CoinUtils:BOOL=ON -DBUILD_Osi:BOOL=ON -DBUILD_Clp:BOOL=ON -DBUILD_Cgl:BOOL=ON -DBUILD_Cbc:BOOL=ON \
     -DUSE_GLPK:BOOL=ON -DBUILD_GLPK:BOOL=ON \
@@ -31,9 +32,9 @@ sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
     -DBUILD_TESTING:BOOL="${BUILD_TESTING}" \
     -DCMAKE_PREFIX_PATH:PATH="${AC_INSTALL_DIR}" \
     -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
-    -DBUILD_SHARED_LIBS:BOOL=OFF \
+    \
     -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]}" \
-    ..
+    .. # -DBUILD_SHARED_LIBS:BOOL=OFF \
 
 sudo cmake --build . --config Release --target install
 
