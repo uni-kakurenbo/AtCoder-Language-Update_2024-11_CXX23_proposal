@@ -24,7 +24,7 @@ version = '19.1.7'
     url = 'https://raw.githubusercontent.com/llvm/llvm-project/main/llvm/LICENSE.TXT'
 
 [library.abseil]
-    version = '20240722.0'
+    version = '20250127.1'
     license = [
         { name = 'Apache-2.0', url = 'https://github.com/abseil/abseil-cpp/blob/master/LICENSE' },
     ]
@@ -36,7 +36,7 @@ version = '19.1.7'
     ]
 
 [library.boost]
-    version = '1.86.0'
+    version = '1.88.0'
     license = [
         { name = 'BSL-1.0', url = 'https://www.boost.org/LICENSE_1_0.txt' }
     ]
@@ -76,14 +76,14 @@ version = '19.1.7'
 
 
 [library.unordered_dense]
-    version = '4.4.0'
+    version = '4.5.0'
     license = [
         { name = 'MIT', url = 'https://github.com/martinus/unordered_dense/blob/main/LICENSE' },
     ]
 
 
 [library.or-tools]
-    version = '9.11'
+    version = '9.12'
     license = [
         { name = 'Apache-2.0', url = 'https://github.com/google/or-tools/blob/stable/LICENSE' },
     ]
@@ -178,7 +178,7 @@ version = '19.1.7'
 
 
 [library.z3]
-    version = '4.13.3'
+    version = '4.14.1'
     license = [
         { name = 'MIT', url = 'https://github.com/Z3Prover/z3/blob/z3-4.13.3/LICENSE.txt' }
     ]
@@ -221,7 +221,7 @@ version = '19.1.7'
 
 
 [variant.gcc.library.light-gbm]
-    version = '4.5.0'
+    version = '4.6.0'
     license = [
         { name = 'MIT', url = 'https://github.com/microsoft/light-gbm/blob/master/LICENSE' }
     ]
@@ -253,4 +253,3 @@ version = '19.1.7'
 [[variant.gcc.library.fmt.license]]
     name = 'X11-distribute-modifications-variant'
     url = 'https://github.com/fmtlib/fmt/blob/f5e54359df4c26b6230fc61d38aa294581393084/LICENSE.rst'
-
