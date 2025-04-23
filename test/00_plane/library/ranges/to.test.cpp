@@ -11,7 +11,7 @@ int main() {
     using namespace std::literals;
 
     auto str = "the quick brown fox"sv;
-    auto words = std::views::split(str, ' ') | ranges::to<std::vector<std::string>>();
+    auto words = std::views::split(str, ' ') | std::ranges::to<std::vector<std::string>>();
 
     for(const auto& word: words) {
         std::println("{}", word);
