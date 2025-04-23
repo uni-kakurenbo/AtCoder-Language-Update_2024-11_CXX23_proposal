@@ -252,7 +252,7 @@ jobs:
                   set -eu
 
                   if "${{ matrix.variant == 'clang' }}"; then
-                    sudo apt-get install -y clang-19 libc++-19-dev
+                    sudo apt-get install -y clang-19 libc++-19-dev lld
                   fi
 
                   chmod +x -R ./dist/
@@ -382,7 +382,7 @@ jobs:
                   set -eu
 
                   if "${{ matrix.variant == 'clang' }}"; then
-                    sudo apt-get install -y clang-19 libc++-19-dev
+                    sudo apt-get install -y clang-19 libc++-19-dev lld
                   else
                     ./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh
                   fi
