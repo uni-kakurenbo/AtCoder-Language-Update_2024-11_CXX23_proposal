@@ -27,6 +27,8 @@ else
     CXX="clang++-19"
 fi
 
+"${CXX}" --version
+
 ### Libraries
 echo "::group::tools"
 sudo apt-get install -y git cmake ninja-build pigz pbzip2

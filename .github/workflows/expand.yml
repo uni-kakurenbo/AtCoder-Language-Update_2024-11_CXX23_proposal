@@ -356,6 +356,7 @@ jobs:
             matrix:
                 # id: [0, 1, 2, 3, 4, 5, 6, 7]
                 variant: ["gcc", "clang"]
+                type: ["individual", "merged"]
             fail-fast: false
 
         steps:
@@ -401,7 +402,23 @@ jobs:
 
                   chmod +x -R ./dist/
 
-                  ./.github/workflows/internal/test.sh "${{ matrix.variant }}" # "${TESTS[@]}"
+                  if [ "${{ matrix.type }}" == "individual" ]; then
+                    ./.github/workflows/internal/test.sh "${{ matrix.variant }}" # "${TESTS[@]}"
+                  else
+                    ./.github/workflows/internal/merge-tests.sh
+
+                    DIST_DIR="./dist/${{ matrix.variant }}"
+                    mkdir -p "${DIST_DIR}"
+
+                    mkdir -p ./test/tmp
+                    cd ./test/tmp
+
+                    cp -f "../../${DIST_DIR}/compile.sh" ./compile.sh
+                    cp -f ../merged.cpp ./Main.cpp
+
+                    ./compile.sh
+                    ./a.out
+                  fi
 
     gen-config:
         name: Generate Configuration File
