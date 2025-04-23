@@ -404,8 +404,7 @@ jobs:
                     DIST_DIR="./dist/${{ matrix.variant }}"
                     mkdir -p "${DIST_DIR}"
 
-                    mkdir -p ./test/tmp
-                    cd ./test/tmp
+                    mkdir -p ./test/tmp & cd ./test/tmp
 
                     cp -f "../../${DIST_DIR}/compile.sh" ./compile.sh
                     cp -f ../merged.cpp ./Main.cpp
