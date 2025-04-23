@@ -384,7 +384,7 @@ jobs:
                   set -eu
 
                   mkdir -p "${AC_TEMP_DIR}"
-                  (./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh)
+                  ./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh
 
                   # TESTS=($(
                   #     find ./test/ -type f -iname *.test.cpp -printf '%P\n' | \
