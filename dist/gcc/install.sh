@@ -61,8 +61,8 @@ else
 
         sudo ./llvm.sh 19
 
-        sudo ln -s "$(which clang-19)" /usr/bin/clang
-        sudo ln -s "$(which clang++-19)" /usr/bin/clang++
+        sudo ln -sf "$(which clang-19)" /usr/bin/clang
+        sudo ln -sf "$(which clang++-19)" /usr/bin/clang++
 
         sudo apt-get install -y libc++-19-dev
         sudo apt-get purge -y --auto-remove lsb-release software-properties-common gnupg
