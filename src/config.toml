@@ -63,15 +63,15 @@ version = '19.1.7'
     url = 'https://github.com/ericniebler/range-v3/blob/0.12.0/LICENSE.txt#L2'
 
 [[library.range-v3.license]]
-    name = '!License-dummy'
-    url = 'https://github.com/ericniebler/range-v3/blob/0.12.0/LICENSE.txt#L28'
+    name = 'MIT'
+    url = 'https://github.com/ericniebler/range-v3/blob/0.12.0/LICENSE.txt#L85-L104'
 
 [[library.range-v3.license]]
-    name = '!License-dummy'
+    name = '!License-26'
     url = 'https://github.com/ericniebler/range-v3/blob/0.12.0/LICENSE.txt#L107'
 
 [[library.range-v3.license]]
-    name = '!License-dummy'
+    name = '!License-27'
     url = 'https://github.com/ericniebler/range-v3/blob/0.12.0/LICENSE.txt#L127'
 
 
