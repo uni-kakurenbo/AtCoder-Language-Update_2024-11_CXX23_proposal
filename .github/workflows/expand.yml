@@ -252,10 +252,7 @@ jobs:
                   set -eu
 
                   if "${{ matrix.variant == 'clang' }}"; then
-                    sudo apt-get install -y clang-18 libc++-19-dev
-
-                    sudo ln -sT /usr/bin/clang-18 /usr/bin/clang-19
-                    sudo ln -sT /usr/bin/clang++-18 /usr/bin/clang++-19
+                    sudo apt-get install -y clang-19 libc++-19-dev lld
                   fi
 
                   chmod +x -R ./dist/
@@ -381,17 +378,13 @@ jobs:
 
             - name: Test
               if: github.event.inputs.test-mode != 'none'
+              env:
+                  AC_TEMP_DIR: /tmp/ac_install/${{ matrix.variant }}
               run: |
                   set -eu
 
-                  if "${{ matrix.variant == 'clang' }}"; then
-                    sudo apt-get install -y clang-18 libc++-19-dev
-
-                    sudo ln -s /usr/bin/clang-18 /usr/bin/clang-19
-                    sudo ln -s /usr/bin/clang++-18 /usr/bin/clang++-19
-                  else
-                    ./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh
-                  fi
+                  mkdir -p "${AC_TEMP_DIR}"
+                  ./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh
 
                   # TESTS=($(
                   #     find ./test/ -type f -iname *.test.cpp -printf '%P\n' | \
@@ -410,8 +403,7 @@ jobs:
                     DIST_DIR="./dist/${{ matrix.variant }}"
                     mkdir -p "${DIST_DIR}"
 
-                    mkdir -p ./test/tmp
-                    cd ./test/tmp
+                    mkdir -p ./test/tmp && cd ./test/tmp
 
                     cp -f "../../${DIST_DIR}/compile.sh" ./compile.sh
                     cp -f ../merged.cpp ./Main.cpp
