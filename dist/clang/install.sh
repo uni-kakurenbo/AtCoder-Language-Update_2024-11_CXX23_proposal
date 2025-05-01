@@ -24,8 +24,34 @@ set -eu
 export AC_TEMP_DIR="/tmp/ac_install/${AC_VARIANT}"
 export AC_INSTALL_DIR="/opt/ac_install/${AC_VARIANT}"
 
-rm -rf "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}"
 sudo mkdir -p "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}/include" "${AC_INSTALL_DIR}/lib"
+
+echo "::group::tools"
+sudo apt-get install -y git cmake ninja-build pigz pbzip2 lld
+
+echo "::endgroup::"
+
+### Configure
+CMAKE_ENVIRONMENT=(
+    -G "Ninja"
+    -DLINK_FLAGS:STRING="-fuse-ld=lld"
+    -DCFLAGS:STRING="-w"
+    -DCXXFLAGS:STRING="-w"
+    -DCMAKE_INSTALL_MESSAGE:STRING=NEVER
+)
+
+if ccache -v; then
+    echo "ccache enabled"
+
+    export CCACHE_ENABLED=1
+
+    CMAKE_ENVIRONMENT+=(
+        -DCMAKE_C_COMPILER_LAUNCHER:STRING=ccache
+        -DCMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
+    )
+fi
+
+export CMAKE_ENVIRONMENT
 
 ### Compiler
 if [[ "${AC_VARIANT}" == "gcc" ]]; then
@@ -50,7 +76,7 @@ else
 
     # clang
     (
-        VERSION="19.1.7"
+        VERSION="20.1.3"
 
         set -eu
         if "${AC_NO_BUILD_COMPILER:-false}"; then exit 0; fi
@@ -59,18 +85,11 @@ else
 
         echo "::group::Clang"
 
-        sudo apt-get install -y lsb-release software-properties-common gnupg
-        sudo wget https://apt.llvm.org/llvm.sh
+        sudo wget -q "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/LLVM-${VERSION}-Linux-X64.tar.xz" -O ./llvm.tar.xz
+        sudo xz -dk -T0 ./llvm.tar.xz && sudo rm -rf ./llvm.tar.xz
+        sudo tar -xf ./llvm.tar -C /usr --strip-components 1 && sudo rm -rf ./llvm.tar
 
-        sudo chmod +x ./llvm.sh
-
-        sudo ./llvm.sh 19
-
-        sudo ln -sf "$(which clang-19)" /usr/bin/clang
-        sudo ln -sf "$(which clang++-19)" /usr/bin/clang++
-
-        sudo apt-get install -y libc++-19-dev
-        sudo apt-get purge -y --auto-remove lsb-release software-properties-common gnupg
+        sudo ln -sf /usr/bin/clang++ /usr/bin/clang++-20
 
         echo "::endgroup::"
     )
@@ -78,49 +97,31 @@ else
     { # generate 'slack' bits/stdc++.h
         sudo mkdir -p "${AC_INSTALL_DIR}/include/bits"
 
-        find /usr/lib/llvm-19/include/c++/v1 -maxdepth 1 -type f ! -iname '__**' ! -iname '**.**' -exec echo '#include <{}>' \; |
+        find "/usr/include/c++/v1" -maxdepth 1 -type f ! -iname '__**' ! -iname '**.**' -exec echo '#include <{}>' \; |
             sudo tee "${AC_INSTALL_DIR}/include/bits/stdc++.h"
     }
 
-    CC="clang-19"
-    CXX="clang++-19"
+    CC="clang-20"
+    CXX="clang++-20"
 fi
 
 "${CXX}" --version
 
-### Libraries
-echo "::group::tools"
-sudo apt-get install -y git cmake ninja-build pigz pbzip2
-echo "::endgroup::"
-
-CMAKE_ENVIRONMENT=(
-    -G "Ninja"
-
-    -DCFLAGS:STRING="-w"
-
+CMAKE_ENVIRONMENT+=(
     -DCMAKE_C_COMPILER:STRING="${CC}"
     -DCMAKE_CXX_COMPILER:STRING="${CXX}"
-
-    -DCMAKE_INSTALL_MESSAGE:STRING=NEVER
 )
 
-BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ${CXX} ;"
-
 if ccache -v; then
-    echo "ccache enabled"
-
-    export CCACHE_ENABLED=1
-
-    CMAKE_ENVIRONMENT+=(
-        -DCMAKE_C_COMPILER_LAUNCHER:STRING=ccache
-        -DCMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
-    )
-
     BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ccache ${CXX} ;"
+else
+    BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ${CXX} ;"
 fi
 
 export CMAKE_ENVIRONMENT
 export BOOST_BUILDER_CONFIG
+
+### Libraries
 
 # abseil
 (
@@ -490,7 +491,7 @@ if [ -v ATCODER ]; then
         -type d -print0 |
         xargs -0 sudo rm -rf
 
-    sudo apt-get purge -y --auto-remove git cmake ninja-build pigz pbzip2
+    sudo apt-get purge -y --auto-remove git cmake ninja-build pigz pbzip2 lld
 
     echo "::endgroup::"
 fi
