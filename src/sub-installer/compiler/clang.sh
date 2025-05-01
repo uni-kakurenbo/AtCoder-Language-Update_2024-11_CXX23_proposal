@@ -6,17 +6,10 @@ cd "${AC_TEMP_DIR}"
 
 echo "::group::Clang"
 
-sudo apt-get install -y lsb-release software-properties-common gnupg
-sudo wget https://apt.llvm.org/llvm.sh
+sudo wget -q "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/LLVM-${VERSION}-Linux-X64.tar.xz" -O ./llvm.tar.xz
+sudo xz -dk -T0 ./llvm.tar.xz && sudo rm -rf ./llvm.tar.xz
+sudo tar -xf ./llvm.tar -C /usr --strip-components 1 && sudo rm -rf ./llvm.tar
 
-sudo chmod +x ./llvm.sh
-
-sudo ./llvm.sh 19
-
-sudo ln -sf "$(which clang-19)" /usr/bin/clang
-sudo ln -sf "$(which clang++-19)" /usr/bin/clang++
-
-sudo apt-get install -y libc++-19-dev
-sudo apt-get purge -y --auto-remove lsb-release software-properties-common gnupg
+sudo ln -sf /usr/bin/clang++ /usr/bin/clang++-20
 
 echo "::endgroup::"
