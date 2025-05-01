@@ -170,6 +170,66 @@ jobs:
                   name: dist-${{ matrix.variant }}-installers
                   path: ./dist/
 
+    test-installers:
+        name: Test installers
+
+        needs:
+            - prepare-tools
+            - gen-installer
+
+        runs-on: ${{ vars.RUNNER_IMAGE }}
+
+        strategy:
+            matrix:
+                variant: ["gcc", "clang"]
+            fail-fast: false
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.head_ref || github.ref_name }}
+                  sparse-checkout-cone-mode: false
+                  sparse-checkout: |
+                      /*
+                      !/dist/*
+
+            - name: Download Installers
+              uses: actions/download-artifact@v4
+              with:
+                  name: dist-${{ matrix.variant }}-installers
+                  path: ./dist/
+
+            - name: Load Cached Tools
+              uses: actions/cache/restore@v4
+              with:
+                  path: /opt/ac_tools/
+                  key: ${{ needs.prepare-tools.outputs.cache-primary-key }}
+                  fail-on-cache-miss: true
+
+            - name: Apply Tools
+              run: sudo cp -rf /opt/ac_tools/** /usr/
+
+            - name: Load CCache
+              if: ${{ github.event.inputs.test-mode != 'strict' }}
+              uses: hendrikmuhs/ccache-action@v1.2
+              with:
+                  key: ${{ matrix.variant }}-compiler
+
+            - name: Configure
+              run: |
+                  ls ./src/sub-installer/library/ | sed -e s/^//g -e s/\.sh$//g |
+                    while read -r lib_id; do
+                      echo "AC_NO_BUILD_${lib_id//-/_}=true" >>"${GITHUB_ENV}"
+                    done
+
+            - name: Test
+              run: |
+                  set -eu
+
+                  chmod +x -R ./dist/
+                  ./dist/${{ matrix.variant }}/install.sh
+
     install:
         name: Install Libraries
 
@@ -251,8 +311,16 @@ jobs:
               run: |
                   set -eu
 
-                  if "${{ matrix.variant == 'clang' }}"; then
+                  if "${{ matrix.variant == 'gcc' }}"; then
+                    sudo apt-get install -y gcc-14
+
+                    sudo ln -sf "$(which gcc-14)" /usr/bin/gcc
+                    sudo ln -sf "$(which g++-14)" /usr/bin/gcc++
+                  else
                     sudo apt-get install -y clang-19 libc++-19-dev lld
+
+                    sudo ln -sf "$(which clang-19)" /usr/bin/clang-20
+                    sudo ln -sf "$(which clang++-19)" /usr/bin/clang++-20
                   fi
 
                   chmod +x -R ./dist/
@@ -297,6 +365,8 @@ jobs:
 
         needs:
             - prepare-tools
+            - test-installers
+            - test-installers
             - install
 
         runs-on: ${{ vars.RUNNER_IMAGE }}
@@ -376,15 +446,29 @@ jobs:
                   path: ./dist/
                   merge-multiple: true
 
+            - name: Load CCache
+              if: ${{ github.event.inputs.test-mode != 'strict' }}
+              uses: hendrikmuhs/ccache-action@v1.2
+              with:
+                  key: ${{ matrix.variant }}-compiler
+                  save: false
+
+            - name: Configure
+              run: |
+                  ls ./src/sub-installer/library/ | sed -e s/^//g -e s/\.sh$//g |
+                    while read -r lib_id; do
+                      echo "AC_NO_BUILD_${lib_id//-/_}=true" >>"${GITHUB_ENV}"
+                    done
+
             - name: Test
               if: github.event.inputs.test-mode != 'none'
               env:
-                  AC_TEMP_DIR: /tmp/ac_install/${{ matrix.variant }}
+                  LD_LIBRARY_PATH: /usr/lib/x86_64-unknown-linux-gnu:/usr/lib/clang/20/lib/x86_64-unknown-linux-gnu
               run: |
                   set -eu
 
-                  mkdir -p "${AC_TEMP_DIR}"
-                  ./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh
+                  chmod +x -R ./dist/
+                  ./dist/${{ matrix.variant }}/install.sh
 
                   # TESTS=($(
                   #     find ./test/ -type f -iname *.test.cpp -printf '%P\n' | \
@@ -392,8 +476,6 @@ jobs:
                   #       -v i=${{ matrix.id }} \
                   #       '{ if((NR-1)%n == i){ print $0 } }'
                   # ))
-
-                  chmod +x -R ./dist/
 
                   if [ "${{ matrix.type }}" == "individual" ]; then
                     ./.github/workflows/internal/test.sh "${{ matrix.variant }}" # "${TESTS[@]}"

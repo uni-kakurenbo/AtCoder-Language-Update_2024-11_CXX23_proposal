@@ -12,7 +12,10 @@ version = '14.2.0-4ubuntu2~24.04'
 
 [variant.clang]
 name = 'Clang'
-version = '19.1.7'
+version = '20.1.3'
+
+[variant.clang.environment]
+LD_LIBRARY_PATH="/usr/lib/x86_64-unknown-linux-gnu:/usr/lib/clang/20/lib/x86_64-unknown-linux-gnu"
 
 [[variant.gcc.license]]
     name = 'GPL-3.0-or-later'
