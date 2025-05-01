@@ -60,7 +60,7 @@ CMAKE_ENVIRONMENT+=(
     -DCMAKE_CXX_COMPILER:STRING="${CXX}"
 )
 
-if ccache -v; then
+if [[ -v CCACHE_ENABLED ]]; then
     BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ccache ${CXX} ;"
 else
     BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ${CXX} ;"
