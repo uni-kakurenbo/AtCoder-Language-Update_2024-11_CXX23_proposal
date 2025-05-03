@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="4.5.0"
+VERSION="4.6.0"
 
 set -eu
 if [[ "${AC_NO_BUILD_light_gbm:-false}" == true || "${AC_VARIANT}" == "clang" ]]; then exit 0; fi

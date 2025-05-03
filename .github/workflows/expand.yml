@@ -252,10 +252,7 @@ jobs:
                   set -eu
 
                   if "${{ matrix.variant == 'clang' }}"; then
-                    sudo apt-get install -y clang-18 libc++-19-dev
-
-                    sudo ln -sT /usr/bin/clang-18 /usr/bin/clang-19
-                    sudo ln -sT /usr/bin/clang++-18 /usr/bin/clang++-19
+                    sudo apt-get install -y clang-19 libc++-19-dev lld
                   fi
 
                   chmod +x -R ./dist/
@@ -356,6 +353,7 @@ jobs:
             matrix:
                 # id: [0, 1, 2, 3, 4, 5, 6, 7]
                 variant: ["gcc", "clang"]
+                type: ["individual", "merged"]
             fail-fast: false
 
         steps:
@@ -380,17 +378,13 @@ jobs:
 
             - name: Test
               if: github.event.inputs.test-mode != 'none'
+              env:
+                  AC_TEMP_DIR: /tmp/ac_install/${{ matrix.variant }}
               run: |
                   set -eu
 
-                  if "${{ matrix.variant == 'clang' }}"; then
-                    sudo apt-get install -y clang-18 libc++-19-dev
-
-                    sudo ln -s /usr/bin/clang-18 /usr/bin/clang-19
-                    sudo ln -s /usr/bin/clang++-18 /usr/bin/clang++-19
-                  else
-                    ./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh
-                  fi
+                  mkdir -p "${AC_TEMP_DIR}"
+                  ./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh
 
                   # TESTS=($(
                   #     find ./test/ -type f -iname *.test.cpp -printf '%P\n' | \
@@ -401,7 +395,22 @@ jobs:
 
                   chmod +x -R ./dist/
 
-                  ./.github/workflows/internal/test.sh "${{ matrix.variant }}" # "${TESTS[@]}"
+                  if [ "${{ matrix.type }}" == "individual" ]; then
+                    ./.github/workflows/internal/test.sh "${{ matrix.variant }}" # "${TESTS[@]}"
+                  else
+                    ./.github/workflows/internal/merge-tests.sh
+
+                    DIST_DIR="./dist/${{ matrix.variant }}"
+                    mkdir -p "${DIST_DIR}"
+
+                    mkdir -p ./test/tmp && cd ./test/tmp
+
+                    cp -f "../../${DIST_DIR}/compile.sh" ./compile.sh
+                    cp -f ../merged.cpp ./Main.cpp
+
+                    ./compile.sh
+                    ./a.out
+                  fi
 
     gen-config:
         name: Generate Configuration File

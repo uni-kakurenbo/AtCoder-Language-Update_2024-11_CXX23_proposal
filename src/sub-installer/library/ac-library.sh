@@ -9,6 +9,6 @@ echo "::group::AC Library"
 sudo wget -q "https://github.com/atcoder/ac-library/releases/download/v${VERSION}/ac-library.zip" -O ./ac-library.zip
 sudo unzip -oq ./ac-library.zip -d ./ac-library
 
-cp -rf ./ac-library/atcoder "${AC_INSTALL_DIR}/include"
+sudo cp -rf ./ac-library/atcoder "${AC_INSTALL_DIR}/include"
 
 echo "::endgroup::"

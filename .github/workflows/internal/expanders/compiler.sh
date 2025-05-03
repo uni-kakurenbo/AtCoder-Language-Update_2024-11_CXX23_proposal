@@ -3,7 +3,7 @@ set -eu
 
 DIST_DIR="./dist/$1"
 
-WORKING_DIRECTORY="$(dirname "$0")/../"
+WORKING_DIRECTORY="$(dirname "$0")/.."
 
 # shellcheck source=/dev/null
 source "${WORKING_DIRECTORY}/functions/flag-generator.sh" "${DIST_DIR}"

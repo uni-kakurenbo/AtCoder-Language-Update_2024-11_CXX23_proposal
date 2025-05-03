@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="1.86.0"
+VERSION="1.88.0"
 
 set -eu
 if "${AC_NO_BUILD_boost:-false}"; then exit 0; fi

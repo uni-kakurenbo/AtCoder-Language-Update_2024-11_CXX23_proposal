@@ -7,14 +7,12 @@
 // ref: https://cpprefjp.github.io/reference/ranges/as_rvalue_view.html
 
 int main() {
-    using namespace std;
+    std::vector<std::string> words = { "the", "quick", "brown", "fox", "ate", "a", "pterodactyl" };
+    std::vector<std::string> new_words;
 
-    vector<string> words = { "the", "quick", "brown", "fox", "ate", "a", "pterodactyl" };
-    vector<string> new_words;
-
-    ranges::copy(words | views::as_rvalue, back_inserter(new_words));
+    std::ranges::copy(words | std::views::as_rvalue, std::back_inserter(new_words));
 
     for(const auto& x : new_words) {
-        print("{}", x);
+        std::print("{}", x);
     }
 }

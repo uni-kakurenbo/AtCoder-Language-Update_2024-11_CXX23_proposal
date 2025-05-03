@@ -31,9 +31,11 @@ SOFTWARE.
 #include <sstream>
 #include <vector>
 
+
+namespace z3_example {
+
+
 using namespace z3;
-
-
 
 
 /**
@@ -1377,7 +1379,13 @@ void iterate_args() {
 
 }
 
+
+} // namespace z3_example
+
+
 int main() {
+    using namespace z3_example;
+
     try {
         demorgan(); std::cout << "\n";
         find_model_example1(); std::cout << "\n";
