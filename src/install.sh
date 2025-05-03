@@ -41,8 +41,8 @@ export CMAKE_ENVIRONMENT
 if [[ "${AC_VARIANT}" == "gcc" ]]; then
     ./sub-installer/compiler/gcc.sh
 
-    CC="gcc-14"
-    CXX="g++-14"
+    CC="gcc-15"
+    CXX="g++-15"
 else
     ./sub-installer/compiler/clang.sh
 
