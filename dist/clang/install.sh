@@ -28,7 +28,11 @@ export AC_INSTALL_DIR="/opt/ac_install/${AC_VARIANT}"
 sudo mkdir -p "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}/include" "${AC_INSTALL_DIR}/lib"
 
 echo "::group::tools"
-sudo apt-get install -y git cmake ninja-build pigz pbzip2 lld
+sudo apt-get install -y git cmake ninja-build pigz pbzip2
+
+if [[ "${AC_VARIANT}" == "gcc" ]]; then
+    sudo apt-get install -y lld
+fi
 
 echo "::endgroup::"
 
@@ -497,7 +501,11 @@ if [ -v ATCODER ]; then
         -type d -print0 |
         xargs -0 sudo rm -rf
 
-    sudo apt-get purge -y --auto-remove git cmake ninja-build pigz pbzip2 lld
+    sudo apt-get purge -y --auto-remove git cmake ninja-build pigz pbzip2
+
+    if [[ "${AC_VARIANT}" == "gcc" ]]; then
+        sudo apt-get purge -y --auto-remove lld
+    fi
 
     echo "::endgroup::"
 fi
