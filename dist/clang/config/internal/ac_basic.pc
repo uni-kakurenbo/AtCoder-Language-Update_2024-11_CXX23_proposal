@@ -2,4 +2,4 @@ Name: Basic build flags
 Description: common flags both for build and for judge
 Version: ""
 Cflags: -std=gnu++23 -fuse-ld=lld -stdlib=libc++ -fexperimental-library -rtlib=compiler-rt -unwindlib=libunwind
-Libs: ""
+Libs: -Wl,-R/usr/lib/x86_64-unknown-linux-gnu -Wl,-R/usr/lib/clang/20/lib/x86_64-unknown-linux-gnu

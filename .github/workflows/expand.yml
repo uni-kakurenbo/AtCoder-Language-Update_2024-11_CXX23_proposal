@@ -247,13 +247,8 @@ jobs:
             - name: Install
               env:
                   AC_RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
-                  AC_NO_BUILD_COMPILER: true
               run: |
                   set -eu
-
-                  if "${{ matrix.variant == 'clang' }}"; then
-                    sudo apt-get install -y clang-19 libc++-19-dev lld
-                  fi
 
                   chmod +x -R ./dist/
                   ./dist/${{ matrix.variant }}/install.sh
@@ -376,15 +371,27 @@ jobs:
                   path: ./dist/
                   merge-multiple: true
 
+            - name: Load CCache
+              if: ${{ github.event.inputs.test-mode != 'strict' }}
+              uses: hendrikmuhs/ccache-action@v1.2
+              with:
+                  key: ${{ matrix.variant }}-compiler
+                  save: false
+
+            - name: Configure
+              run: |
+                  ls ./src/sub-installer/library/ | sed -e s/^//g -e s/\.sh$//g |
+                    while read -r lib_id; do
+                      echo "AC_NO_BUILD_${lib_id//-/_}=true" >>"${GITHUB_ENV}"
+                    done
+
             - name: Test
               if: github.event.inputs.test-mode != 'none'
-              env:
-                  AC_TEMP_DIR: /tmp/ac_install/${{ matrix.variant }}
               run: |
                   set -eu
 
-                  mkdir -p "${AC_TEMP_DIR}"
-                  ./dist/${{ matrix.variant }}/sub-installer/compiler/${{ matrix.variant }}.sh
+                  chmod +x -R ./dist/
+                  ./dist/${{ matrix.variant }}/install.sh
 
                   # TESTS=($(
                   #     find ./test/ -type f -iname *.test.cpp -printf '%P\n' | \
@@ -392,8 +399,6 @@ jobs:
                   #       -v i=${{ matrix.id }} \
                   #       '{ if((NR-1)%n == i){ print $0 } }'
                   # ))
-
-                  chmod +x -R ./dist/
 
                   if [ "${{ matrix.type }}" == "individual" ]; then
                     ./.github/workflows/internal/test.sh "${{ matrix.variant }}" # "${TESTS[@]}"
