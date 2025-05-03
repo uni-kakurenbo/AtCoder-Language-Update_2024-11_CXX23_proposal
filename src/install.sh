@@ -10,7 +10,7 @@ echo "::group::tools"
 sudo apt-get install -y git cmake ninja-build pigz pbzip2
 
 if [[ "${AC_VARIANT}" == "gcc" ]]; then
-    sudo apt-get install lld
+    sudo apt-get install -y lld
 fi
 
 echo "::endgroup::"
