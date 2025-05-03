@@ -5,4 +5,5 @@
 -stdlib=libc++
 -unwindlib=libunwind
 -w
-
+-Wl,-R/usr/lib/x86_64-unknown-linux-gnu
+-Wl,-R/usr/lib/clang/20/lib/x86_64-unknown-linux-gnu

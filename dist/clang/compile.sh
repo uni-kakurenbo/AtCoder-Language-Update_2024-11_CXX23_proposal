@@ -39,6 +39,8 @@ BUILD_FLAGS=(
     "-std=gnu++23"
     "-stdlib=libc++"
     "-unwindlib=libunwind"
+    "-Wl,-R/usr/lib/x86_64-unknown-linux-gnu"
+    "-Wl,-R/usr/lib/clang/20/lib/x86_64-unknown-linux-gnu"
     "-L/opt/ac_install/clang/lib"
     "-labsl_bad_any_cast_impl"
     "-labsl_cordz_sample_token"

@@ -31,9 +31,13 @@ if [[ -v CCACHE_ENABLED ]]; then
         ./tools/build/src/engine/build.sh
 fi
 
+if [[ "${AC_VARIANT}" == "clang" ]]; then
+    BOOST_BUILD_FLAGS=("${BUILD_FLAGS[@]}" "--target=x86_64-unknown-linux-gnu")
+fi
+
 sudo ./bootstrap.sh \
     --with-toolset="${AC_VARIANT}" \
-    --without-libraries=mpi,graph_parallel \
+    --without-libraries=mpi,graph_parallel,python \
     --prefix="${AC_INSTALL_DIR}"
 
 sudo ./b2 \
@@ -42,7 +46,7 @@ sudo ./b2 \
     threading=single \
     variant=release \
     cflags="-w" \
-    cxxflags="${BUILD_FLAGS[*]}" \
+    cxxflags="${BOOST_BUILD_FLAGS[*]}" \
     --user-config="./user-config.jam" \
     -j"${PARALLEL}" -d0 \
     install

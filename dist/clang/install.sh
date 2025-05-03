@@ -16,7 +16,8 @@ BUILD_FLAGS=(
     "-stdlib=libc++"
     "-unwindlib=libunwind"
     "-w"
-    ""
+    "-Wl,-R/usr/lib/x86_64-unknown-linux-gnu"
+    "-Wl,-R/usr/lib/clang/20/lib/x86_64-unknown-linux-gnu"
 )
 
 set -eu
@@ -112,7 +113,7 @@ CMAKE_ENVIRONMENT+=(
     -DCMAKE_CXX_COMPILER:STRING="${CXX}"
 )
 
-if ccache -v; then
+if [[ -v CCACHE_ENABLED ]]; then
     BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ccache ${CXX} ;"
 else
     BOOST_BUILDER_CONFIG="using ${AC_VARIANT} : : ${CXX} ;"
@@ -216,9 +217,13 @@ export BOOST_BUILDER_CONFIG
             ./tools/build/src/engine/build.sh
     fi
 
+    if [[ "${AC_VARIANT}" == "clang" ]]; then
+        BOOST_BUILD_FLAGS=("${BUILD_FLAGS[@]}" "--target=x86_64-unknown-linux-gnu")
+    fi
+
     sudo ./bootstrap.sh \
         --with-toolset="${AC_VARIANT}" \
-        --without-libraries=mpi,graph_parallel \
+        --without-libraries=mpi,graph_parallel,python \
         --prefix="${AC_INSTALL_DIR}"
 
     sudo ./b2 \
@@ -227,7 +232,7 @@ export BOOST_BUILDER_CONFIG
         threading=single \
         variant=release \
         cflags="-w" \
-        cxxflags="${BUILD_FLAGS[*]}" \
+        cxxflags="${BOOST_BUILD_FLAGS[*]}" \
         --user-config="./user-config.jam" \
         -j"${PARALLEL}" -d0 \
         install
@@ -390,6 +395,7 @@ export BOOST_BUILDER_CONFIG
         -DCMAKE_PREFIX_PATH:PATH="${AC_INSTALL_DIR}" \
         -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
         -DBUILD_SHARED_LIBS:BOOL=OFF \
+        -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=ON \
         -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]}" \
         ..
 
