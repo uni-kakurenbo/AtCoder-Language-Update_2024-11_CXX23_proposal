@@ -2,12 +2,7 @@ Name: AC-Library
 Description: links AC-Library.
 Version: null
 
-Cflags: >
-    -I/opt/ac_install/${variant}/include
-
 Libs: >
-    -L/opt/ac_install/${variant}/lib
-
     -lboost_atomic
     -lboost_charconv
     -lboost_chrono

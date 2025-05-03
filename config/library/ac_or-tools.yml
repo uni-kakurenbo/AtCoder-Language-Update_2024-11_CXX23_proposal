@@ -5,7 +5,6 @@ Version: null
 Requires: protobuf re2
 
 Cflags: >
-    -I/opt/ac_install/${variant}/include
     -DOR_PROTO_DLL=""
     -DUSE_LP_PARSER
     -DUSE_MATH_OPT
@@ -17,9 +16,6 @@ Cflags: >
     -DUSE_SCIP
 
 Libs: >
-    -L/opt/ac_install/${variant}/lib
-    -Wl,-R/opt/ac_install/${variant}/lib
-
     -lortools
     -lCbc
     -lCbcSolver

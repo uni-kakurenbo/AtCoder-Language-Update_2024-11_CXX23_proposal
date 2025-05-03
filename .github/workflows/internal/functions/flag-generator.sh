@@ -11,8 +11,6 @@ CONFIG_PATHS=(
     "${DIST_DIR}/config/internal"
     "${DIST_DIR}/config/library"
     "./pkgconfig"
-
-    "/opt/ac_install/lib/pkgconfig"
 )
 
 CONFIG_PATHS="${CONFIG_PATHS[@]}"
@@ -27,8 +25,8 @@ function gen-flags() {
     local flags
     local libs
 
-    flags=($(pkgconf --define-variable="variant=${VARIANT}" --cflags "$@" | tr ' ' '\n' | sort -u))
-    libs=($(pkgconf --define-variable="variant=${VARIANT}" --libs "$@"))
+    flags=($(pkgconf --define-variable="install_dir=\${install_dir}" --cflags "$@" | tr ' ' '\n' | sort -u))
+    libs=($(pkgconf --define-variable="install_dir=\${install_dir}" --libs "$@"))
 
     echo "${flags[@]} ${libs[@]}"
 }

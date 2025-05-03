@@ -14,9 +14,6 @@ version = '15.1.0'
 name = 'Clang'
 version = '20.1.3'
 
-[variant.clang.environment]
-LD_LIBRARY_PATH="/usr/lib/x86_64-unknown-linux-gnu:/usr/lib/clang/20/lib/x86_64-unknown-linux-gnu"
-
 [[variant.gcc.license]]
     name = 'GPL-3.0-or-later'
     url = 'https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Copying.html'

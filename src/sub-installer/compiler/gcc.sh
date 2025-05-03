@@ -16,11 +16,13 @@ sudo ./contrib/download_prerequisites
 sudo ./configure \
     --host=x86_64-linux-gnu \
     --enable-languages=c++ \
-    --prefix=/usr/ \
-    --program-suffix=-15 \
+    --prefix="${AC_INSTALL_DIR}" \
     --disable-bootstrap --disable-multilib
 
 sudo make -j"${PARALLEL}" >/dev/null
 sudo make install
+
+ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
+ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
 
 echo "::endgroup::"
