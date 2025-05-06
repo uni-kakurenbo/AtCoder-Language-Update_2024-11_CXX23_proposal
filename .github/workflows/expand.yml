@@ -390,7 +390,6 @@ jobs:
               uses: hendrikmuhs/ccache-action@v1.2
               with:
                   key: ${{ matrix.variant }}-compiler
-                  save: false
 
             - name: Configure
               run: |
