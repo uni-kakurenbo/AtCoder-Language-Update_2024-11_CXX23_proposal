@@ -2,5 +2,5 @@ Name: Z3
 Description: links Z3.
 Version: ""
 Requires: z3
-Libs: -L/opt/ac_install/${variant}/lib -Wl,-R/opt/ac_install/${variant}/lib
 Cflags: ""
+Libs: ""

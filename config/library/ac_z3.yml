@@ -4,6 +4,3 @@ Version: null
 
 Requires: z3
 
-Libs: >
-    -L/opt/ac_install/${variant}/lib
-    -Wl,-R/opt/ac_install/${variant}/lib

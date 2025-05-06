@@ -1,6 +1,3 @@
 Name: AC-Library
 Description: links AC-Library.
 Version: null
-
-Cflags: >
-    -I/opt/ac_install/${variant}/include/

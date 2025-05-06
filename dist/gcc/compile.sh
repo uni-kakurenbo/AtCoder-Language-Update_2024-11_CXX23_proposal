@@ -19,9 +19,9 @@ BUILD_FLAGS=(
     "-DUSE_MATH_OPT"
     "-DUSE_PDLP"
     "-DUSE_SCIP"
-    "-I/opt/ac_install/gcc/include"
-    "-I/opt/ac_install/gcc/include/"
-    "-I/opt/ac_install/gcc/include/torch/csrc/api/include"
+    "-I$\{install_dir\}/include/"
+    "-I$\{install_dir\}/include/torch/csrc/api/include"
+    "-I/opt/atcoder/gcc/include"
     "-O2"
     "-Wall"
     "-Wextra"
@@ -34,7 +34,9 @@ BUILD_FLAGS=(
     "-std=gnu++23"
     "-lstdc++exp"
     "-fopenmp"
-    "-L/opt/ac_install/gcc/lib"
+    "-L$\{install_dir\}/lib"
+    "-Wl,-R$\{install_dir\}/lib"
+    "-L/opt/atcoder/gcc/lib"
     "-labsl_bad_any_cast_impl"
     "-labsl_cordz_sample_token"
     "-labsl_failure_signal_handler"
@@ -193,14 +195,46 @@ BUILD_FLAGS=(
     "-ltorch"
     "-ltorch_cpu"
     "-lc10"
-    "-Wl,-R/opt/ac_install/gcc/lib"
     "-l_lightgbm"
 )
 
 set -eu
 
+ARGUMENTS=("$0")
+while (($# > 0)); do
+    case "$1" in
+    --variant)
+        AC_VARIANT="$2"
+        shift
+        ;;
+    -h | --help | ?)
+        echo "{--option}       / {ENVIRONMENT}      [default]"
+        echo "--variant        / AC_VARIANT         [gcc]"
+        exit 0
+        ;;
+    -*)
+        echo "$(tput setaf 1)ERROR: $(tput sgr0)Unexpected command option: $(tput setaf 5)$1"
+        exit 1
+        ;;
+    *)
+        ARGUMENTS=("${ARGUMENTS[@]}" "$1")
+        ;;
+    esac
+
+    shift
+done
+
+if [[ -z "${AC_VARIANT}" ]]; then
+    export AC_VARIANT="gcc"
+fi
+
+INSTALL_DIR="$(cat /etc/atcoder/install_dir.txt)"
+
+# shellcheck disable=SC2016
+BUILD_FLAGS=("${BUILD_FLAGS[@]//'$\{install_dir\}'/${INSTALL_DIR}}")
+
 if [[ "${AC_VARIANT}" = "gcc" ]]; then
-    g++-14 ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
+    g++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
 else
-    clang++-20 ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
+    clang++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
 fi
