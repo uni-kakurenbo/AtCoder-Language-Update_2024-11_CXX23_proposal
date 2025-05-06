@@ -60,7 +60,7 @@ sudo mkdir -p /etc/atcoder/
 echo "${AC_INSTALL_DIR}" | sudo tee /etc/atcoder/install_dir.txt
 
 # shellcheck disable=SC2016
-BUILD_FLAGS=("${BUILD_FLAGS[@]/'$\{install_dir\}'/${AC_INSTALL_DIR}}")
+BUILD_FLAGS=("${BUILD_FLAGS[@]/'::install_dir::'/${AC_INSTALL_DIR}}")
 
 export PATH="${AC_INSTALL_DIR}/bin:${PATH}"
 

@@ -25,8 +25,8 @@ function gen-flags() {
     local flags
     local libs
 
-    flags=($(pkgconf --define-variable="install_dir=\${install_dir}" --cflags "$@" | tr ' ' '\n' | sort -u))
-    libs=($(pkgconf --define-variable="install_dir=\${install_dir}" --libs "$@"))
+    flags=($(pkgconf --define-variable='install_dir=::install_dir::' --cflags "$@" | tr ' ' '\n' | sort -u))
+    libs=($(pkgconf --define-variable='install_dir=::install_dir::' --libs "$@"))
 
     echo "${flags[@]} ${libs[@]}"
 }
