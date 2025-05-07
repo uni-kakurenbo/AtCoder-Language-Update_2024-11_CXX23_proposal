@@ -27,7 +27,7 @@ sudo ./configure \
 sudo make -j"${PARALLEL}" >/dev/null
 sudo make install
 
-ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
-ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
+sudo ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
+sudo ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
 
 echo "::endgroup::"

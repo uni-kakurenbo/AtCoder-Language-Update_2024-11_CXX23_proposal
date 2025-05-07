@@ -75,7 +75,7 @@ sudo mkdir -p /etc/atcoder/
 echo "${AC_INSTALL_DIR}" | sudo tee /etc/atcoder/install_dir.txt
 
 # shellcheck disable=SC2016
-BUILD_FLAGS=("${BUILD_FLAGS[@]/'$\{install_dir\}'/${AC_INSTALL_DIR}}")
+BUILD_FLAGS=("${BUILD_FLAGS[@]/'::install_dir::'/${AC_INSTALL_DIR}}")
 
 export PATH="${AC_INSTALL_DIR}/bin:${PATH}"
 
@@ -142,8 +142,8 @@ if [[ "${AC_VARIANT}" == "gcc" ]]; then
         sudo make -j"${PARALLEL}" >/dev/null
         sudo make install
 
-        ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
-        ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
+        sudo ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
+        sudo ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
 
         echo "::endgroup::"
     )
@@ -167,9 +167,9 @@ else
         sudo xz -dk -T0 ./llvm.tar.xz && sudo rm -rf ./llvm.tar.xz
         sudo tar -xf ./llvm.tar -C "${AC_INSTALL_DIR}" --strip-components 1 && sudo rm -rf ./llvm.tar
 
-        ln -sf "${AC_INSTALL_DIR}/bin/clang" /usr/local/bin/clang
-        ln -sf "${AC_INSTALL_DIR}/bin/clang++" /usr/local/bin/clang++
-        ln -sf "${AC_INSTALL_DIR}/bin/lld" /usr/local/bin/lld
+        sudo ln -sf "${AC_INSTALL_DIR}/bin/clang" /usr/local/bin/clang
+        sudo ln -sf "${AC_INSTALL_DIR}/bin/clang++" /usr/local/bin/clang++
+        sudo ln -sf "${AC_INSTALL_DIR}/bin/lld" /usr/local/bin/lld
 
         echo "::endgroup::"
     )
