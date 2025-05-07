@@ -1,5 +1,5 @@
 Name: LightGBM
 Description: links LightGBM.
 Version: ""
-Cflags: -I/opt/ac_install/${variant}/include
-Libs: -L/opt/ac_install/${variant}/lib -Wl,-R/opt/ac_install/${variant}/lib -l_lightgbm
+Libs: -l_lightgbm
+Cflags: ""

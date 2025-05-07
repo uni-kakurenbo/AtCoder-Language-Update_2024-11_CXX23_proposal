@@ -11,9 +11,9 @@
 -DUSE_MATH_OPT
 -DUSE_PDLP
 -DUSE_SCIP
--I/opt/ac_install/gcc/include
--I/opt/ac_install/gcc/include/
--I/opt/ac_install/gcc/include/torch/csrc/api/include
+-I$\{install_dir\}/include/
+-I$\{install_dir\}/include/torch/csrc/api/include
+-I/opt/atcoder/gcc/include
 -O2
 -Wall
 -Wextra
@@ -26,7 +26,9 @@
 -std=gnu++23
 -lstdc++exp
 -fopenmp
--L/opt/ac_install/gcc/lib
+-L$\{install_dir\}/lib
+-Wl,-R$\{install_dir\}/lib
+-L/opt/atcoder/gcc/lib
 -labsl_bad_any_cast_impl
 -labsl_cordz_sample_token
 -labsl_failure_signal_handler
@@ -185,5 +187,4 @@
 -ltorch
 -ltorch_cpu
 -lc10
--Wl,-R/opt/ac_install/gcc/lib
 -l_lightgbm

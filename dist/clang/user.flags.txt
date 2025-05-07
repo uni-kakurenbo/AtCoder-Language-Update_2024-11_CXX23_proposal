@@ -11,8 +11,8 @@
 -DUSE_MATH_OPT
 -DUSE_PDLP
 -DUSE_SCIP
--I/opt/ac_install/clang/include
--I/opt/ac_install/clang/include/
+-I$\{install_dir\}/include/
+-I/opt/atcoder/clang/include
 -O2
 -Wall
 -Wextra
@@ -31,9 +31,11 @@
 -std=gnu++23
 -stdlib=libc++
 -unwindlib=libunwind
--Wl,-R/usr/lib/x86_64-unknown-linux-gnu
--Wl,-R/usr/lib/clang/20/lib/x86_64-unknown-linux-gnu
--L/opt/ac_install/clang/lib
+-Wl,-R$\{install_dir\}/lib/x86_64-unknown-linux-gnu
+-Wl,-R$\{install_dir\}/lib/clang/20/lib/x86_64-unknown-linux-gnu
+-L$\{install_dir\}/lib
+-Wl,-R$\{install_dir\}/lib
+-L/opt/atcoder/clang/lib
 -labsl_bad_any_cast_impl
 -labsl_cordz_sample_token
 -labsl_failure_signal_handler
@@ -188,5 +190,4 @@
 -labsl_raw_logging_internal
 -labsl_log_severity
 -labsl_spinlock_wait
--Wl,-R/opt/ac_install/clang/lib
 -lz3

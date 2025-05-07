@@ -16,14 +16,74 @@ BUILD_FLAGS=(
     "-stdlib=libc++"
     "-unwindlib=libunwind"
     "-w"
-    "-Wl,-R/usr/lib/x86_64-unknown-linux-gnu"
-    "-Wl,-R/usr/lib/clang/20/lib/x86_64-unknown-linux-gnu"
+    "-Wl,-R$\{install_dir\}/lib/x86_64-unknown-linux-gnu"
+    "-Wl,-R$\{install_dir\}/lib/clang/20/lib/x86_64-unknown-linux-gnu"
 )
 
 set -eu
 
-export AC_TEMP_DIR="/tmp/ac_install/${AC_VARIANT}"
-export AC_INSTALL_DIR="/opt/ac_install/${AC_VARIANT}"
+ARGUMENTS=("$0")
+while (($# > 0)); do
+    case "$1" in
+    --variant)
+        AC_VARIANT="$2"
+        shift
+        ;;
+    --install-prefix)
+        AC_INSTALL_PREFIX="$2"
+        shift
+        ;;
+    --install-dir)
+        AC_INSTALL_DIR="$2"
+        shift
+        ;;
+    --temp-dir)
+        AC_TEMP_DIR="$2"
+        shift
+        ;;
+    -h | --help | ?)
+        echo "{--option}       / {ENVIRONMENT}      [default] (info)"
+        echo "--variant        / AC_VARIANT         [gcc]"
+        echo "--install-prefix / AC_INSTALL_PREFIX  [/opt/atcoder] (ignored iif --install-dir is given)"
+        echo "--install-dir    / AC_INSTALL_DIR     [\${install-prefix}/\${variant}']"
+        echo "--temp-dir       / AC_TEMP_DIR        [/temp/atcoder/\${variant}]"
+        exit 0
+        ;;
+    -*)
+        echo "$(tput setaf 1)ERROR: $(tput sgr0)Unexpected command option: $(tput setaf 5)$1"
+        exit 1
+        ;;
+    *)
+        ARGUMENTS=("${ARGUMENTS[@]}" "$1")
+        ;;
+    esac
+
+    shift
+done
+
+if [[ ! -v AC_VARIANT ]]; then
+    export AC_VARIANT="gcc"
+fi
+
+if [[ ! -v AC_INSTALL_PREFIX ]]; then
+    export AC_INSTALL_PREFIX="/opt/atcoder"
+fi
+
+if [[ ! -v AC_TEMP_DIR ]]; then
+    export AC_TEMP_DIR="/tmp/atcoder/${AC_VARIANT}"
+fi
+
+if [[ ! -v AC_INSTALL_DIR ]]; then
+    export AC_INSTALL_DIR="${AC_INSTALL_PREFIX}/${AC_VARIANT}"
+fi
+
+sudo mkdir -p /etc/atcoder/
+echo "${AC_INSTALL_DIR}" | sudo tee /etc/atcoder/install_dir.txt
+
+# shellcheck disable=SC2016
+BUILD_FLAGS=("${BUILD_FLAGS[@]/'$\{install_dir\}'/${AC_INSTALL_DIR}}")
+
+export PATH="${AC_INSTALL_DIR}/bin:${PATH}"
 
 sudo mkdir -p "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}/include" "${AC_INSTALL_DIR}/lib"
 
@@ -63,20 +123,39 @@ if [[ "${AC_VARIANT}" == "gcc" ]]; then
 
     # gcc
     (
-        VERSION="14.2.0-4ubuntu2~24.04"
+        VERSION="15.1.0"
 
         set -eu
         if "${AC_NO_BUILD_COMPILER:-false}"; then exit 0; fi
 
         echo "::group::GCC"
 
-        sudo apt-get install -y "g++-14=${VERSION}"
+        sudo mkdir -p ./gcc
+
+        sudo wget -q "http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-${VERSION}/gcc-${VERSION}.tar.gz" -O ./gcc.tar.gz
+        sudo tar -I pigz -xf ./gcc.tar.gz -C ./gcc --strip-components 1
+
+        cd ./gcc
+
+        sudo ./contrib/download_prerequisites
+
+        sudo ./configure \
+            --host=x86_64-linux-gnu \
+            --enable-languages=c++ \
+            --prefix="${AC_INSTALL_DIR}" \
+            --disable-bootstrap --disable-multilib
+
+        sudo make -j"${PARALLEL}" >/dev/null
+        sudo make install
+
+        ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
+        ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
 
         echo "::endgroup::"
     )
 
-    CC="gcc-14"
-    CXX="g++-14"
+    CC="gcc"
+    CXX="g++"
 else
 
     # clang
@@ -92,9 +171,11 @@ else
 
         sudo wget -q "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/LLVM-${VERSION}-Linux-X64.tar.xz" -O ./llvm.tar.xz
         sudo xz -dk -T0 ./llvm.tar.xz && sudo rm -rf ./llvm.tar.xz
-        sudo tar -xf ./llvm.tar -C /usr --strip-components 1 && sudo rm -rf ./llvm.tar
+        sudo tar -xf ./llvm.tar -C "${AC_INSTALL_DIR}" --strip-components 1 && sudo rm -rf ./llvm.tar
 
-        sudo ln -sf /usr/bin/clang++ /usr/bin/clang++-20
+        ln -sf "${AC_INSTALL_DIR}/bin/clang" /usr/local/bin/clang
+        ln -sf "${AC_INSTALL_DIR}/bin/clang++" /usr/local/bin/clang++
+        ln -sf "${AC_INSTALL_DIR}/bin/lld" /usr/local/bin/lld
 
         echo "::endgroup::"
     )
@@ -102,12 +183,12 @@ else
     { # generate 'slack' bits/stdc++.h
         sudo mkdir -p "${AC_INSTALL_DIR}/include/bits"
 
-        find "/usr/include/c++/v1" -maxdepth 1 -type f ! -iname '__**' ! -iname '**.**' -exec echo '#include <{}>' \; |
+        find "${AC_INSTALL_DIR}/include/c++/v1" -maxdepth 1 -type f ! -iname '__**' ! -iname '**.**' -exec echo '#include <{}>' \; |
             sudo tee "${AC_INSTALL_DIR}/include/bits/stdc++.h"
     }
 
-    CC="clang-20"
-    CXX="clang++-20"
+    CC="clang"
+    CXX="clang++"
 fi
 
 "${CXX}" --version
@@ -497,7 +578,7 @@ if [ -v ATCODER ]; then
     echo "::group::finalize"
 
     find "${AC_INSTALL_DIR}" \
-        -name cmake -or -name pkgconfig -or -name bin -or -name share \
+        -name cmake -or -name pkgconfig \
         -type d -print0 |
         xargs -0 sudo rm -rf
 
