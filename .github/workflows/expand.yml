@@ -247,10 +247,24 @@ jobs:
             - name: Install
               env:
                   AC_RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
+                  AC_NO_BUILD_COMPILER: true
               run: |
                   set -eu
 
                   chmod +x -R ./dist/
+
+                  if "${{ matrix.variant == 'gcc' }}"; then
+                    sudo apt-get install -y gcc-14
+
+                    sudo ln -sf "$(which gcc-14)" /usr/local/bin/gcc
+                    sudo ln -sf "$(which g++-14)" /usr/local/bin/g++
+                  else
+                    sudo apt-get install -y clang-19 libc++-19-dev lld
+
+                    sudo ln -sf "$(which clang-19)" /usr/local/bin/clang
+                    sudo ln -sf "$(which clang++-19)" /usr/local/bin/clang++
+                  fi
+
                   ./dist/${{ matrix.variant }}/install.sh
 
             - name: Collect Pkgconfig Files
@@ -258,7 +272,7 @@ jobs:
                   set -eu
 
                   mkdir -p ./config/libs/
-                  find /opt/ac_install/ -name '**.pc' -type f -print0 |
+                  find /opt/atcoder/ -name '**.pc' -type f -print0 |
                     xargs -0 -I {} sudo cp {} ./config/libs/
 
             - name: Upload Pkgconfig Files
@@ -272,14 +286,14 @@ jobs:
               run: |
                   set -eu
 
-                  find /opt/ac_install/ -name cmake -or -name pkgconfig -or -name bin -or -name share -type d -print0 |
+                  find /opt/atcoder/ -name cmake -or -name pkgconfig -or -name bin -or -name share -type d -print0 |
                     xargs -0 sudo rm -rf
 
             - name: Upload
               uses: actions/upload-artifact@v4
               with:
                   name: library-${{ matrix.variant }}-${{ matrix.target }}
-                  path: /opt/ac_install/
+                  path: /opt/atcoder/
                   compression-level: 0
 
     gen-compiler:
@@ -361,7 +375,7 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                   pattern: library-${{ matrix.variant }}-*
-                  path: /opt/ac_install/
+                  path: /opt/atcoder/
                   merge-multiple: true
 
             - name: Download Compiler

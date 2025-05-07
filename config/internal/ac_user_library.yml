@@ -13,6 +13,13 @@ Requires: >
     ac_unordered_dense
     ac_z3
 
+Cflags: >
+    -I${install_dir}/include/
+
+Libs: >
+    -L${install_dir}/lib
+    -Wl,-R${install_dir}/lib
+
 variant:
     gcc:
         Requires: >
