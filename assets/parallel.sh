@@ -1,2 +1,2 @@
 # shellcheck disable=all
-PARALLEL="$(nproc)"
+PARALLEL="$(($(nproc) + 2))"
