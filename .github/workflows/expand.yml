@@ -185,13 +185,6 @@ jobs:
             fail-fast: false
 
         steps:
-            - name: Configure
-              run: |
-                  ls ./src/sub-installer/library/ | sed -e s/^//g -e s/\.sh$//g |
-                    while read -r lib_id; do
-                      echo "AC_NO_BUILD_${lib_id//-/_}=true" >>"${GITHUB_ENV}"
-                    done
-
             - name: Checkout
               uses: actions/checkout@v4
               with:
@@ -200,6 +193,13 @@ jobs:
                   sparse-checkout: |
                       /*
                       !/dist/*
+
+            - name: Configure
+              run: |
+                  ls ./src/sub-installer/library/ | sed -e s/^//g -e s/\.sh$//g |
+                    while read -r lib_id; do
+                      echo "AC_NO_BUILD_${lib_id//-/_}=true" >>"${GITHUB_ENV}"
+                    done
 
             - name: Download Installers
               uses: actions/download-artifact@v4
