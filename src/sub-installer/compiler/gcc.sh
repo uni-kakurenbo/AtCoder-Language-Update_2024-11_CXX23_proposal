@@ -21,7 +21,9 @@ if [[ -v CCACHE_ENABLED ]]; then
     CXX="ccache ${CXX}"
 fi
 
-sudo ./configure CC="${CC}" CXX="${CXX}" \
+sudo mkdir -p build && cd build
+
+sudo ../configure CC="${CC}" CXX="${CXX}" \
     --prefix="${AC_INSTALL_DIR}" \
     --enable-languages=c++ \
     --disable-bootstrap \
@@ -35,8 +37,5 @@ sudo ./configure CC="${CC}" CXX="${CXX}" \
 
 sudo make -j"${PARALLEL}" >/dev/null
 sudo make install
-
-sudo ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
-sudo ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
 
 echo "::endgroup::"

@@ -170,13 +170,83 @@ jobs:
                   name: dist-${{ matrix.variant }}-installers
                   path: ./dist/
 
-    install:
+    install-compiler:
+        name: Install Compiler
+
+        needs:
+            - prepare-tools
+            - gen-installer
+
+        runs-on: ${{ vars.RUNNER_IMAGE }}
+
+        strategy:
+            matrix:
+                variant: ["gcc", "clang"]
+            fail-fast: false
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.head_ref || github.ref_name }}
+                  sparse-checkout-cone-mode: false
+                  sparse-checkout: |
+                      /*
+                      !/dist/*
+
+            - name: Configure
+              run: |
+                  ls ./src/sub-installer/library/ | sed -e s/^//g -e s/\.sh$//g |
+                    while read -r lib_id; do
+                      echo "AC_NO_BUILD_${lib_id//-/_}=true" >>"${GITHUB_ENV}"
+                    done
+
+            - name: Download Installers
+              uses: actions/download-artifact@v4
+              with:
+                  name: dist-${{ matrix.variant }}-installers
+                  path: ./dist/
+
+            - name: Load Cached Tools
+              uses: actions/cache/restore@v4
+              with:
+                  path: /opt/ac_tools/
+                  key: ${{ needs.prepare-tools.outputs.cache-primary-key }}
+                  fail-on-cache-miss: true
+
+            - name: Apply Tools
+              run: sudo cp -rf /opt/ac_tools/** /usr/
+
+            - name: Load CCache
+              if: ${{ github.event.inputs.test-mode != 'strict' }}
+              uses: hendrikmuhs/ccache-action@v1.2
+              with:
+                  key: ${{ matrix.variant }}-compiler
+
+            - name: Install
+              env:
+                  AC_RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
+              run: |
+                  set -eu
+
+                  chmod +x -R ./dist/
+                  ./dist/${{ matrix.variant }}/install.sh
+
+            - name: Upload
+              uses: actions/upload-artifact@v4
+              with:
+                  name: compiler-${{ matrix.variant }}
+                  path: /opt/atcoder/
+                  compression-level: 0
+
+    install-library:
         name: Install Libraries
 
         needs:
             - prepare-tools
             - gen-installer
             - config-matrix
+            - install-compiler
 
         runs-on: ${{ vars.RUNNER_IMAGE }}
 
@@ -192,7 +262,7 @@ jobs:
             fail-fast: false
 
         steps:
-            - name: Configure Installation
+            - name: Configure
               run: |
                   set -eu
 
@@ -222,6 +292,12 @@ jobs:
                       /*
                       !/dist/*
 
+            - name: Download Compiler
+              uses: actions/download-artifact@v4
+              with:
+                  name: compiler-${{ matrix.variant }}
+                  path: /opt/atcoder/
+
             - name: Download Installers
               uses: actions/download-artifact@v4
               with:
@@ -238,6 +314,12 @@ jobs:
             - name: Apply Tools
               run: sudo cp -rf /opt/ac_tools/** /usr/
 
+            # - name: Load CCache of Compiler
+            #   if: ${{ github.event.inputs.test-mode != 'strict' }}
+            #   uses: hendrikmuhs/ccache-action@v1.2
+            #   with:
+            #       key: ${{ matrix.variant }}-compiler
+
             - name: Load CCache
               if: ${{ github.event.inputs.test-mode != 'strict' }}
               uses: hendrikmuhs/ccache-action@v1.2
@@ -252,19 +334,6 @@ jobs:
                   set -eu
 
                   chmod +x -R ./dist/
-
-                  if "${{ matrix.variant == 'gcc' }}"; then
-                    sudo apt-get install -y gcc-14
-
-                    sudo ln -sf "$(which gcc-14)" /usr/local/bin/gcc
-                    sudo ln -sf "$(which g++-14)" /usr/local/bin/g++
-                  else
-                    sudo apt-get install -y clang-19 libc++-19-dev lld
-
-                    sudo ln -sf "$(which clang-19)" /usr/local/bin/clang
-                    sudo ln -sf "$(which clang++-19)" /usr/local/bin/clang++
-                  fi
-
                   ./dist/${{ matrix.variant }}/install.sh
 
             - name: Collect Pkgconfig Files
@@ -306,7 +375,7 @@ jobs:
 
         needs:
             - prepare-tools
-            - install
+            - install-library
 
         runs-on: ${{ vars.RUNNER_IMAGE }}
 
@@ -342,7 +411,6 @@ jobs:
                   set -eu
 
                   mkdir -p ./dist/${{ matrix.variant }}/
-
                   ./.github/workflows/internal/expanders/compiler.sh ${{ matrix.variant }}
 
             - name: Upload
@@ -370,6 +438,12 @@ jobs:
               uses: actions/checkout@v4
               with:
                   ref: ${{ github.head_ref || github.ref_name }}
+
+            - name: Download Compiler
+              uses: actions/download-artifact@v4
+              with:
+                  name: compiler-${{ matrix.variant }}
+                  path: /opt/atcoder/
 
             - name: Download Libraries
               uses: actions/download-artifact@v4

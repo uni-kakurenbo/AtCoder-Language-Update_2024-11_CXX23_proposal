@@ -62,8 +62,6 @@ echo "${AC_INSTALL_DIR}" | sudo tee /etc/atcoder/install_dir.txt
 # shellcheck disable=SC2016
 BUILD_FLAGS=("${BUILD_FLAGS[@]/'::install_dir::'/${AC_INSTALL_DIR}}")
 
-export PATH="${AC_INSTALL_DIR}/bin:${PATH}"
-
 sudo mkdir -p "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}/include" "${AC_INSTALL_DIR}/lib"
 
 echo "::group::tools"
@@ -97,10 +95,17 @@ export CMAKE_ENVIRONMENT
 if [[ "${AC_VARIANT}" == "gcc" ]]; then
     ./sub-installer/compiler/gcc.sh
 
+    sudo ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
+    sudo ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
+
     CC="gcc"
     CXX="g++"
 else
     ./sub-installer/compiler/clang.sh
+
+    sudo ln -sf "${AC_INSTALL_DIR}/bin/clang" /usr/local/bin/clang
+    sudo ln -sf "${AC_INSTALL_DIR}/bin/clang++" /usr/local/bin/clang++
+    sudo ln -sf "${AC_INSTALL_DIR}/bin/lld" /usr/local/bin/lld
 
     { # generate 'slack' bits/stdc++.h
         sudo mkdir -p "${AC_INSTALL_DIR}/include/bits"
@@ -113,7 +118,10 @@ else
     CXX="clang++"
 fi
 
+sudo chmod +x -R "${AC_INSTALL_DIR}"
+
 "${CXX}" --version
+"${CXX}" -print-search-dirs
 
 CMAKE_ENVIRONMENT+=(
     -DCMAKE_C_COMPILER:STRING="${CC}"
