@@ -24,6 +24,7 @@ fi
 sudo ./configure CC="${CC}" CXX="${CXX}" \
     --prefix="${AC_INSTALL_DIR}" \
     --enable-languages=c++ \
+    --with-ld=/usr/bin/ld.lld \
     --disable-bootstrap \
     --disable-multilib \
     --disable-libsanitizer \
