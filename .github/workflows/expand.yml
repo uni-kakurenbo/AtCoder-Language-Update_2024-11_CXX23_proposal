@@ -292,11 +292,11 @@ jobs:
                       /*
                       !/dist/*
 
-            - name: Download Compiler
-              uses: actions/download-artifact@v4
-              with:
-                  name: compiler-${{ matrix.variant }}
-                  path: /opt/atcoder/
+            # - name: Download Compiler
+            #   uses: actions/download-artifact@v4
+            #   with:
+            #       name: compiler-${{ matrix.variant }}
+            #       path: /opt/atcoder/
 
             - name: Download Installers
               uses: actions/download-artifact@v4
@@ -318,12 +318,18 @@ jobs:
               if: ${{ github.event.inputs.test-mode != 'strict' }}
               uses: hendrikmuhs/ccache-action@v1.2
               with:
+                  key: ${{ matrix.variant }}-compiler
+
+            - name: Load CCache
+              if: ${{ github.event.inputs.test-mode != 'strict' }}
+              uses: hendrikmuhs/ccache-action@v1.2
+              with:
                   key: ${{ matrix.variant }}-${{ matrix.target }}
 
             - name: Install
               env:
                   AC_RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
-                  AC_NO_BUILD_COMPILER: true
+                  # AC_NO_BUILD_COMPILER: true
               run: |
                   set -eu
 
