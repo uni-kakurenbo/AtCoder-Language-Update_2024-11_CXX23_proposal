@@ -124,9 +124,7 @@ sudo chmod +x -R "${AC_INSTALL_DIR}/bin/"
 
 find /usr -iname cc1plus
 find "/opt" -iname cc1plus
-find "/tmp" -iname cc1plus
-
-ls "${AC_INSTALL_DIR}/bin"
+sudo find "/tmp" -iname cc1plus
 
 "${CXX}" --version
 
