@@ -1,20 +1,17 @@
-#! /bin/bash
+#!/bin/bash
 set -eu
 
 REF="$(git branch --show-current)"
+if [ -z "${REF}" ]; then exit 0; fi
 
-if [ -n "${REF}" ]; then
-    SOURCE_BRANCH="${REF//'refs/heads/'/}"
-    TEST_BRANCH="test/${SOURCE_BRANCH}"
+SOURCE_BRANCH="${REF//'refs/heads/'/}"
+TEST_BRANCH="test/${SOURCE_BRANCH}"
 
-    (
-        git switch "${TEST_BRANCH}" || exit 1
+(
+    git switch "${TEST_BRANCH}" || exit 1
+    git pull origin "${TEST_BRANCH}"
+    git merge -X theirs --no-verify "${SOURCE_BRANCH}"
+) || git switch -c "${TEST_BRANCH}"
 
-        git pull origin "${TEST_BRANCH}"
-        git merge -X theirs --no-verify "${SOURCE_BRANCH}"
-    ) || git switch -c "${TEST_BRANCH}"
-
-    git push origin HEAD --no-verify
-
-    git switch "${SOURCE_BRANCH}"
-fi
+git push origin HEAD --no-verify
+git switch "${SOURCE_BRANCH}"
