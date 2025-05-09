@@ -120,6 +120,8 @@ else
     CXX="clang++"
 fi
 
+ls "${AC_INSTALL_DIR}/bin"
+
 "${CXX}" --version
 
 CMAKE_ENVIRONMENT+=(
