@@ -329,6 +329,7 @@ jobs:
             - name: Install
               env:
                   AC_RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
+                  AC_NO_BUILD_COMPILER: true
               run: |
                   set -eu
 
