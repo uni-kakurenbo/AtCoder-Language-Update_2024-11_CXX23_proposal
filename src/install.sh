@@ -97,17 +97,17 @@ export CMAKE_ENVIRONMENT
 if [[ "${AC_VARIANT}" == "gcc" ]]; then
     ./sub-installer/compiler/gcc.sh
 
-    ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
-    ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
+    sudo ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
+    sudo ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
 
     CC="gcc"
     CXX="g++"
 else
     ./sub-installer/compiler/clang.sh
 
-    ln -sf "${AC_INSTALL_DIR}/bin/clang" /usr/local/bin/clang
-    ln -sf "${AC_INSTALL_DIR}/bin/clang++" /usr/local/bin/clang++
-    ln -sf "${AC_INSTALL_DIR}/bin/lld" /usr/local/bin/lld
+    sudo ln -sf "${AC_INSTALL_DIR}/bin/clang" /usr/local/bin/clang
+    sudo ln -sf "${AC_INSTALL_DIR}/bin/clang++" /usr/local/bin/clang++
+    sudo ln -sf "${AC_INSTALL_DIR}/bin/lld" /usr/local/bin/lld
 
     { # generate 'slack' bits/stdc++.h
         sudo mkdir -p "${AC_INSTALL_DIR}/include/bits"
@@ -119,6 +119,8 @@ else
     CC="clang"
     CXX="clang++"
 fi
+
+sudo chmod +x -R "${AC_INSTALL_DIR}/bin/"
 
 ls "${AC_INSTALL_DIR}/bin"
 
