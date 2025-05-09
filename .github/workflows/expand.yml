@@ -292,11 +292,11 @@ jobs:
                       /*
                       !/dist/*
 
-            # - name: Download Compiler
-            #   uses: actions/download-artifact@v4
-            #   with:
-            #       name: compiler-${{ matrix.variant }}
-            #       path: /opt/atcoder/
+            - name: Download Compiler
+              uses: actions/download-artifact@v4
+              with:
+                  name: compiler-${{ matrix.variant }}
+                  path: /opt/atcoder/
 
             - name: Download Installers
               uses: actions/download-artifact@v4
@@ -314,11 +314,11 @@ jobs:
             - name: Apply Tools
               run: sudo cp -rf /opt/ac_tools/** /usr/
 
-            - name: Load CCache
-              if: ${{ github.event.inputs.test-mode != 'strict' }}
-              uses: hendrikmuhs/ccache-action@v1.2
-              with:
-                  key: ${{ matrix.variant }}-compiler
+            # - name: Load CCache of Compiler
+            #   if: ${{ github.event.inputs.test-mode != 'strict' }}
+            #   uses: hendrikmuhs/ccache-action@v1.2
+            #   with:
+            #       key: ${{ matrix.variant }}-compiler
 
             - name: Load CCache
               if: ${{ github.event.inputs.test-mode != 'strict' }}
@@ -329,7 +329,6 @@ jobs:
             - name: Install
               env:
                   AC_RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
-                  # AC_NO_BUILD_COMPILER: true
               run: |
                   set -eu
 
@@ -411,7 +410,6 @@ jobs:
                   set -eu
 
                   mkdir -p ./dist/${{ matrix.variant }}/
-
                   ./.github/workflows/internal/expanders/compiler.sh ${{ matrix.variant }}
 
             - name: Upload
