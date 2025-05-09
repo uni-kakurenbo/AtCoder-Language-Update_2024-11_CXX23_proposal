@@ -6,10 +6,6 @@ cd "${AC_TEMP_DIR}"
 
 echo "::group::Clang"
 
-# sudo wget -q "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/LLVM-${VERSION}-Linux-X64.tar.xz" -O ./llvm.tar.xz
-# sudo xz -dk -T0 ./llvm.tar.xz && sudo rm -rf ./llvm.tar.xz
-# sudo tar -xf ./llvm.tar -C "${AC_INSTALL_DIR}" --strip-components 1 && sudo rm -rf ./llvm.tar
-
 sudo mkdir -p ./llvm-project
 
 sudo wget -q "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/llvm-project-${VERSION}.src.tar.xz" -O ./llvm-project.tar.xz
