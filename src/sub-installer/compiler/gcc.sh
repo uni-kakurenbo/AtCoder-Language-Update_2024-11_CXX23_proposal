@@ -13,11 +13,25 @@ cd ./gcc
 
 sudo ./contrib/download_prerequisites
 
-sudo ./configure \
-    --host=x86_64-linux-gnu \
-    --enable-languages=c++ \
+CC=gcc
+CXX=g++
+
+if [[ -v CCACHE_ENABLED ]]; then
+    CC="ccache ${CC}"
+    CXX="ccache ${CXX}"
+fi
+
+sudo ./configure CC="${CC}" CXX="${CXX}" \
     --prefix="${AC_INSTALL_DIR}" \
-    --disable-bootstrap --disable-multilib
+    --enable-languages=c++ \
+    --disable-bootstrap \
+    --disable-multilib \
+    --disable-libsanitizer \
+    --disable-checking \
+    --disable-nls \
+    --disable-gcov \
+    --disable-libada \
+    --disable-libgm2
 
 sudo make -j"${PARALLEL}" >/dev/null
 sudo make install
