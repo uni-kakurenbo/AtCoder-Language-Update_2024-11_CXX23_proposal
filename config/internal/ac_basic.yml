@@ -10,6 +10,9 @@ variant:
         Libs: >
             -lstdc++exp
 
+            -Wl,-R${prefix}/libexec/gcc/x86_64-pc-linux-gnu/15.1.0
+            -Wl,-R${prefix}/lib/gcc/x86_64-pc-linux-gnu/15.1.0/plugin
+
     clang:
         Cflags: >
             -fuse-ld=lld
