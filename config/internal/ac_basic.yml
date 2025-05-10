@@ -4,7 +4,6 @@ Version: null
 
 Cflags: >
     -std=gnu++23
-    -Wl,--no-allow-shlib-undefined
 
 variant:
     gcc:
@@ -20,7 +19,3 @@ variant:
 
             -rtlib=compiler-rt
             -unwindlib=libunwind
-
-        Libs: >
-            -Wl,-R${install_dir}/lib/x86_64-unknown-linux-gnu
-            -Wl,-R${install_dir}/lib/clang/20/lib/x86_64-unknown-linux-gnu
