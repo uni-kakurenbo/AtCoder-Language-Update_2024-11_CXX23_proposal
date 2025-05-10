@@ -120,13 +120,10 @@ fi
 
 sudo chmod +x -R "${AC_INSTALL_DIR}"
 
-find /usr -iname cc1plus
-find "/opt" -iname cc1plus
-sudo find "/tmp" -iname cc1plus
-echo "${PATH}"
-gcc -print-search-dirs
-
 "${CXX}" --version
+"${CXX}" -print-search-dirs
+
+strings "${AC_INSTALL_DIR}/lib/x86_64-pc-linux-gnu/libstdc++.so.6" | grep GLIBCXX
 
 CMAKE_ENVIRONMENT+=(
     -DCMAKE_C_COMPILER:STRING="${CC}"
