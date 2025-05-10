@@ -123,9 +123,6 @@ sudo chmod +x -R "${AC_INSTALL_DIR}"
 "${CXX}" --version
 "${CXX}" -print-search-dirs
 
-find "${AC_INSTALL_DIR}" -iname libstdc++.so.6
-strings "${AC_INSTALL_DIR}/lib64/libstdc++.so.6" | grep GLIBCXX
-
 CMAKE_ENVIRONMENT+=(
     -DCMAKE_C_COMPILER:STRING="${CC}"
     -DCMAKE_CXX_COMPILER:STRING="${CXX}"
