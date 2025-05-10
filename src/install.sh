@@ -126,6 +126,7 @@ find /usr -iname cc1plus
 find "/opt" -iname cc1plus
 sudo find "/tmp" -iname cc1plus
 echo "${PATH}"
+gcc -print-search-dirs
 
 "${CXX}" --version
 
