@@ -4,6 +4,7 @@ Version: null
 
 Cflags: >
     -std=gnu++23
+    -Wl,--no-allow-shlib-undefined
 
 variant:
     gcc:
