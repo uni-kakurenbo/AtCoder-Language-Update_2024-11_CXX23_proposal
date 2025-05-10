@@ -170,8 +170,8 @@ jobs:
                   name: dist-${{ matrix.variant }}-installers
                   path: ./dist/
 
-    install-compiler:
-        name: Install Compiler
+    build-environment:
+        name: Build Environment
 
         needs:
             - prepare-tools
@@ -226,6 +226,7 @@ jobs:
             - name: Install
               env:
                   AC_RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
+                  AC_NO_GENERATE_CACHES: true
               run: |
                   set -eu
 
@@ -246,7 +247,6 @@ jobs:
             - prepare-tools
             - gen-installer
             - config-matrix
-            - install-compiler
 
         runs-on: ${{ vars.RUNNER_IMAGE }}
 
@@ -292,12 +292,6 @@ jobs:
                       /*
                       !/dist/*
 
-            - name: Download Compiler
-              uses: actions/download-artifact@v4
-              with:
-                  name: compiler-${{ matrix.variant }}
-                  path: /opt/atcoder/
-
             - name: Download Installers
               uses: actions/download-artifact@v4
               with:
@@ -314,12 +308,6 @@ jobs:
             - name: Apply Tools
               run: sudo cp -rf /opt/ac_tools/** /usr/
 
-            # - name: Load CCache of Compiler
-            #   if: ${{ github.event.inputs.test-mode != 'strict' }}
-            #   uses: hendrikmuhs/ccache-action@v1.2
-            #   with:
-            #       key: ${{ matrix.variant }}-compiler
-
             - name: Load CCache
               if: ${{ github.event.inputs.test-mode != 'strict' }}
               uses: hendrikmuhs/ccache-action@v1.2
@@ -330,8 +318,21 @@ jobs:
               env:
                   AC_RUN_TEST: ${{ github.event.inputs.test-mode == 'strict' }}
                   AC_NO_BUILD_COMPILER: true
+                  AC_NO_GENERATE_CACHES: true
               run: |
                   set -eu
+
+                  if "${{ matrix.variant == 'gcc' }}"; then
+                    sudo apt-get install -y gcc-14
+
+                    sudo ln -sf "$(which gcc-14)" /usr/local/bin/gcc
+                    sudo ln -sf "$(which g++-14)" /usr/local/bin/g++
+                  else
+                    sudo apt-get install -y clang-19 libc++-19-dev lld
+
+                    sudo ln -sf "$(which clang-19)" /usr/local/bin/clang
+                    sudo ln -sf "$(which clang++-19)" /usr/local/bin/clang++
+                  fi
 
                   chmod +x -R ./dist/
                   ./dist/${{ matrix.variant }}/install.sh
@@ -422,7 +423,9 @@ jobs:
     test:
         name: Test
 
-        needs: gen-compiler
+        needs:
+            - gen-compiler
+            - build-environment
 
         runs-on: ${{ vars.RUNNER_IMAGE }}
 
@@ -466,14 +469,27 @@ jobs:
                   key: ${{ matrix.variant }}-compiler
 
             - name: Configure
+              env:
+                  AC_INSTALL_DIR: /opt/atcoder/${{ matrix.variant }}
               run: |
                   ls ./src/sub-installer/library/ | sed -e s/^//g -e s/\.sh$//g |
                     while read -r lib_id; do
                       echo "AC_NO_BUILD_${lib_id//-/_}=true" >>"${GITHUB_ENV}"
                     done
 
+                  if "${{ matrix.variant == 'gcc' }}"; then
+                    sudo ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
+                    sudo ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
+                  else
+                    sudo ln -sf "${AC_INSTALL_DIR}/bin/clang" /usr/local/bin/clang
+                    sudo ln -sf "${AC_INSTALL_DIR}/bin/clang++" /usr/local/bin/clang++
+                    sudo ln -sf "${AC_INSTALL_DIR}/bin/lld" /usr/local/bin/lld
+                  fi
+
             - name: Test
               if: github.event.inputs.test-mode != 'none'
+              env:
+                  AC_NO_BUILD_COMPILER: true
               run: |
                   set -eu
 
@@ -487,7 +503,7 @@ jobs:
                   #       '{ if((NR-1)%n == i){ print $0 } }'
                   # ))
 
-                  if [ "${{ matrix.type }}" == "individual" ]; then
+                  if [ "${{ matrix.type == 'individual' }}" ]; then
                     ./.github/workflows/internal/test.sh "${{ matrix.variant }}" # "${TESTS[@]}"
                   else
                     ./.github/workflows/internal/merge-tests.sh
@@ -499,6 +515,12 @@ jobs:
 
                     cp -f "../../${DIST_DIR}/compile.sh" ./compile.sh
                     cp -f ../merged.cpp ./Main.cpp
+
+                    if [ "${{ matrix.variant == 'gcc' }}"]; then
+                      cp -rf ../../gcm.cache ./gcm.cache
+                    else
+                      cp -rf ../../**.pcm ./
+                    fi
 
                     ./compile.sh
                     ./a.out

@@ -6,16 +6,11 @@ Cflags: >
     -std=gnu++23
 
 variant:
-    gcc:
-        Libs: >
-            -lstdc++exp
-
     clang:
         Cflags: >
             -fuse-ld=lld
 
             -stdlib=libc++
-            -fexperimental-library
 
             -rtlib=compiler-rt
             -unwindlib=libunwind

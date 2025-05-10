@@ -38,4 +38,7 @@ sudo ../configure CC="${CC}" CXX="${CXX}" \
 sudo make -j"${PARALLEL}" >/dev/null
 sudo make install
 
+sudo ln -sf "${AC_INSTALL_DIR}/bin/gcc" /usr/local/bin/gcc
+sudo ln -sf "${AC_INSTALL_DIR}/bin/g++" /usr/local/bin/g++
+
 echo "::endgroup::"

@@ -35,4 +35,8 @@ sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
 sudo cmake --build .
 sudo cmake --build . --target install
 
+sudo ln -sf "${AC_INSTALL_DIR}/bin/clang" /usr/local/bin/clang
+sudo ln -sf "${AC_INSTALL_DIR}/bin/clang++" /usr/local/bin/clang++
+sudo ln -sf "${AC_INSTALL_DIR}/bin/lld" /usr/local/bin/lld
+
 echo "::endgroup::"
