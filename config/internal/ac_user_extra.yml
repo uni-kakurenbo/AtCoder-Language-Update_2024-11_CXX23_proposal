@@ -18,6 +18,9 @@ variant:
 
             -lstdc++exp
 
+        Libs: >
+            -fopenmp
+
     clang:
         Cflags: >
             -fconstexpr-steps=524288
