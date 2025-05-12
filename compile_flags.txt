@@ -27,8 +27,8 @@
 -fimplicit-module-maps
 -fimplicit-modules
 -flto=auto
--fprebuilt-module-path=./
 -fmodule-file=std=std.pcm
+-fmodule-file=std.compat=std.compat.pcm
 -fuse-ld=lld
 -march=native
 -pthread

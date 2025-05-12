@@ -503,7 +503,7 @@ jobs:
                   #       '{ if((NR-1)%n == i){ print $0 } }'
                   # ))
 
-                  if [ "${{ matrix.type == 'individual' }}" ]; then
+                  if "${{ matrix.type == 'individual' }}"; then
                     ./.github/workflows/internal/test.sh "${{ matrix.variant }}" # "${TESTS[@]}"
                   else
                     ./.github/workflows/internal/merge-tests.sh
