@@ -1,5 +1,5 @@
 import std.compat;
 
 int main() {
-    std::print("{}", "Hello, import std.compact.");
+    std::println("{}", "Hello, import std.compact.");
 }

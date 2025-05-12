@@ -1,5 +1,5 @@
 import std;
 
 int main() {
-    std::print("{}", "Hello, import std.");
+    std::println("{}", "Hello, import std.");
 }
