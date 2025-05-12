@@ -12,4 +12,3 @@
 -march=native
 -pthread
 -std=gnu++23
--fopenmp

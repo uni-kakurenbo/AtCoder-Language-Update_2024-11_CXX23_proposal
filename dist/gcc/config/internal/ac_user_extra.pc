@@ -2,4 +2,4 @@ Name: Extra user flags
 Description: advanced flags for judge
 Version: ""
 Cflags: -march=native -flto=auto -pthread -fconstexpr-depth=1024 -fconstexpr-loop-limit=524288 -fconstexpr-ops-limit=2097152 -lstdc++exp
-Libs: -fopenmp
+Libs: ""
