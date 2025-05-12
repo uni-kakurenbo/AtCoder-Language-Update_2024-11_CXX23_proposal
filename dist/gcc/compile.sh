@@ -19,9 +19,9 @@ BUILD_FLAGS=(
     "-DUSE_MATH_OPT"
     "-DUSE_PDLP"
     "-DUSE_SCIP"
-    "-I$\{install_dir\}/include/"
-    "-I$\{install_dir\}/include/torch/csrc/api/include"
     "-I/opt/atcoder/gcc/include"
+    "-I::install_dir::/include/"
+    "-I::install_dir::/include/torch/csrc/api/include"
     "-O2"
     "-Wall"
     "-Wextra"
@@ -34,8 +34,8 @@ BUILD_FLAGS=(
     "-std=gnu++23"
     "-lstdc++exp"
     "-fopenmp"
-    "-L$\{install_dir\}/lib"
-    "-Wl,-R$\{install_dir\}/lib"
+    "-L::install_dir::/lib"
+    "-Wl,-R::install_dir::/lib"
     "-L/opt/atcoder/gcc/lib"
     "-labsl_bad_any_cast_impl"
     "-labsl_cordz_sample_token"
@@ -231,7 +231,7 @@ fi
 INSTALL_DIR="$(cat /etc/atcoder/install_dir.txt)"
 
 # shellcheck disable=SC2016
-BUILD_FLAGS=("${BUILD_FLAGS[@]//'$\{install_dir\}'/${INSTALL_DIR}}")
+BUILD_FLAGS=("${BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
 
 if [[ "${AC_VARIANT}" = "gcc" ]]; then
     g++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"

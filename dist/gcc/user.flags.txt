@@ -11,9 +11,9 @@
 -DUSE_MATH_OPT
 -DUSE_PDLP
 -DUSE_SCIP
--I$\{install_dir\}/include/
--I$\{install_dir\}/include/torch/csrc/api/include
 -I/opt/atcoder/gcc/include
+-I::install_dir::/include/
+-I::install_dir::/include/torch/csrc/api/include
 -O2
 -Wall
 -Wextra
@@ -26,8 +26,8 @@
 -std=gnu++23
 -lstdc++exp
 -fopenmp
--L$\{install_dir\}/lib
--Wl,-R$\{install_dir\}/lib
+-L::install_dir::/lib
+-Wl,-R::install_dir::/lib
 -L/opt/atcoder/gcc/lib
 -labsl_bad_any_cast_impl
 -labsl_cordz_sample_token

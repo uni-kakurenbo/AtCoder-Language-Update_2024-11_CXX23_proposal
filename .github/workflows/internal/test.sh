@@ -1,7 +1,8 @@
 #!/bin/bash
 set -eu
 
-export DIST_DIR="./dist/$1"
+export VARIANT="$1"
+export DIST_DIR="./dist/${VARIANT}"
 
 chmod +x -R "${DIST_DIR}"
 
@@ -18,6 +19,12 @@ function run-test() {
     mkdir -p "${directory}"
     cp -f "../${DIST_DIR}/compile.sh" "${directory}/compile.sh"
     cp -f "$1" "${directory}/Main.cpp"
+
+    if [[ "${VARIANT}" == "gcc" ]]; then
+        cp -rf ../gcm.cache "${directory}/gcm.cache"
+    else
+        cp -rf ../**.pcm "${directory}"
+    fi
 
     cd "${directory}/"
 

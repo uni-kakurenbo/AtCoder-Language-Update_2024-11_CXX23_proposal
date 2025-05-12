@@ -1,1 +1,5 @@
 tmp/
+a.out
+**.pcm
+**.cache
+**/build

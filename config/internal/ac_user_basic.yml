@@ -12,3 +12,12 @@ Cflags: >
     -Wextra
 
     -O2
+
+variant:
+    gcc:
+        Cflags: >
+            -fmodules
+
+    clang:
+        Cflags: >
+            -fprebuilt-module-path=.

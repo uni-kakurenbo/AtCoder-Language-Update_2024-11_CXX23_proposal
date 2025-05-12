@@ -15,7 +15,7 @@ VARIANT="$(basename "${DIST_DIR}")"
     echo "AC_VARIANT=${VARIANT}"
 
     echo
-    echo "BUILD_FLAGS=("
+    echo "USER_BUILD_FLAGS=("
     format <"${DIST_DIR}/user.flags.txt"
     echo ")"
 

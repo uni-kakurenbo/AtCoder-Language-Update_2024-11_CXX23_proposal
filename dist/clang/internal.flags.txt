@@ -5,5 +5,5 @@
 -stdlib=libc++
 -unwindlib=libunwind
 -w
--Wl,-R$\{install_dir\}/lib/x86_64-unknown-linux-gnu
--Wl,-R$\{install_dir\}/lib/clang/20/lib/x86_64-unknown-linux-gnu
+-Wl,-R::install_dir::/lib/x86_64-unknown-linux-gnu
+-Wl,-R::install_dir::/lib/clang/20/lib/x86_64-unknown-linux-gnu

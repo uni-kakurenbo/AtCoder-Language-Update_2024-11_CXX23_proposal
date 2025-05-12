@@ -25,8 +25,13 @@ export HEADER
     echo "AC_VARIANT=${VARIANT}"
 
     echo
-    echo "BUILD_FLAGS=("
+    echo "INTERNALL_BUILD_FLAGS=("
     format <"${DIST_DIR}/internal.flags.txt"
+    echo ")"
+
+    echo
+    echo "PRECOMPILE_BUILD_FLAGS=("
+    format <"${DIST_DIR}/pre-compile.flags.txt"
     echo ")"
 
     echo

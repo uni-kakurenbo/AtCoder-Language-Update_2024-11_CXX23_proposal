@@ -60,18 +60,13 @@ sudo mkdir -p /etc/atcoder/
 echo "${AC_INSTALL_DIR}" | sudo tee /etc/atcoder/install_dir.txt
 
 # shellcheck disable=SC2016
-BUILD_FLAGS=("${BUILD_FLAGS[@]/'::install_dir::'/${AC_INSTALL_DIR}}")
-
-export PATH="${AC_INSTALL_DIR}/bin:${PATH}"
+INTERNALL_BUILD_FLAGS=("${INTERNALL_BUILD_FLAGS[@]/'::install_dir::'/${AC_INSTALL_DIR}}")
+PRECOMPILE_BUILD_FLAGS=("${PRECOMPILE_BUILD_FLAGS[@]/'::install_dir::'/${AC_INSTALL_DIR}}")
 
 sudo mkdir -p "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}/include" "${AC_INSTALL_DIR}/lib"
 
 echo "::group::tools"
-sudo apt-get install -y git cmake ninja-build pigz pbzip2
-
-if [[ "${AC_VARIANT}" == "gcc" ]]; then
-    sudo apt-get install -y lld
-fi
+sudo apt-get install -y git cmake lld ninja-build pigz pbzip2
 
 echo "::endgroup::"
 
@@ -117,7 +112,10 @@ else
     CXX="clang++"
 fi
 
+sudo chmod +x -R "${AC_INSTALL_DIR}"
+
 "${CXX}" --version
+"${CXX}" -print-search-dirs
 
 CMAKE_ENVIRONMENT+=(
     -DCMAKE_C_COMPILER:STRING="${CC}"
@@ -146,6 +144,20 @@ export BOOST_BUILDER_CONFIG
 ./sub-installer/library/unordered_dense.sh
 ./sub-installer/library/z3.sh
 
+if ! ${AC_NO_GENERATE_CACHES:-false}; then
+    echo ::group::generate caches
+
+    if [[ "${AC_VARIANT}" == "gcc" ]]; then
+        # Generate caches of std and std.compat modules.
+        "${CXX}" bits/std.cc bits/std.compat.cc "${PRECOMPILE_BUILD_FLAGS[@]}" -c -fmodule-only -fsearch-include-path || :
+    else
+        "${CXX}" "${AC_INSTALL_DIR}/share/libc++/v1/std.cppm" -o std.pcm -Wno-reserved-module-identifier --precompile "${PRECOMPILE_BUILD_FLAGS[@]}"
+        "${CXX}" "${AC_INSTALL_DIR}/share/libc++/v1/std.compat.cppm" -o std.compat.pcm -Wno-reserved-module-identifier --precompile "${PRECOMPILE_BUILD_FLAGS[@]}"
+    fi
+
+    echo "::endgroup::"
+fi
+
 if [ -v ATCODER ]; then
     echo "::group::finalize"
 
@@ -154,11 +166,7 @@ if [ -v ATCODER ]; then
         -type d -print0 |
         xargs -0 sudo rm -rf
 
-    sudo apt-get purge -y --auto-remove git cmake ninja-build pigz pbzip2
-
-    if [[ "${AC_VARIANT}" == "gcc" ]]; then
-        sudo apt-get purge -y --auto-remove lld
-    fi
+    sudo apt-get purge -y --auto-remove git cmake lld ninja-build pigz pbzip2
 
     echo "::endgroup::"
 fi
