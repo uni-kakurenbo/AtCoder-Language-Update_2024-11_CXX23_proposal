@@ -23,7 +23,7 @@ sudo mkdir -p ./build && cd ./build
 sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
     -DCMAKE_BUILD_TYPE:STRING=Release \
     -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
-    -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]}" \
+    -DCMAKE_CXX_FLAGS:STRING="${INTERNALL_BUILD_FLAGS[*]}" \
     ..
 
 sudo cmake --build . --target install

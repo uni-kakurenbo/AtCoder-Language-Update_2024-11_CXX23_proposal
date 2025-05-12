@@ -5,7 +5,7 @@
 
 AC_VARIANT=gcc
 
-BUILD_FLAGS=(
+USER_BUILD_FLAGS=(
     "-DATCODER"
     "-DNOMINMAX"
     "-DONLINE_JUDGE"
@@ -29,13 +29,14 @@ BUILD_FLAGS=(
     "-fconstexpr-loop-limit=524288"
     "-fconstexpr-ops-limit=2097152"
     "-flto=auto"
+    "-fmodules"
+    "-lstdc++exp"
     "-march=native"
     "-pthread"
     "-std=gnu++23"
-    "-lstdc++exp"
-    "-fopenmp"
     "-L::install_dir::/lib"
     "-Wl,-R::install_dir::/lib"
+    "-fopenmp"
     "-L/opt/atcoder/gcc/lib"
     "-labsl_bad_any_cast_impl"
     "-labsl_cordz_sample_token"
@@ -231,10 +232,10 @@ fi
 INSTALL_DIR="$(cat /etc/atcoder/install_dir.txt)"
 
 # shellcheck disable=SC2016
-BUILD_FLAGS=("${BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
+USER_BUILD_FLAGS=("${USER_BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
 
 if [[ "${AC_VARIANT}" = "gcc" ]]; then
-    g++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
+    g++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 else
-    clang++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
+    clang++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 fi

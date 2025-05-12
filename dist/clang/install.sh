@@ -8,14 +8,35 @@ PARALLEL="$(($(nproc) + 2))"
 
 AC_VARIANT=clang
 
-BUILD_FLAGS=(
-    "-fexperimental-library"
+INTERNALL_BUILD_FLAGS=(
     "-fuse-ld=lld"
     "-rtlib=compiler-rt"
     "-std=gnu++23"
     "-stdlib=libc++"
     "-unwindlib=libunwind"
     "-w"
+    "-Wl,-R::install_dir::/lib/x86_64-unknown-linux-gnu"
+    "-Wl,-R::install_dir::/lib/clang/20/lib/x86_64-unknown-linux-gnu"
+)
+
+PRECOMPILE_BUILD_FLAGS=(
+    "-DATCODER"
+    "-DONLINE_JUDGE"
+    "-O2"
+    "-Wall"
+    "-Wextra"
+    "-fconstexpr-depth=1024"
+    "-fconstexpr-steps=524288"
+    "-fexperimental-library"
+    "-flto=auto"
+    "-fprebuilt-module-path=."
+    "-fuse-ld=lld"
+    "-march=native"
+    "-pthread"
+    "-rtlib=compiler-rt"
+    "-std=gnu++23"
+    "-stdlib=libc++"
+    "-unwindlib=libunwind"
     "-Wl,-R::install_dir::/lib/x86_64-unknown-linux-gnu"
     "-Wl,-R::install_dir::/lib/clang/20/lib/x86_64-unknown-linux-gnu"
 )
@@ -81,9 +102,8 @@ sudo mkdir -p /etc/atcoder/
 echo "${AC_INSTALL_DIR}" | sudo tee /etc/atcoder/install_dir.txt
 
 # shellcheck disable=SC2016
-BUILD_FLAGS=("${BUILD_FLAGS[@]/'::install_dir::'/${AC_INSTALL_DIR}}")
-
-export PATH="${AC_INSTALL_DIR}/bin:${PATH}"
+INTERNALL_BUILD_FLAGS=("${INTERNALL_BUILD_FLAGS[@]/'::install_dir::'/${AC_INSTALL_DIR}}")
+PRECOMPILE_BUILD_FLAGS=("${PRECOMPILE_BUILD_FLAGS[@]/'::install_dir::'/${AC_INSTALL_DIR}}")
 
 sudo mkdir -p "${AC_TEMP_DIR}" "${AC_INSTALL_DIR}/include" "${AC_INSTALL_DIR}/lib"
 
@@ -143,7 +163,9 @@ if [[ "${AC_VARIANT}" == "gcc" ]]; then
             CXX="ccache ${CXX}"
         fi
 
-        sudo ./configure CC="${CC}" CXX="${CXX}" \
+        sudo mkdir -p build && cd build
+
+        sudo ../configure CC="${CC}" CXX="${CXX}" \
             --prefix="${AC_INSTALL_DIR}" \
             --enable-languages=c++ \
             --disable-bootstrap \
@@ -226,7 +248,10 @@ else
     CXX="clang++"
 fi
 
+sudo chmod +x -R "${AC_INSTALL_DIR}"
+
 "${CXX}" --version
+"${CXX}" -print-search-dirs
 
 CMAKE_ENVIRONMENT+=(
     -DCMAKE_C_COMPILER:STRING="${CC}"
@@ -270,7 +295,7 @@ export BOOST_BUILDER_CONFIG
         -DABSL_PROPAGATE_CXX_STD:BOOL=ON
         -DABSL_USE_SYSTEM_INCLUDES:BOOL=ON
         -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}"
-        -DCMAKE_CXX_FLAGS:STRING="-fPIC ${BUILD_FLAGS[*]}"
+        -DCMAKE_CXX_FLAGS:STRING="-fPIC ${INTERNALL_BUILD_FLAGS[*]}"
     )
 
     if [[ -v AC_RUN_TEST ]] && [[ "${AC_RUN_TEST}" = "true" ]]; then
@@ -338,7 +363,7 @@ export BOOST_BUILDER_CONFIG
     fi
 
     if [[ "${AC_VARIANT}" == "clang" ]]; then
-        BOOST_BUILD_FLAGS=("${BUILD_FLAGS[@]}" "--target=x86_64-unknown-linux-gnu")
+        BOOST_BUILD_FLAGS=("${INTERNALL_BUILD_FLAGS[@]}" "--target=x86_64-unknown-linux-gnu")
     fi
 
     sudo ./bootstrap.sh \
@@ -469,7 +494,7 @@ export BOOST_BUILDER_CONFIG
         -DBUILD_STATIC_LIB=ON \
         -DUSE_HOMEBREW_FALLBACK=OFF \
         -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
-        -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]} -I${AC_INSTALL_DIR}/include" \
+        -DCMAKE_CXX_FLAGS:STRING="${INTERNALL_BUILD_FLAGS[*]} -I${AC_INSTALL_DIR}/include" \
         ..
 
     sudo cmake --build . --target install
@@ -516,7 +541,7 @@ export BOOST_BUILDER_CONFIG
         -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
         -DBUILD_SHARED_LIBS:BOOL=OFF \
         -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=ON \
-        -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]}" \
+        -DCMAKE_CXX_FLAGS:STRING="${INTERNALL_BUILD_FLAGS[*]}" \
         ..
 
     sudo cmake --build . --config Release --target install
@@ -601,13 +626,27 @@ export BOOST_BUILDER_CONFIG
     sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
         -DCMAKE_BUILD_TYPE:STRING=Release \
         -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
-        -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]}" \
+        -DCMAKE_CXX_FLAGS:STRING="${INTERNALL_BUILD_FLAGS[*]}" \
         ..
 
     sudo cmake --build . --target install
 
     echo "::endgroup::"
 )
+
+if ! ${AC_NO_GENERATE_CACHES:-false}; then
+    echo ::group::generate caches
+
+    if [[ "${AC_VARIANT}" == "gcc" ]]; then
+        # Generate caches of std and std.compat modules.
+        "${CXX}" bits/std.cc bits/std.compat.cc "${PRECOMPILE_BUILD_FLAGS[@]}" -c -fmodule-only -fsearch-include-path || :
+    else
+        "${CXX}" "${AC_INSTALL_DIR}/share/libc++/v1/std.cppm" -o std.pcm -Wno-reserved-module-identifier --precompile "${PRECOMPILE_BUILD_FLAGS[@]}"
+        "${CXX}" "${AC_INSTALL_DIR}/share/libc++/v1/std.compat.cppm" -o std.compat.pcm -Wno-reserved-module-identifier --precompile "${PRECOMPILE_BUILD_FLAGS[@]}"
+    fi
+
+    echo "::endgroup::"
+fi
 
 if [ -v ATCODER ]; then
     echo "::group::finalize"

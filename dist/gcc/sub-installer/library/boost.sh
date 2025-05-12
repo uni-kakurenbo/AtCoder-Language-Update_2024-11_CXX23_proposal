@@ -32,7 +32,7 @@ if [[ -v CCACHE_ENABLED ]]; then
 fi
 
 if [[ "${AC_VARIANT}" == "clang" ]]; then
-    BOOST_BUILD_FLAGS=("${BUILD_FLAGS[@]}" "--target=x86_64-unknown-linux-gnu")
+    BOOST_BUILD_FLAGS=("${INTERNALL_BUILD_FLAGS[@]}" "--target=x86_64-unknown-linux-gnu")
 fi
 
 sudo ./bootstrap.sh \

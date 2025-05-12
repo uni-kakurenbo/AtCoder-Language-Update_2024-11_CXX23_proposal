@@ -1,3 +1,2 @@
 -std=gnu++23
 -w
--lstdc++exp
