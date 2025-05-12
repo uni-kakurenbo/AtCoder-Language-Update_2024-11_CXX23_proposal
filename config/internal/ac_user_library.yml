@@ -25,3 +25,6 @@ variant:
         Requires: >
             ac_libtorch
             ac_light-gbm
+
+        Libs: >
+            -fopenmp
