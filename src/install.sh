@@ -149,7 +149,7 @@ if ! ${AC_NO_GENERATE_CACHES:-false}; then
 
     if [[ "${AC_VARIANT}" == "gcc" ]]; then
         # Generate caches of std and std.compat modules.
-        "${CXX}" bits/std.cc bits/std.compat.cc "${PRECOMPILE_BUILD_FLAGS[@]}" -c -fmodule-only -fsearch-include-path || :
+        "${CXX}" bits/std.cc bits/std.compat.cc "${PRECOMPILE_BUILD_FLAGS[@]}" -c -fmodule-only -fsearch-include-path
     else
         "${CXX}" "${AC_INSTALL_DIR}/share/libc++/v1/std.cppm" -o std.pcm -Wno-reserved-module-identifier --precompile "${PRECOMPILE_BUILD_FLAGS[@]}"
         "${CXX}" "${AC_INSTALL_DIR}/share/libc++/v1/std.compat.cppm" -o std.compat.pcm -Wno-reserved-module-identifier --precompile "${PRECOMPILE_BUILD_FLAGS[@]}"

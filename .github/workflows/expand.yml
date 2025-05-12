@@ -503,7 +503,7 @@ jobs:
                   #       '{ if((NR-1)%n == i){ print $0 } }'
                   # ))
 
-                  if [ "${{ matrix.type == 'individual' }}" ]; then
+                  if "${{ matrix.type == 'individual' }}"; then
                     ./.github/workflows/internal/test.sh "${{ matrix.variant }}" # "${TESTS[@]}"
                   else
                     ./.github/workflows/internal/merge-tests.sh
@@ -516,7 +516,7 @@ jobs:
                     cp -f "../../${DIST_DIR}/compile.sh" ./compile.sh
                     cp -f ../merged.cpp ./Main.cpp
 
-                    if [ "${{ matrix.variant == 'gcc' }}"]; then
+                    if "${{ matrix.variant == 'gcc' }}"; then
                       cp -rf ../../gcm.cache ./gcm.cache
                     else
                       cp -rf ../../**.pcm ./
