@@ -21,7 +21,9 @@ if [[ -v CCACHE_ENABLED ]]; then
     CXX="ccache ${CXX}"
 fi
 
-sudo ./configure CC="${CC}" CXX="${CXX}" \
+sudo mkdir -p build && cd build
+
+sudo ../configure CC="${CC}" CXX="${CXX}" \
     --prefix="${AC_INSTALL_DIR}" \
     --enable-languages=c++ \
     --disable-bootstrap \

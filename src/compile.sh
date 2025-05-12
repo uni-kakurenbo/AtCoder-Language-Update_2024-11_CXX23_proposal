@@ -32,10 +32,10 @@ fi
 INSTALL_DIR="$(cat /etc/atcoder/install_dir.txt)"
 
 # shellcheck disable=SC2016
-BUILD_FLAGS=("${BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
+USER_BUILD_FLAGS=("${USER_BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
 
 if [[ "${AC_VARIANT}" = "gcc" ]]; then
-    g++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
+    g++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 else
-    clang++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
+    clang++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 fi
