@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="4.14.1"
+VERSION="4.15.0"
 
 set -eu
 if "${AC_NO_BUILD_z3:-false}"; then exit 0; fi
@@ -23,7 +23,7 @@ sudo mkdir -p ./build && cd ./build
 sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
     -DCMAKE_BUILD_TYPE:STRING=Release \
     -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
-    -DCMAKE_CXX_FLAGS:STRING="${BUILD_FLAGS[*]}" \
+    -DCMAKE_CXX_FLAGS:STRING="${INTERNALL_BUILD_FLAGS[*]}" \
     ..
 
 sudo cmake --build . --target install
