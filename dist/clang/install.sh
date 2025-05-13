@@ -314,7 +314,7 @@ export BOOST_BUILDER_CONFIG
 
 # ac-library
 (
-    VERSION="1.5.1"
+    VERSION="1.6"
 
     set -eu
     if "${AC_NO_BUILD_ac_library:-false}"; then exit 0; fi
@@ -323,8 +323,10 @@ export BOOST_BUILDER_CONFIG
 
     echo "::group::AC Library"
 
-    sudo wget -q "https://github.com/atcoder/ac-library/releases/download/v${VERSION}/ac-library.zip" -O ./ac-library.zip
-    sudo unzip -oq ./ac-library.zip -d ./ac-library
+    sudo mkdir -p ./ac-library
+
+    sudo wget -q "https://github.com/atcoder/ac-library/archive/refs/tags/v${VERSION}.tar.gz" -O ./ac-library.tar.gz
+    sudo tar -I pigz -xf ./ac-library.tar.gz -C ./ac-library --strip-components 1
 
     sudo cp -rf ./ac-library/atcoder "${AC_INSTALL_DIR}/include"
 
@@ -342,12 +344,12 @@ export BOOST_BUILDER_CONFIG
 
     echo "::group::boost"
 
-    sudo mkdir -p ./boost/
+    sudo mkdir -p ./boost
 
     sudo wget -q "https://archives.boost.io/release/${VERSION}/source/boost_${VERSION//./_}.tar.bz2" -O ./boost.tar.bz2
-    sudo tar -I pbzip2 -xf ./boost.tar.bz2 -C ./boost/ --strip-components 1
+    sudo tar -I pbzip2 -xf ./boost.tar.bz2 -C ./boost --strip-components 1
 
-    cd ./boost/
+    cd ./boost
 
     if [[ -v BOOST_BUILDER_CONFIG ]]; then
         echo "${BOOST_BUILDER_CONFIG}" | sudo tee -a ./user-config.jam
@@ -605,7 +607,7 @@ export BOOST_BUILDER_CONFIG
 
 # z3
 (
-    VERSION="4.14.1"
+    VERSION="4.15.0"
 
     set -eu
     if "${AC_NO_BUILD_z3:-false}"; then exit 0; fi
