@@ -1,4 +1,4 @@
-#ifdef __GNUC__
+#ifdef __clang__
 
 
 #pragma message("skipped")
@@ -9,9 +9,10 @@ int main() {}
 #else
 
 
-#include <flat_map>
-#include <iostream>
+#include <cassert>
 #include <string>
+#include <ranges>
+#include <flat_map>
 
 
 
