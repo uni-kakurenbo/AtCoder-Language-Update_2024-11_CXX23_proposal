@@ -27,4 +27,5 @@ variant:
             ac_light-gbm
 
         Libs: >
+            -lstdc++exp
             -fopenmp

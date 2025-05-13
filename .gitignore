@@ -1,5 +1,7 @@
 tmp/
-a.out
+**.out
 **.pcm
 **.cache
 **/build
+CMakeLists.txt
+compile_flags.txt

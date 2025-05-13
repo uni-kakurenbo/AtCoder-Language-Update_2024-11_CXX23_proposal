@@ -11,12 +11,12 @@ cd "${AC_TEMP_DIR}"
 
 echo "::group::boost"
 
-sudo mkdir -p ./boost/
+sudo mkdir -p ./boost
 
 sudo wget -q "https://archives.boost.io/release/${VERSION}/source/boost_${VERSION//./_}.tar.bz2" -O ./boost.tar.bz2
-sudo tar -I pbzip2 -xf ./boost.tar.bz2 -C ./boost/ --strip-components 1
+sudo tar -I pbzip2 -xf ./boost.tar.bz2 -C ./boost --strip-components 1
 
-cd ./boost/
+cd ./boost
 
 if [[ -v BOOST_BUILDER_CONFIG ]]; then
     echo "${BOOST_BUILDER_CONFIG}" | sudo tee -a ./user-config.jam
@@ -32,7 +32,7 @@ if [[ -v CCACHE_ENABLED ]]; then
 fi
 
 if [[ "${AC_VARIANT}" == "clang" ]]; then
-    BOOST_BUILD_FLAGS=("${BUILD_FLAGS[@]}" "--target=x86_64-unknown-linux-gnu")
+    BOOST_BUILD_FLAGS=("${INTERNALL_BUILD_FLAGS[@]}" "--target=x86_64-unknown-linux-gnu")
 fi
 
 sudo ./bootstrap.sh \

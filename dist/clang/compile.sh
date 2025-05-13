@@ -5,7 +5,7 @@
 
 AC_VARIANT=clang
 
-BUILD_FLAGS=(
+USER_BUILD_FLAGS=(
     "-DATCODER"
     "-DNOMINMAX"
     "-DONLINE_JUDGE"
@@ -32,6 +32,7 @@ BUILD_FLAGS=(
     "-fconstexpr-steps=524288"
     "-fexperimental-library"
     "-flto=auto"
+    "-fprebuilt-module-path=."
     "-fuse-ld=lld"
     "-march=native"
     "-pthread"
@@ -39,6 +40,8 @@ BUILD_FLAGS=(
     "-std=gnu++23"
     "-stdlib=libc++"
     "-unwindlib=libunwind"
+    "std.compat.pcm"
+    "std.pcm"
     "-Wl,-R::install_dir::/lib/x86_64-unknown-linux-gnu"
     "-Wl,-R::install_dir::/lib/clang/20/lib/x86_64-unknown-linux-gnu"
     "-L::install_dir::/lib"
@@ -234,10 +237,10 @@ fi
 INSTALL_DIR="$(cat /etc/atcoder/install_dir.txt)"
 
 # shellcheck disable=SC2016
-BUILD_FLAGS=("${BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
+USER_BUILD_FLAGS=("${USER_BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
 
 if [[ "${AC_VARIANT}" = "gcc" ]]; then
-    g++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
+    g++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 else
-    clang++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
+    clang++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 fi
