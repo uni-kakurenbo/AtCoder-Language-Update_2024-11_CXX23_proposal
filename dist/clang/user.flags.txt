@@ -32,8 +32,6 @@
 -std=gnu++23
 -stdlib=libc++
 -unwindlib=libunwind
-std.compat.pcm
-std.pcm
 -Wl,-R::install_dir::/lib/x86_64-unknown-linux-gnu
 -Wl,-R::install_dir::/lib/clang/20/lib/x86_64-unknown-linux-gnu
 -L::install_dir::/lib

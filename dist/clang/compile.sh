@@ -40,8 +40,6 @@ USER_BUILD_FLAGS=(
     "-std=gnu++23"
     "-stdlib=libc++"
     "-unwindlib=libunwind"
-    "std.compat.pcm"
-    "std.pcm"
     "-Wl,-R::install_dir::/lib/x86_64-unknown-linux-gnu"
     "-Wl,-R::install_dir::/lib/clang/20/lib/x86_64-unknown-linux-gnu"
     "-L::install_dir::/lib"
@@ -242,5 +240,5 @@ USER_BUILD_FLAGS=("${USER_BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
 if [[ "${AC_VARIANT}" = "gcc" ]]; then
     g++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 else
-    clang++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
+    clang++ std.pcm std.compat.pcm ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 fi
