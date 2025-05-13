@@ -24,5 +24,6 @@ variant:
 
             -fexperimental-library
 
-        Lib: >
+        Libs: >
             -fopenmp
+            -fopenmp-extensions

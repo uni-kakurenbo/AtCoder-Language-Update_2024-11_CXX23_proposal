@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eu
-if [[ "${AC_NO_BUILD_light_gbm:-false}" == true || "${AC_VARIANT}" == "clang" ]]; then exit 0; fi
+if [[ "${AC_NO_BUILD_light_gbm:-false}" == true ]]; then exit 0; fi
 
 cd "${AC_TEMP_DIR}"
 
@@ -25,7 +25,7 @@ sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
     -DBUILD_STATIC_LIB=ON \
     -DUSE_HOMEBREW_FALLBACK=OFF \
     -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
-    -DCMAKE_CXX_FLAGS:STRING="${INTERNALL_BUILD_FLAGS[*]} -I${AC_INSTALL_DIR}/include" \
+    -DCMAKE_CXX_FLAGS:STRING="${INTERNALL_BUILD_FLAGS[*]} -I${AC_INSTALL_DIR}/include -fopenmp" \
     ..
 
 sudo cmake --build . --target install

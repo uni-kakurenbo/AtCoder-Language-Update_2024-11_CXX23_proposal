@@ -220,36 +220,36 @@ version = '20.1.3'
     url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L420-L456'
 
 
-[variant.gcc.library.light-gbm]
+[library.light-gbm]
     version = '4.6.0'
     license = [
         { name = 'MIT', url = 'https://github.com/microsoft/light-gbm/blob/master/LICENSE' }
     ]
 
 
-[variant.gcc.library.compute]
+[library.compute]
     indirect = true
 
-[[variant.gcc.library.compute.license]]
+[[library.compute.license]]
     name = 'BSL-1.0'
     url = 'https://github.com/boostorg/compute/blob/36350b7de849300bd3d72a05d8bf890ca405a014/LICENSE_1_0.txt'
 
 
-[variant.gcc.library.fast_double_parser]
+[library.fast_double_parser]
     indirect = true
 
-[[variant.gcc.library.fast_double_parser.license]]
+[[library.fast_double_parser.license]]
     name = 'Apache-2.0'
     url = 'https://github.com/lemire/fast_double_parser/blob/efec03532ef65984786e5e32dbc81f6e6a55a115/LICENSE'
 
-[[variant.gcc.library.fast_double_parser.license]]
+[[library.fast_double_parser.license]]
     name = 'BSL-1.0'
     url = 'https://github.com/lemire/fast_double_parser/blob/efec03532ef65984786e5e32dbc81f6e6a55a115/LICENSE.BSL'
 
 
-[variant.gcc.library.fmt]
+[library.fmt]
     indirect = true
 
-[[variant.gcc.library.fmt.license]]
+[[library.fmt.license]]
     name = 'X11-distribute-modifications-variant'
     url = 'https://github.com/fmtlib/fmt/blob/f5e54359df4c26b6230fc61d38aa294581393084/LICENSE.rst'
