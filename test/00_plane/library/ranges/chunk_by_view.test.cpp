@@ -1,14 +1,3 @@
-#ifdef __clang__
-
-
-#pragma message("skipped")
-
-int main() {}
-
-
-#else
-
-
 #include <print>
 #include <ranges>
 #include <vector>
@@ -25,6 +14,3 @@ int main() {
         }
     }
 }
-
-
-#endif
