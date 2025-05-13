@@ -37,5 +37,5 @@ USER_BUILD_FLAGS=("${USER_BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
 if [[ "${AC_VARIANT}" = "gcc" ]]; then
     g++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 else
-    clang++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
+    clang++ std.pcm std.compat.pcm ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 fi
