@@ -1,19 +1,7 @@
-#ifdef __clang__
-
-
-#pragma message("skipped")
-
-int main() {}
-
-
-#else
-
-
 #include <cassert>
 #include <string>
 #include <ranges>
 #include <flat_map>
-
 
 
 int main() {
@@ -28,6 +16,3 @@ int main() {
         assert(std::stoi(key) == value);
     }
 }
-
-
-#endif

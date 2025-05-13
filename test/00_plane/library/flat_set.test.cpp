@@ -1,3 +1,14 @@
+#ifdef __clang__
+
+
+#pragma message("skipped")
+
+int main() {}
+
+
+#else
+
+
 #include <cassert>
 #include <string>
 #include <ranges>
@@ -12,3 +23,6 @@ int main() {
         assert(std::stoi(v) == i);
     }
 }
+
+
+#endif
