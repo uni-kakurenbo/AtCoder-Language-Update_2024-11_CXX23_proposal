@@ -30,7 +30,7 @@ version = '20.1.3'
     ]
 
 [library.ac-library]
-    version = '1.5.1'
+    version = '1.6'
     license = [
         { name = 'CC0-1.0', url = 'https://github.com/atcoder/ac-library/blob/master/LICENSE' }
     ]
@@ -178,14 +178,14 @@ version = '20.1.3'
 
 
 [library.z3]
-    version = '4.14.1'
+    version = '4.15.0'
     license = [
         { name = 'MIT', url = 'https://github.com/Z3Prover/z3/blob/z3-4.13.3/LICENSE.txt' }
     ]
 
 
 [variant.gcc.library.libtorch]
-    version = '2.6.0'
+    version = '2.7.0'
 
 [[variant.gcc.library.libtorch.license]]
     name = 'BSD-3-Clause'
