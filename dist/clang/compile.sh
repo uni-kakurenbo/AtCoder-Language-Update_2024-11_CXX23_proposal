@@ -19,7 +19,6 @@ USER_BUILD_FLAGS=(
     "-DUSE_MATH_OPT"
     "-DUSE_PDLP"
     "-DUSE_SCIP"
-    "-I/opt/atcoder/clang/include"
     "-I::install_dir::/include/"
     "-O2"
     "-Wall"

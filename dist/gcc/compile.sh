@@ -19,7 +19,6 @@ USER_BUILD_FLAGS=(
     "-DUSE_MATH_OPT"
     "-DUSE_PDLP"
     "-DUSE_SCIP"
-    "-I/opt/atcoder/gcc/include"
     "-I::install_dir::/include/"
     "-I::install_dir::/include/torch/csrc/api/include"
     "-O2"
