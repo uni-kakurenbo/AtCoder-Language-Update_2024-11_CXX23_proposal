@@ -8,6 +8,8 @@ Cflags: >
 
     -pthread
 
+    -ftrivial-auto-var-init=zero
+
     -fconstexpr-depth=1024
 
 variant:
@@ -21,3 +23,6 @@ variant:
             -fconstexpr-steps=524288
 
             -fexperimental-library
+
+        Lib: >
+            -fopenmp
