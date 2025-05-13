@@ -30,13 +30,14 @@ USER_BUILD_FLAGS=(
     "-fconstexpr-ops-limit=2097152"
     "-flto=auto"
     "-fmodules"
+    "-ftrivial-auto-var-init=zero"
     "-march=native"
     "-pthread"
     "-std=gnu++23"
     "-L::install_dir::/lib"
     "-Wl,-R::install_dir::/lib"
-    "-lstdc++exp"
     "-fopenmp"
+    "-lstdc++exp"
     "-L/opt/atcoder/gcc/lib"
     "-labsl_bad_any_cast_impl"
     "-labsl_cordz_sample_token"
@@ -193,10 +194,10 @@ USER_BUILD_FLAGS=(
     "-labsl_log_severity"
     "-labsl_spinlock_wait"
     "-lz3"
+    "-l_lightgbm"
     "-ltorch"
     "-ltorch_cpu"
     "-lc10"
-    "-l_lightgbm"
 )
 
 set -eu
@@ -237,5 +238,5 @@ USER_BUILD_FLAGS=("${USER_BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
 if [[ "${AC_VARIANT}" = "gcc" ]]; then
     g++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 else
-    clang++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
+    clang++ std.pcm std.compat.pcm ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 fi

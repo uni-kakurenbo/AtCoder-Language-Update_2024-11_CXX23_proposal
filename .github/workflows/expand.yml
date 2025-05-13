@@ -254,11 +254,6 @@ jobs:
             matrix:
                 target: ${{ fromJson(needs.config-matrix.outputs.libraries) }}
                 variant: ["gcc", "clang"]
-                exclude:
-                    - target: libtorch
-                      variant: clang
-                    - target: light-gbm
-                      variant: clang
             fail-fast: false
 
         steps:
@@ -328,7 +323,7 @@ jobs:
                     sudo ln -sf "$(which gcc-14)" /usr/local/bin/gcc
                     sudo ln -sf "$(which g++-14)" /usr/local/bin/g++
                   else
-                    sudo apt-get install -y clang-19 libc++-19-dev lld
+                    sudo apt-get install -y clang-19 libc++-19-dev lld libomp-19-dev
 
                     sudo ln -sf "$(which clang-19)" /usr/local/bin/clang
                     sudo ln -sf "$(which clang++-19)" /usr/local/bin/clang++

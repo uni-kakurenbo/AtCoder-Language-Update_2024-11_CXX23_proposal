@@ -4,12 +4,12 @@
 [![workflows:generate-pages]({{ site.github.repository_url }}/actions/workflows/gh-pages.yml/badge.svg)]({{ site.github.repository_url }}/actions/workflows/gh-pages.yml)
 [![workflows:test-on-docker]({{ site.github.repository_url }}/actions/workflows/test-on-docker.yml/badge.svg)]({{ site.github.repository_url }}/actions/workflows/test-on-docker.yml)
 
-### GCC: `14.2.0`
+### GCC: `15.1.0`
 - [Install script](#install-script)
 - [Compile script](#compile-script)
 - [Configuration](#configuration)
 
-### Clang: `19.1.7`
+### Clang: `20.1.3`
 - [Install script](#install-script-1)
 - [Compile script](#compile-script-1)
 - [Configuration](#configuration-1)
@@ -17,7 +17,7 @@
 ## [Library]({{ site.github.repository_url }}/blob/main/src/sub-installer/library)
 
 ### Official
-- [AC Library](https://atcoder.github.io/ac-library/master/document_ja/): `1.5.1`
+- [AC Library](https://atcoder.github.io/ac-library/master/document_ja/): `1.6`
     - The official, original library provided by AtCoder.
     - inherited
 
@@ -28,18 +28,18 @@
     - [「いずれ利用できるようになるので，先取りしておくことに否定的である必要はない」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306609306996707398)
     - [「いずれ C++ 標準入りするなら，早期から使えるようにしたところで長期的には特に問題ない」](https://discord.com/channels/1245258617582653553/1293457974442070016/1308248462772408373)
 
-- [unordered_dense](https://github.com/martinus/unordered_dense): `4.4.0`
+- [unordered_dense](https://github.com/martinus/unordered_dense): `4.5.0`
     - A densely stored hashmap (and hashset) based on robin-hood hashing and backward shift deletion.
     - proposed at [2024/11/10 07:24](https://discord.com/channels/1245258617582653553/1293457974442070016/1304934690616115251)
     - [「機能面を見るに，C++ 標準 (GNU 拡張含む) や Boost で十分に思える．性能面で優れているところが動機だと思うが，それで外部ライブラリの導入を進めると際限なく広がってしまうので，やはり反対」](https://discord.com/channels/1245258617582653553/1293457974442070016/1308248462772408373)
 
 ### Advanced STL-like
-- [Abseil](https://abseil.io/docs/cpp/quickstart): `20240722.0`
+- [Abseil](https://abseil.io/docs/cpp/quickstart): `20250127.1`
     - A set of libraries developed by Google to argument C++ Standard Library.
     - proposed at [2024/11/10 08:28](https://discord.com/channels/1245258617582653553/1293457974442070016/1304950777604735097)
     - [「機能面を見るに，C++ 標準 (GNU 拡張含む) や Boost で十分に思える．性能面で優れているところが動機だと思うが，それで外部ライブラリの導入を進めると際限なく広がってしまうので，やはり反対」](https://discord.com/channels/1245258617582653553/1293457974442070016/1308248462772408373)
 
-- [Boost](https://www.boost.org/): `1.86.0`
+- [Boost](https://www.boost.org/): `1.88.0`
     - A set of portable, versatile libraries that work well with C++ Standard Library.
     - inherited
 
@@ -56,7 +56,7 @@ Arithmetic Library
     - inherited
 
 ### Machine learning
-- [LibTorch](https://pytorch.org/cppdocs/installing.html): `2.5.1`
+- [LibTorch](https://pytorch.org/cppdocs/installing.html): `2.7.0`
     - A C++ bindings for [PyTorch](https://pytorch.org/).
     - proposed at [2024/11/10 08:28](https://discord.com/channels/1245258617582653553/1293457974442070016/1304950777604735097)
     - [「過去問は機械学習が本番一位を取った回があり (中略) 普通に使えるチャンスがあるのかも」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306591214392447088)
@@ -71,11 +71,11 @@ Arithmetic Library
 
 
 ### Solver
-- [OR-Tools](https://developers.google.com/optimization):`9.11`
+- [OR-Tools](https://developers.google.com/optimization):`9.12`
     - A portable software designed by Google to solve combinatorial optimization problems.
     - inherited (as a proposal)
 
-- [Z3](https://github.com/Z3Prover/z3): `4.13.3`
+- [Z3](https://github.com/Z3Prover/z3): `4.15.0`
     - A theorem prover designed by Microsoft Research to solve satisfiability modulo theories (SMT).
     - inherited (as a proposal)
 
@@ -120,6 +120,8 @@ Some other flags might be appended, depending on libraries that is to be install
     - [「GCC 14 時点での安定性については分りかねるが，再度検討して損はない」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306609306996707398)
     - [「詳しく把握しないままに追加すると思わぬトラブルになるかも」](https://discord.com/channels/1245258617582653553/1293457974442070016/1308248462772408373)
     - [「精査が必要だと考え，現時点での追加には反対」](https://discord.com/channels/1245258617582653553/1293457974442070016/1308248462772408373)
+
+- `-ftrivial-auto-var-init=zero`
 
 #### Comments
 - [「他にも潜在的なバグがある可能性はある」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306599336418738248)

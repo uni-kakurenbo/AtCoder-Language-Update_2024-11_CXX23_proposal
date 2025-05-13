@@ -33,6 +33,7 @@ USER_BUILD_FLAGS=(
     "-fexperimental-library"
     "-flto=auto"
     "-fprebuilt-module-path=."
+    "-ftrivial-auto-var-init=zero"
     "-fuse-ld=lld"
     "-march=native"
     "-pthread"
@@ -40,12 +41,13 @@ USER_BUILD_FLAGS=(
     "-std=gnu++23"
     "-stdlib=libc++"
     "-unwindlib=libunwind"
-    "std.compat.pcm"
-    "std.pcm"
     "-Wl,-R::install_dir::/lib/x86_64-unknown-linux-gnu"
     "-Wl,-R::install_dir::/lib/clang/20/lib/x86_64-unknown-linux-gnu"
+    "-fopenmp"
+    "-fopenmp-extensions"
     "-L::install_dir::/lib"
     "-Wl,-R::install_dir::/lib"
+    "-fopenmp"
     "-L/opt/atcoder/clang/lib"
     "-labsl_bad_any_cast_impl"
     "-labsl_cordz_sample_token"
@@ -202,6 +204,7 @@ USER_BUILD_FLAGS=(
     "-labsl_log_severity"
     "-labsl_spinlock_wait"
     "-lz3"
+    "-l_lightgbm"
 )
 
 set -eu
@@ -242,5 +245,5 @@ USER_BUILD_FLAGS=("${USER_BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
 if [[ "${AC_VARIANT}" = "gcc" ]]; then
     g++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 else
-    clang++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
+    clang++ std.pcm std.compat.pcm ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 fi

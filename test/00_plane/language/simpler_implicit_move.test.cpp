@@ -1,7 +1,7 @@
 #include <concepts>
 
 
-namespace simpler_implicit_move{
+namespace simpler_implicit_move {
 
 
 struct movable {

@@ -1,17 +1,3 @@
-#ifdef __GNUC__
-
-
-#pragma message("skipped")
-
-int main() {}
-
-
-#else
-
-
-#pragma GCC diagnostic error "-Wdangling-gsl"
-
-
 #include <print>
 #include <vector>
 #include <string>
@@ -27,6 +13,3 @@ int main() {
         std::println("{}", c);
     }
 }
-
-
-#endif

@@ -30,6 +30,7 @@ PRECOMPILE_BUILD_FLAGS=(
     "-fexperimental-library"
     "-flto=auto"
     "-fprebuilt-module-path=."
+    "-ftrivial-auto-var-init=zero"
     "-fuse-ld=lld"
     "-march=native"
     "-pthread"
@@ -39,6 +40,8 @@ PRECOMPILE_BUILD_FLAGS=(
     "-unwindlib=libunwind"
     "-Wl,-R::install_dir::/lib/x86_64-unknown-linux-gnu"
     "-Wl,-R::install_dir::/lib/clang/20/lib/x86_64-unknown-linux-gnu"
+    "-fopenmp"
+    "-fopenmp-extensions"
 )
 
 set -eu
@@ -443,8 +446,7 @@ export BOOST_BUILDER_CONFIG
     VERSION=null
 
     set -eu
-    if [[ "${AC_NO_BUILD_libtorch:-false}" == true || \
-        "${AC_VARIANT}" == "clang" ]]; then
+    if [[ "${AC_NO_BUILD_libtorch:-false}" == true || "${AC_VARIANT}" == "clang" ]]; then
         exit 0
     fi
 
@@ -468,10 +470,10 @@ export BOOST_BUILDER_CONFIG
 
 # light-gbm
 (
-    VERSION=null
+    VERSION="4.6.0"
 
     set -eu
-    if [[ "${AC_NO_BUILD_light_gbm:-false}" == true || "${AC_VARIANT}" == "clang" ]]; then exit 0; fi
+    if [[ "${AC_NO_BUILD_light_gbm:-false}" == true ]]; then exit 0; fi
 
     cd "${AC_TEMP_DIR}"
 
@@ -496,7 +498,7 @@ export BOOST_BUILDER_CONFIG
         -DBUILD_STATIC_LIB=ON \
         -DUSE_HOMEBREW_FALLBACK=OFF \
         -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
-        -DCMAKE_CXX_FLAGS:STRING="${INTERNALL_BUILD_FLAGS[*]} -I${AC_INSTALL_DIR}/include" \
+        -DCMAKE_CXX_FLAGS:STRING="${INTERNALL_BUILD_FLAGS[*]} -I${AC_INSTALL_DIR}/include -fopenmp" \
         ..
 
     sudo cmake --build . --target install
