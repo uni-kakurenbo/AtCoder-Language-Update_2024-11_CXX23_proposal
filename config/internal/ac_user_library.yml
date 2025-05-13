@@ -12,6 +12,7 @@ Requires: >
     ac_range-v3
     ac_unordered_dense
     ac_z3
+    ac_light-gbm
 
 Cflags: >
     -I${install_dir}/include/
@@ -20,12 +21,12 @@ Libs: >
     -L${install_dir}/lib
     -Wl,-R${install_dir}/lib
 
+    -fopenmp
+
 variant:
     gcc:
         Requires: >
             ac_libtorch
-            ac_light-gbm
 
         Libs: >
             -lstdc++exp
-            -fopenmp
