@@ -1,17 +1,7 @@
-#ifdef __GNUC__
-
-
-#pragma message("skipped")
-
-int main() {}
-
-
-#else
-
-
-#include <flat_map>
-#include <iostream>
+#include <cassert>
 #include <string>
+#include <ranges>
+#include <flat_map>
 
 
 
@@ -27,6 +17,3 @@ int main() {
         assert(std::stoi(key) == value);
     }
 }
-
-
-#endif

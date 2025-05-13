@@ -1,6 +1,3 @@
-#include <concepts>
-
-
 #ifdef __clang__
 
 
@@ -10,6 +7,9 @@ int main() {}
 
 
 #else
+
+
+#include <concepts>
 
 
 template<class T, class U, class V>
