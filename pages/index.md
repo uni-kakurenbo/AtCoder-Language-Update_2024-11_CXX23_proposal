@@ -122,6 +122,7 @@ Some other flags might be appended, depending on libraries that is to be install
     - [「精査が必要だと考え，現時点での追加には反対」](https://discord.com/channels/1245258617582653553/1293457974442070016/1308248462772408373)
 
 - `-ftrivial-auto-var-init=zero`
+    - trivial な未初期化変数が 0 で初期化されるようになります．
 
 #### Comments
 - [「他にも潜在的なバグがある可能性はある」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306599336418738248)
