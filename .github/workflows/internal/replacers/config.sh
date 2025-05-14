@@ -15,7 +15,7 @@ echo >>"${DIST_DIR}/config.toml"
 dasel -r toml -w json <./src/config.toml |
     jq --arg installer "${INSTALLER}" '.install=$installer' |
     jq --arg compiler "${COMPILER}" '.compile=$compiler' |
-    jq --arg variant "gcc" '. * .variant[$variant] | del(.variant)' |
+    jq --arg variant "${VARIANT}" '. * .variant[$variant] | del(.variant)' |
     dasel -r json -w toml |
     tr -s ' \n' |
     sed -e 's/^\s*//g' >>"${DIST_DIR}/config.toml"
