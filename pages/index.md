@@ -122,6 +122,7 @@ Some other flags might be appended, depending on libraries that is to be install
     - [「精査が必要だと考え，現時点での追加には反対」](https://discord.com/channels/1245258617582653553/1293457974442070016/1308248462772408373)
 
 - `-ftrivial-auto-var-init=zero`
+    - trivial な未初期化変数が 0 で初期化されるようになります．
 
 #### Comments
 - [「他にも潜在的なバグがある可能性はある」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306599336418738248)
@@ -142,7 +143,7 @@ Some other flags might be appended, depending on libraries that is to be install
     - 備考: かつては設定できる最大値 (`4294967295`) が指定されていた．
 
 ### Extra features
-- `-lstdc++exp`
+- `-lstdc++exp` (GCC), `-fexperimental-library` (Clang)
     - enables experimental library features
     - proposed at [2024/11/10 16:36](https://discord.com/channels/1245258617582653553/1293457974442070016/1305073512746192949)
     - [「競プロ (特に Algo) とはほぼ関係ない (導入しても大きな問題はない) のでは」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306609306996707398)
