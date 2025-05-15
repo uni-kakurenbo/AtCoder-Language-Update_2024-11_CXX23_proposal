@@ -11,7 +11,7 @@ int main() {
     v << 2,
        3;
 
-    MatrixXf::Index index;
+    Eigen::MatrixXf::Index index;
     (m.colwise() - v).colwise().squaredNorm().minCoeff(&index);
 
     std::cout << "Nearest neighbor is column " << index << ":" << std::endl;
