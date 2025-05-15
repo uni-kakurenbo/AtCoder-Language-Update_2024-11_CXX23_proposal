@@ -1,3 +1,4 @@
+#include <Eigen/Dense>
 import std;
 
 int main() {
