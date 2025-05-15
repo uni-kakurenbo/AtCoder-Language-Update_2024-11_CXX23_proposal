@@ -15,8 +15,7 @@ gen-flags ac_pre-compile | sed -e 's/ +/ /' | tr ' ' '\n' >"${DIST_DIR}/pre-comp
 sed -i '/^$/d' "${DIST_DIR}/internal.flags.txt"
 sed -i '/^$/d' "${DIST_DIR}/pre-compile.flags.txt"
 
-cat "${DIST_DIR}/internal.flags.txt"
-echo
+cat "${DIST_DIR}/internal.flags.txt" && echo
 cat "${DIST_DIR}/pre-compile.flags.txt"
 
 "${WORKING_DIRECTORY}/replacers/sub-installer.sh" "${DIST_DIR}"

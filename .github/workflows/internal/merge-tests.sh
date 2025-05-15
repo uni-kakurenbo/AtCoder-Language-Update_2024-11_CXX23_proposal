@@ -32,11 +32,16 @@ export -f replace
 
 MAIN="$(
     # shellcheck disable=SC2016
-    find ./test/ -iname '*.test.cpp' -print0 |
+    find ./test -iname '*.test.cpp' -not -path "*/modules/*" -print0 |
+        xargs -0 -I {} bash -c 'echo "$(replace {})(argc, argv);"'
+
+    # shellcheck disable=SC2016
+    find ./test/**/modules -iname '*.test.cpp' -print0 |
         xargs -0 -I {} bash -c 'echo "$(replace {})(argc, argv);"'
 )"
 
 {
+    echo
     echo "int main(int argc, char* argv[]) {"
     echo "${MAIN}"
     echo "}"
