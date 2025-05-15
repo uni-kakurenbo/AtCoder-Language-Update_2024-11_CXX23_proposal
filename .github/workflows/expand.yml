@@ -508,6 +508,10 @@ jobs:
 
                     mkdir -p ./test/tmp && cd ./test/tmp
 
+                    echo "---"
+                    cat ../merged.cpp
+                    echo "---"
+
                     cp -f "../../${DIST_DIR}/compile.sh" ./compile.sh
                     cp -f ../merged.cpp ./Main.cpp
 
