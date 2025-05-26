@@ -4,7 +4,6 @@
 #include <flat_map>
 
 
-
 int main() {
     std::flat_map<std::string, int> fm = {
         { "0", 0 },

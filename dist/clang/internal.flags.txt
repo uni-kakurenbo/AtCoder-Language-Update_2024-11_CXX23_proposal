@@ -1,4 +1,3 @@
--fexperimental-library
 -fuse-ld=lld
 -rtlib=compiler-rt
 -std=gnu++23

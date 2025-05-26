@@ -5,7 +5,7 @@
 
 AC_VARIANT=gcc
 
-BUILD_FLAGS=(
+USER_BUILD_FLAGS=(
     "-DATCODER"
     "-DNOMINMAX"
     "-DONLINE_JUDGE"
@@ -19,7 +19,6 @@ BUILD_FLAGS=(
     "-DUSE_MATH_OPT"
     "-DUSE_PDLP"
     "-DUSE_SCIP"
-    "-I/opt/atcoder/gcc/include"
     "-I::install_dir::/include/"
     "-I::install_dir::/include/torch/csrc/api/include"
     "-O2"
@@ -29,13 +28,15 @@ BUILD_FLAGS=(
     "-fconstexpr-loop-limit=524288"
     "-fconstexpr-ops-limit=2097152"
     "-flto=auto"
+    "-fmodules"
+    "-ftrivial-auto-var-init=zero"
     "-march=native"
     "-pthread"
     "-std=gnu++23"
-    "-lstdc++exp"
-    "-fopenmp"
     "-L::install_dir::/lib"
     "-Wl,-R::install_dir::/lib"
+    "-fopenmp"
+    "-lstdc++exp"
     "-L/opt/atcoder/gcc/lib"
     "-labsl_bad_any_cast_impl"
     "-labsl_cordz_sample_token"
@@ -192,10 +193,10 @@ BUILD_FLAGS=(
     "-labsl_log_severity"
     "-labsl_spinlock_wait"
     "-lz3"
+    "-l_lightgbm"
     "-ltorch"
     "-ltorch_cpu"
     "-lc10"
-    "-l_lightgbm"
 )
 
 set -eu
@@ -231,10 +232,10 @@ fi
 INSTALL_DIR="$(cat /etc/atcoder/install_dir.txt)"
 
 # shellcheck disable=SC2016
-BUILD_FLAGS=("${BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
+USER_BUILD_FLAGS=("${USER_BUILD_FLAGS[@]//'::install_dir::'/${INSTALL_DIR}}")
 
 if [[ "${AC_VARIANT}" = "gcc" ]]; then
-    g++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
+    g++ ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 else
-    clang++ ./Main.cpp -o a.out "${BUILD_FLAGS[@]}"
+    clang++ std.pcm std.compat.pcm ./Main.cpp -o a.out "${USER_BUILD_FLAGS[@]}"
 fi
