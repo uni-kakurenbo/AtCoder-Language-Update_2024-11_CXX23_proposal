@@ -1,4 +1,4 @@
-language = 'C++23'
+language = 'C++'
 
 filename = 'Main.cpp'
 
@@ -6,15 +6,22 @@ object = 'a.out'
 
 execution = ['./a.out']
 
+
 [variant.gcc]
-name = 'GCC'
-version = '15.1.0'
+display = 'C++23 (GCC 15.1.0)'
 
 [variant.clang]
-name = 'Clang'
-version = '20.1.3'
+display = 'C++23 (Clang 20.1.3)'
 
-[[variant.gcc.license]]
+
+[internal.gcc]
+version="15.1.0"
+
+[internal.clang]
+version="20.1.3"
+
+
+[[license]]
     name = 'GPL-3.0-or-later'
     url = 'https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Copying.html'
 
@@ -184,6 +191,41 @@ version = '20.1.3'
     ]
 
 
+[library.light-gbm]
+    version = '4.6.0'
+    license = [
+        { name = 'MIT', url = 'https://github.com/microsoft/light-gbm/blob/master/LICENSE' }
+    ]
+
+
+[library.compute]
+    indirect = true
+
+[[library.compute.license]]
+    name = 'BSL-1.0'
+    url = 'https://github.com/boostorg/compute/blob/36350b7de849300bd3d72a05d8bf890ca405a014/LICENSE_1_0.txt'
+
+
+[library.fast_double_parser]
+    indirect = true
+
+[[library.fast_double_parser.license]]
+    name = 'Apache-2.0'
+    url = 'https://github.com/lemire/fast_double_parser/blob/efec03532ef65984786e5e32dbc81f6e6a55a115/LICENSE'
+
+[[library.fast_double_parser.license]]
+    name = 'BSL-1.0'
+    url = 'https://github.com/lemire/fast_double_parser/blob/efec03532ef65984786e5e32dbc81f6e6a55a115/LICENSE.BSL'
+
+
+[library.fmt]
+    indirect = true
+
+[[library.fmt.license]]
+    name = 'X11-distribute-modifications-variant'
+    url = 'https://github.com/fmtlib/fmt/blob/f5e54359df4c26b6230fc61d38aa294581393084/LICENSE.rst'
+
+
 [variant.gcc.library.libtorch]
     version = '2.7.0'
 
@@ -218,38 +260,3 @@ version = '20.1.3'
 [[variant.gcc.library.libtorch.license]]
     name = 'MIT-CMU'
     url = 'https://github.com/pytorch/pytorch/blob/main/NOTICE#L420-L456'
-
-
-[library.light-gbm]
-    version = '4.6.0'
-    license = [
-        { name = 'MIT', url = 'https://github.com/microsoft/light-gbm/blob/master/LICENSE' }
-    ]
-
-
-[library.compute]
-    indirect = true
-
-[[library.compute.license]]
-    name = 'BSL-1.0'
-    url = 'https://github.com/boostorg/compute/blob/36350b7de849300bd3d72a05d8bf890ca405a014/LICENSE_1_0.txt'
-
-
-[library.fast_double_parser]
-    indirect = true
-
-[[library.fast_double_parser.license]]
-    name = 'Apache-2.0'
-    url = 'https://github.com/lemire/fast_double_parser/blob/efec03532ef65984786e5e32dbc81f6e6a55a115/LICENSE'
-
-[[library.fast_double_parser.license]]
-    name = 'BSL-1.0'
-    url = 'https://github.com/lemire/fast_double_parser/blob/efec03532ef65984786e5e32dbc81f6e6a55a115/LICENSE.BSL'
-
-
-[library.fmt]
-    indirect = true
-
-[[library.fmt.license]]
-    name = 'X11-distribute-modifications-variant'
-    url = 'https://github.com/fmtlib/fmt/blob/f5e54359df4c26b6230fc61d38aa294581393084/LICENSE.rst'

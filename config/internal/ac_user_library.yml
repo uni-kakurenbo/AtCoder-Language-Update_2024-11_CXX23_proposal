@@ -15,7 +15,7 @@ Requires: >
     ac_light-gbm
 
 Cflags: >
-    -I${install_dir}/include/
+    -I${install_dir}/include
 
 Libs: >
     -L${install_dir}/lib
