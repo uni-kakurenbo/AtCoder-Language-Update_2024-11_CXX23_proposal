@@ -11,7 +11,7 @@
 -DUSE_MATH_OPT
 -DUSE_PDLP
 -DUSE_SCIP
--I::install_dir::/include/
+-I::install_dir::/include
 -O2
 -Wall
 -Wextra
@@ -39,7 +39,6 @@
 -L::install_dir::/lib
 -Wl,-R::install_dir::/lib
 -fopenmp
--L/opt/atcoder/clang/lib
 -labsl_bad_any_cast_impl
 -labsl_cordz_sample_token
 -labsl_failure_signal_handler

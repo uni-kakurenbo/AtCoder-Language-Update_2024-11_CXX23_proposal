@@ -5,7 +5,7 @@
 VERSION=null
 
 set -eu
-if [[ "${AC_NO_BUILD_libtorch:-false}" == true || "${AC_VARIANT}" == "clang" ]]; then
+if [[ "${AC_NO_BUILD_libtorch:-false}" == true || "${AC_VARIANT:-}" == "clang" ]]; then
     exit 0
 fi
 
