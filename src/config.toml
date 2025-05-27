@@ -1,4 +1,4 @@
-language = 'C++23'
+language = 'C++'
 
 filename = 'Main.cpp'
 
@@ -6,13 +6,20 @@ object = 'a.out'
 
 execution = ['./a.out']
 
+
 [variant.gcc]
-name = 'GCC'
-version = '15.1.0'
+display = 'C++23 (GCC 15.1.0)'
 
 [variant.clang]
-name = 'Clang'
-version = '20.1.3'
+display = 'C++23 (Clang 20.1.3)'
+
+
+[internal.gcc]
+version="15.1.0"
+
+[internal.clang]
+version="20.1.3"
+
 
 [[license]]
     name = 'GPL-3.0-or-later'
