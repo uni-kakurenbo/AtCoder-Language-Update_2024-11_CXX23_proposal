@@ -519,6 +519,8 @@ jobs:
 
                     ./compile.sh
                     ./a.out
+
+                    ldd ./a.out
                   fi
 
     gen-config:
