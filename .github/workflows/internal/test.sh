@@ -44,7 +44,7 @@ function run-test() {
 
         echo "${header//[^\$]/-}"
 
-        ./a.out
+        time ./a.out
         exit_status=$((exit_status + $?))
 
         echo "${header//[^\$]/-}"
