@@ -518,7 +518,7 @@ jobs:
                     fi
 
                     ./compile.sh
-                    ./a.out
+                    time ./a.out
 
                     ldd ./a.out
                   fi
