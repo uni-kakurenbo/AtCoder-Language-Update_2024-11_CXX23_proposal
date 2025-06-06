@@ -47,6 +47,10 @@ function run-test() {
         ./a.out
         exit_status=$((exit_status + $?))
 
+        echo "${header//[^\$]/-}"
+
+        ldd ./a.out
+
         echo "${header//[^=]/=}"
         echo
         echo
