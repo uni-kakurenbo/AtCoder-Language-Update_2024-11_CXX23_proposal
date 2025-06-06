@@ -32,7 +32,7 @@ function replace() {
         version="$(
             dasel -r toml -w json <./src/config.toml |
                 jq --arg name "${name}" \
-                    '.version // .variant[$name].version'
+                    '.internal[$name].version'
         )"
     fi
 

@@ -11,7 +11,7 @@
 -DUSE_MATH_OPT
 -DUSE_PDLP
 -DUSE_SCIP
--I::install_dir::/include/
+-I::install_dir::/include
 -I::install_dir::/include/torch/csrc/api/include
 -O2
 -Wall
@@ -29,7 +29,6 @@
 -Wl,-R::install_dir::/lib
 -fopenmp
 -lstdc++exp
--L/opt/atcoder/gcc/lib
 -labsl_bad_any_cast_impl
 -labsl_cordz_sample_token
 -labsl_failure_signal_handler
