@@ -13,7 +13,7 @@
 以下のディレクトリ内のファイルは [Boost Software License 1.0](https://www.boost.org/doc/user-guide/bsl.html) の下で提供されます：
 - `/test/01_boost`
 
-以下のディレクトリ内のファイルは [Creative Commons 1.0](https://creativecommons.org/publicdomain/zero/1.0/) の下で提供されます：
+以下のディレクトリ内のファイルは [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) の下で提供されます：
 - `/dist`
 
 その他の任意のファイルは [MIT License](https://opensource.org/license/mit) の下で提供されます．
