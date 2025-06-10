@@ -233,6 +233,8 @@ jobs:
                   chmod +x -R ./dist/
                   ./dist/${{ matrix.variant }}/install.sh
 
+                  find /opt/atcoder/${{ matrix.variant }}/ -iname '**libstdc++.so.6'
+
             - name: Upload
               uses: actions/upload-artifact@v4
               with:
