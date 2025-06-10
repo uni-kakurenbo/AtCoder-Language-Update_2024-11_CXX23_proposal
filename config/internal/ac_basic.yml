@@ -7,7 +7,7 @@ Cflags: >
 
 variant:
     gcc:
-        Lib: >
+        Libs: >
             -L${install_dir}/lib64
             -Wl,-R${${install_dir}/lib64
 
