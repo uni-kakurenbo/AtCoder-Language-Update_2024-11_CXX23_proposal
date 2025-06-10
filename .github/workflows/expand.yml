@@ -233,6 +233,8 @@ jobs:
                   chmod +x -R ./dist/
                   ./dist/${{ matrix.variant }}/install.sh
 
+                  find /opt/atcoder/ -iname '**libstdc++'
+
             - name: Upload
               uses: actions/upload-artifact@v4
               with:
@@ -331,6 +333,8 @@ jobs:
 
                   chmod +x -R ./dist/
                   ./dist/${{ matrix.variant }}/install.sh
+
+                  grep "pthread" /opt/atcoder/${{ matrix.variant }}/lib/pkgconfig/* || :
 
             - name: Collect Pkgconfig Files
               run: |

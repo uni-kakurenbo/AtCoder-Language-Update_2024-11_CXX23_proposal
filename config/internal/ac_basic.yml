@@ -6,6 +6,11 @@ Cflags: >
     -std=gnu++23
 
 variant:
+    gcc:
+        Libs: >
+            -L${install_dir}/lib64
+            -Wl,-R${install_dir}/lib64
+
     clang:
         Cflags: >
             -fuse-ld=lld
