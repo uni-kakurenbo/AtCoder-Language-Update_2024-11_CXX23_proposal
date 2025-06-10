@@ -2,6 +2,8 @@
 set -eu
 if "${AC_NO_BUILD_COMPILER:-false}"; then exit 0; fi
 
+cd "${AC_TEMP_DIR}"
+
 echo "::group::GCC"
 
 sudo mkdir -p ./gcc
