@@ -353,6 +353,8 @@ jobs:
               run: |
                   set -eu
 
+                  grep "thread" /opt/atcoder/gcc/lib/pkgconfig/*
+
                   find /opt/atcoder/ -name cmake -or -name pkgconfig -or -name bin -or -name share -type d -print0 |
                     xargs -0 sudo rm -rf
 
@@ -482,8 +484,6 @@ jobs:
                     sudo ln -sf "${AC_INSTALL_DIR}/bin/clang++" /usr/local/bin/clang++
                     sudo ln -sf "${AC_INSTALL_DIR}/bin/lld" /usr/local/bin/lld
                   fi
-
-                  grep "thread"  /opt/atcoder/gcc/lib/pkgconfig/*
 
             - name: Test
               if: github.event.inputs.test-mode != 'none'
