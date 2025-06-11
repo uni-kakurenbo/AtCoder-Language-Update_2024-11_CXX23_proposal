@@ -334,6 +334,8 @@ jobs:
                   chmod +x -R ./dist/
                   ./dist/${{ matrix.variant }}/install.sh
 
+                  grep "pthread" /opt/atcoder/*
+
             - name: Collect Pkgconfig Files
               run: |
                   set -eu
@@ -352,8 +354,6 @@ jobs:
             - name: Clean Up
               run: |
                   set -eu
-
-                  grep "thread" /opt/atcoder/gcc/lib/pkgconfig/*
 
                   find /opt/atcoder/ -name cmake -or -name pkgconfig -or -name bin -or -name share -type d -print0 |
                     xargs -0 sudo rm -rf
