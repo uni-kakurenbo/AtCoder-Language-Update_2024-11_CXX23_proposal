@@ -334,7 +334,7 @@ jobs:
                   chmod +x -R ./dist/
                   ./dist/${{ matrix.variant }}/install.sh
 
-                  grep "pthread" /opt/atcoder/*
+                  grep "pthread" /opt/atcoder/${{ matrix.variant }}/lib/pkgconfig/* || :
 
             - name: Collect Pkgconfig Files
               run: |
