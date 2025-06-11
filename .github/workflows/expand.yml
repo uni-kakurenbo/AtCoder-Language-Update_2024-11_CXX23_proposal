@@ -483,6 +483,8 @@ jobs:
                     sudo ln -sf "${AC_INSTALL_DIR}/bin/lld" /usr/local/bin/lld
                   fi
 
+                  grep "thread"  /opt/atcoder/gcc/lib/pkgconfig/*
+
             - name: Test
               if: github.event.inputs.test-mode != 'none'
               env:
