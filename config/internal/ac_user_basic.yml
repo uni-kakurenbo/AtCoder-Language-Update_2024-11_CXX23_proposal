@@ -13,6 +13,9 @@ Cflags: >
 
     -O2
 
+Libs: >
+    --as-needed
+
 variant:
     gcc:
         Cflags: >
