@@ -11,6 +11,8 @@ AC_VARIANT=gcc
 INTERNALL_BUILD_FLAGS=(
     "-std=gnu++23"
     "-w"
+    "-L::install_dir::/lib64"
+    "-Wl,-R::install_dir::/lib64"
 )
 
 PRECOMPILE_BUILD_FLAGS=(
@@ -28,6 +30,9 @@ PRECOMPILE_BUILD_FLAGS=(
     "-march=native"
     "-pthread"
     "-std=gnu++23"
+    "-Wl,--as-needed"
+    "-L::install_dir::/lib64"
+    "-Wl,-R::install_dir::/lib64"
 )
 
 set -eu

@@ -1,2 +1,4 @@
 -std=gnu++23
 -w
+-L::install_dir::/lib64
+-Wl,-R::install_dir::/lib64

@@ -12,3 +12,6 @@
 -march=native
 -pthread
 -std=gnu++23
+-Wl,--as-needed
+-L::install_dir::/lib64
+-Wl,-R::install_dir::/lib64
