@@ -69,6 +69,6 @@ void BasicExample() {
 
 int main(int argc, char *argv[]) {
   InitGoogle(argv[0], &argc, &argv, true);
-  absl::SetFlag(&FLAGS_stderrthreshold, 0);
+  absl::SetStderrThreshold(absl::LogSeverityAtLeast::kInfo);
   operations_research::BasicExample();
 }
