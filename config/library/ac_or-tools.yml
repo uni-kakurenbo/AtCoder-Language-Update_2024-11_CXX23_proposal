@@ -30,3 +30,4 @@ Libs: >
     -lhighs
     -lscip
     -lz
+    -lbz2
