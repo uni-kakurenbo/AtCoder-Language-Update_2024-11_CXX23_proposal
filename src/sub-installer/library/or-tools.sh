@@ -21,7 +21,7 @@ fi
 
 sudo mkdir -p ./build && cd ./build
 
-sudo cmake ..
+sudo cmake -DBUILD_DEPS:BOOL=ON ..
 
 sudo cmake --build . --config Release --target install
 
