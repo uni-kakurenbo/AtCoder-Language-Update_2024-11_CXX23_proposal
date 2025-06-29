@@ -12,7 +12,6 @@ Requires: >
     absl_any_invocable
     absl_atomic_hook
     absl_bad_any_cast
-    absl_bad_any_cast_impl
     absl_bad_optional_access
     absl_bad_variant_access
     absl_base
@@ -83,13 +82,15 @@ Requires: >
     absl_hash_container_defaults
     absl_hash_function_defaults
     absl_hash_policy_traits
+    absl_hashtable_control_bytes
     absl_hashtable_debug
     absl_hashtable_debug_hooks
     absl_hashtablez_sampler
-    absl_if_constexpr
     absl_inlined_vector
     absl_inlined_vector_internal
     absl_int128
+    absl_iterator_traits_internal
+    absl_iterator_traits_test_helper_internal
     absl_kernel_timeout_internal
     absl_layout
     absl_leak_check
@@ -115,6 +116,7 @@ Requires: >
     absl_log_internal_proto
     absl_log_internal_strip
     absl_log_internal_structured
+    absl_log_internal_structured_proto
     absl_log_internal_voidify
     absl_log_severity
     absl_log_sink
@@ -144,6 +146,7 @@ Requires: >
     absl_random_distributions
     absl_random_internal_distribution_caller
     absl_random_internal_distribution_test_util
+    absl_random_internal_entropy_pool
     absl_random_internal_fast_uniform_bits
     absl_random_internal_fastmath
     absl_random_internal_generate_real
@@ -152,7 +155,6 @@ Requires: >
     absl_random_internal_nonsecure_base
     absl_random_internal_pcg_engine
     absl_random_internal_platform
-    absl_random_internal_pool_urbg
     absl_random_internal_randen
     absl_random_internal_randen_engine
     absl_random_internal_randen_hwaes
@@ -168,6 +170,7 @@ Requires: >
     absl_random_seed_sequences
     absl_raw_hash_map
     absl_raw_hash_set
+    absl_raw_hash_set_resize_impl
     absl_raw_logging_internal
     absl_sample_recorder
     absl_scoped_set_env
@@ -187,9 +190,11 @@ Requires: >
     absl_throw_delegate
     absl_time
     absl_time_zone
+    absl_tracing_internal
     absl_type_traits
     absl_utf8_for_code_point
     absl_utility
     absl_variant
     absl_vlog_config_internal
     absl_vlog_is_on
+    absl_weakly_mixed_integer
