@@ -31,7 +31,7 @@ version="20.1.3"
     url = 'https://raw.githubusercontent.com/llvm/llvm-project/main/llvm/LICENSE.TXT'
 
 [library.abseil]
-    version = '20250127.1'
+    version = '20250512.1'
     license = [
         { name = 'Apache-2.0', url = 'https://github.com/abseil/abseil-cpp/blob/master/LICENSE' },
     ]
@@ -95,11 +95,10 @@ version="20.1.3"
 
 
 [library.or-tools]
-    version = '9.12'
+    version = '9.14'
     license = [
         { name = 'Apache-2.0', url = 'https://github.com/google/or-tools/blob/stable/LICENSE' },
     ]
-
 
 [library.zlib]
     indirect = true
@@ -232,7 +231,7 @@ version="20.1.3"
 
 
 [variant.gcc.library.libtorch]
-    version = '2.7.0'
+    version = '2.7.1'
 
 [[variant.gcc.library.libtorch.license]]
     name = 'BSD-3-Clause'
