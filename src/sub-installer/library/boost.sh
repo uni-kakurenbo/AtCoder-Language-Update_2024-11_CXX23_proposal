@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eu
-if [[ "${AC_NO_BUILD_boo:-false}" == true && "${AC_NO_BUILD_or_tools:-false}" == true ]]; then exit 0; fi
+if "${AC_NO_BUILD_boost:-false}"; then exit 0; fi
 
 cd "${AC_TEMP_DIR}"
 
