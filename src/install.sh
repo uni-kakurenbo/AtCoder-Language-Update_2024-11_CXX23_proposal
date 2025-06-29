@@ -137,6 +137,7 @@ export BOOST_BUILDER_CONFIG
 ./sub-installer/library/boost.sh
 ./sub-installer/library/eigen.sh
 ./sub-installer/library/gmp.sh
+./sub-installer/library/immer.sh
 ./sub-installer/library/libtorch.sh
 ./sub-installer/library/light-gbm.sh
 ./sub-installer/library/or-tools.sh

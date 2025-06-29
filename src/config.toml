@@ -61,6 +61,11 @@ version="20.1.3"
         { name = 'GPL-2.0-only', url = 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html' }
     ]
 
+[library.immer]
+    version = '0.8.1'
+    license = [
+        { name = 'BSL-1.0', url = 'https://github.com/arximboldi/immer/blob/v0.8.1/LICENSE' },
+    ]
 
 [library.range-v3]
     version = '0.12.0'
