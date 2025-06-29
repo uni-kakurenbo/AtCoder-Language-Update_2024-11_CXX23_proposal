@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="2.7.0"
+VERSION="2.7.1"
 
 set -eu
 if [[ "${AC_NO_BUILD_libtorch:-false}" == true || "${AC_VARIANT:-}" == "clang" ]]; then

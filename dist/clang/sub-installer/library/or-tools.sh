@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="9.12"
+VERSION="9.14"
 
 set -eu
 if "${AC_NO_BUILD_or_tools:-false}"; then exit 0; fi
@@ -28,11 +28,11 @@ sudo mkdir -p ./build && cd ./build
 
 sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
     -DBUILD_CXX:BOOL=ON \
-    -DBUILD_ZLIB:BOOL=ON -DBUILD_Protobuf:BOOL=ON -DBUILD_re2:BOOL=ON \
+    -DBUILD_BZip2:BOOL=ON -DBUILD_ZLIB:BOOL=ON -DBUILD_Protobuf:BOOL=ON -DBUILD_re2:BOOL=ON \
     -DUSE_COINOR:BOOL=ON -DBUILD_CoinUtils:BOOL=ON -DBUILD_Osi:BOOL=ON -DBUILD_Clp:BOOL=ON -DBUILD_Cgl:BOOL=ON -DBUILD_Cbc:BOOL=ON \
     -DUSE_GLPK:BOOL=ON -DBUILD_GLPK:BOOL=ON \
     -DUSE_HIGHS:BOOL=ON -DBUILD_HIGHS:BOOL=ON \
-    -DUSE_SCIP:BOOL=ON -DBUILD_SCIP:BOOL=ON \
+    -DUSE_SCIP:BOOL=ON -DBUILD_SCIP:BOOL=ON -DBUILD_soplex:BOOL=ON -DBUILD_Boost:BOOL=ON \
     -DBUILD_SAMPLES:BOOL=OFF -DBUILD_EXAMPLES:BOOL=OFF \
     -DBUILD_TESTING:BOOL="${BUILD_TESTING}" \
     -DCMAKE_PREFIX_PATH:PATH="${AC_INSTALL_DIR}" \

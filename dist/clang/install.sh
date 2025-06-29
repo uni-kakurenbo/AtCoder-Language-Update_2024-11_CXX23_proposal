@@ -277,7 +277,7 @@ export BOOST_BUILDER_CONFIG
 
 # abseil
 (
-    VERSION="20250127.1"
+    VERSION="20250512.1"
 
     set -eu
     if [[ "${AC_NO_BUILD_abseil:-false}" == true && "${AC_NO_BUILD_or_tools:-false}" == true ]]; then exit 0; fi
@@ -444,6 +444,29 @@ export BOOST_BUILDER_CONFIG
     echo "::endgroup::"
 )
 
+# immer
+(
+    VERSION="0.8.1"
+
+    set -eu
+    if "${AC_NO_BUILD_immer:-false}"; then exit 0; fi
+
+    cd "${AC_TEMP_DIR}"
+
+    echo "::group::immer"
+
+    sudo mkdir -p ./immer
+
+    sudo wget -q "https://github.com/arximboldi/immer/archive/refs/tags/v${VERSION}.tar.gz" -O ./immer.tar.gz
+    sudo tar -I pigz -xf ./immer.tar.gz -C ./immer --strip-components 1
+
+    cd ./immer
+
+    sudo cp -Trf ./immer "${AC_INSTALL_DIR}/include/immer"
+
+    echo "::endgroup::"
+)
+
 # libtorch
 (
     VERSION=null
@@ -511,7 +534,7 @@ export BOOST_BUILDER_CONFIG
 
 # or-tools
 (
-    VERSION="9.12"
+    VERSION="9.14"
 
     set -eu
     if "${AC_NO_BUILD_or_tools:-false}"; then exit 0; fi
@@ -537,11 +560,11 @@ export BOOST_BUILDER_CONFIG
 
     sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
         -DBUILD_CXX:BOOL=ON \
-        -DBUILD_ZLIB:BOOL=ON -DBUILD_Protobuf:BOOL=ON -DBUILD_re2:BOOL=ON \
+        -DBUILD_BZip2:BOOL=ON -DBUILD_ZLIB:BOOL=ON -DBUILD_Protobuf:BOOL=ON -DBUILD_re2:BOOL=ON \
         -DUSE_COINOR:BOOL=ON -DBUILD_CoinUtils:BOOL=ON -DBUILD_Osi:BOOL=ON -DBUILD_Clp:BOOL=ON -DBUILD_Cgl:BOOL=ON -DBUILD_Cbc:BOOL=ON \
         -DUSE_GLPK:BOOL=ON -DBUILD_GLPK:BOOL=ON \
         -DUSE_HIGHS:BOOL=ON -DBUILD_HIGHS:BOOL=ON \
-        -DUSE_SCIP:BOOL=ON -DBUILD_SCIP:BOOL=ON \
+        -DUSE_SCIP:BOOL=ON -DBUILD_SCIP:BOOL=ON -DBUILD_soplex:BOOL=ON -DBUILD_Boost:BOOL=ON \
         -DBUILD_SAMPLES:BOOL=OFF -DBUILD_EXAMPLES:BOOL=OFF \
         -DBUILD_TESTING:BOOL="${BUILD_TESTING}" \
         -DCMAKE_PREFIX_PATH:PATH="${AC_INSTALL_DIR}" \

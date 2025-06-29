@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="20250127.1"
+VERSION="20250512.1"
 
 set -eu
 if [[ "${AC_NO_BUILD_abseil:-false}" == true && "${AC_NO_BUILD_or_tools:-false}" == true ]]; then exit 0; fi

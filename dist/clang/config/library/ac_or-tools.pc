@@ -3,4 +3,4 @@ Description: links LightGBM.
 Version: ""
 Requires: protobuf re2
 Cflags: -DOR_PROTO_DLL="" -DUSE_LP_PARSER -DUSE_MATH_OPT -DUSE_BOP -DUSE_CBC -DUSE_CLP -DUSE_GLOP -DUSE_PDLP -DUSE_SCIP
-Libs: -lortools -lCbc -lCbcSolver -lCgl -lClp -lClpSolver -lCoinUtils -lGLPK -lOsi -lOsiCbc -lOsiClp -lhighs -lscip -lz
+Libs: -lortools -lCbc -lCbcSolver -lCgl -lClp -lClpSolver -lCoinUtils -lGLPK -lOsi -lOsiCbc -lOsiClp -lhighs -lscip -lz -lbz2
