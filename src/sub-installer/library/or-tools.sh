@@ -34,7 +34,6 @@ sudo cmake "${CMAKE_ENVIRONMENT[@]}" \
     -DCMAKE_INSTALL_PREFIX:PATH="${AC_INSTALL_DIR}" \
     -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=ON \
     -DCMAKE_CXX_FLAGS:STRING="${INTERNALL_BUILD_FLAGS[*]}" \
-    --target build \
     ..
 
 sudo cmake --build . --config Release --target install
