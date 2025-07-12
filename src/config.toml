@@ -11,14 +11,14 @@ execution = ['./a.out']
 display = 'C++23 (GCC 15.1.0)'
 
 [variant.clang]
-display = 'C++23 (Clang 20.1.3)'
+display = 'C++23 (Clang 20.1.8)'
 
 
 [internal.gcc]
 version="15.1.0"
 
 [internal.clang]
-version="20.1.3"
+version="20.1.8"
 
 
 [[license]]
