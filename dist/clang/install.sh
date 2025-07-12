@@ -198,7 +198,7 @@ else
 
     # clang
     (
-        VERSION="20.1.3"
+        VERSION="20.1.8"
 
         set -eu
         if "${AC_NO_BUILD_COMPILER:-false}"; then exit 0; fi
