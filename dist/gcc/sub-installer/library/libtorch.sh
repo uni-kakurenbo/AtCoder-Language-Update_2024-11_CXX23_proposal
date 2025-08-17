@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="2.7.1"
+VERSION="2.8.0"
 
 set -eu
 if [[ "${AC_NO_BUILD_libtorch:-false}" == true || "${AC_VARIANT:-}" == "clang" ]]; then
@@ -13,7 +13,7 @@ cd "${AC_TEMP_DIR}"
 
 echo "::group::LibTorch"
 
-sudo wget "https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-${VERSION}%2Bcpu.zip" -O ./libtorch.zip
+sudo wget "https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-${VERSION}%2Bcpu.zip" -O ./libtorch.zip
 sudo unzip -o ./libtorch.zip -d .
 
 # remove protobuf, which or-tools has as its dependencies.

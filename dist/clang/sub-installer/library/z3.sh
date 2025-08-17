@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="4.15.0"
+VERSION="4.15.2"
 
 set -eu
 if "${AC_NO_BUILD_z3:-false}"; then exit 0; fi

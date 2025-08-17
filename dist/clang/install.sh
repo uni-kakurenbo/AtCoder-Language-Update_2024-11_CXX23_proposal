@@ -143,7 +143,7 @@ if [[ "${AC_VARIANT}" == "gcc" ]]; then
 
     # gcc
     (
-        VERSION="15.1.0"
+        VERSION="15.2.0"
 
         set -eu
         if "${AC_NO_BUILD_COMPILER:-false}"; then exit 0; fi
@@ -480,7 +480,7 @@ export BOOST_BUILDER_CONFIG
 
     echo "::group::LibTorch"
 
-    sudo wget "https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-${VERSION}%2Bcpu.zip" -O ./libtorch.zip
+    sudo wget "https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-${VERSION}%2Bcpu.zip" -O ./libtorch.zip
     sudo unzip -o ./libtorch.zip -d .
 
     # remove protobuf, which or-tools has as its dependencies.
@@ -635,7 +635,7 @@ export BOOST_BUILDER_CONFIG
 
 # z3
 (
-    VERSION="4.15.0"
+    VERSION="4.15.2"
 
     set -eu
     if "${AC_NO_BUILD_z3:-false}"; then exit 0; fi
