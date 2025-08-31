@@ -2,7 +2,7 @@
 ########## AUTO-GENERATED ##########
 # Do not modify this file manually #
 ####################################
-VERSION="20.1.8"
+VERSION="21.1.0"
 
 set -eu
 if "${AC_NO_BUILD_COMPILER:-false}"; then exit 0; fi
