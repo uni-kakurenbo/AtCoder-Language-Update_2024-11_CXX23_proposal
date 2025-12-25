@@ -4,7 +4,6 @@ Version: null
 
 Cflags: >
     -march=native
-    -flto=auto
 
     -pthread
 
