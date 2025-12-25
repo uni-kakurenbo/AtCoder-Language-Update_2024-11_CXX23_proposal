@@ -120,6 +120,7 @@ Some other flags might be appended, depending on libraries that is to be install
     - [「GCC 14 時点での安定性については分りかねるが，再度検討して損はない」](https://discord.com/channels/1245258617582653553/1293457974442070016/1306609306996707398)
     - [「詳しく把握しないままに追加すると思わぬトラブルになるかも」](https://discord.com/channels/1245258617582653553/1293457974442070016/1308248462772408373)
     - [「精査が必要だと考え，現時点での追加には反対」](https://discord.com/channels/1245258617582653553/1293457974442070016/1308248462772408373)
+    - [新規バグ](https://discord.com/channels/1245258617582653553/1293457974442070016/1453297384032567316)
 
 - `-ftrivial-auto-var-init=zero`
     - trivial な未初期化変数が 0 で初期化されるようになります．
