@@ -30,7 +30,6 @@ USER_BUILD_FLAGS=(
     "-fconstexpr-depth=1024"
     "-fconstexpr-steps=524288"
     "-fexperimental-library"
-    "-flto=auto"
     "-fprebuilt-module-path=."
     "-ftrivial-auto-var-init=zero"
     "-fuse-ld=lld"

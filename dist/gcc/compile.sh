@@ -27,7 +27,6 @@ USER_BUILD_FLAGS=(
     "-fconstexpr-depth=1024"
     "-fconstexpr-loop-limit=524288"
     "-fconstexpr-ops-limit=2097152"
-    "-flto=auto"
     "-fmodules"
     "-ftrivial-auto-var-init=zero"
     "-march=native"
